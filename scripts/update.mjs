@@ -298,6 +298,28 @@ export async function main() {
         row.senior_claims_pct = claims * 100;
         row.cebe_sats = Math.round(B * (1 - claims) / S * 1e8);
         row.cebe_mnav = claims < 1 ? mcap / (B * (1 - claims) * P) : null;
+        // Residual BTC NAV uses the same clamped senior-claims fraction as CEBE,
+        // so stock price / residual NAV per share = CEBE mNAV.
+        const residualNav = btcNav * (1 - claims);
+        row.residual_nav_usd = residualNav;
+        row.residual_nav_per_share_usd = residualNav / S;
+        const nativePerUsd = row.stock.currency !== 'USD' && row.stock.price && row.stock.price_usd
+          ? row.stock.price / row.stock.price_usd : null;
+        if (nativePerUsd != null && isFinite(nativePerUsd)) {
+          row.residual_nav_per_share_native = row.residual_nav_per_share_usd * nativePerUsd;
+        }
+        if (row.diluted_shares > 0) {
+          row.residual_nav_per_share_diluted_usd = residualNav / row.diluted_shares;
+          if (nativePerUsd != null && isFinite(nativePerUsd)) {
+            row.residual_nav_per_share_diluted_native = row.residual_nav_per_share_diluted_usd * nativePerUsd;
+          }
+        }
+        if (row.cebe_mnav != null && row.residual_nav_per_share_usd) {
+          const implied = row.stock.price_usd / row.residual_nav_per_share_usd;
+          if (Math.abs(implied - row.cebe_mnav) > 1e-8 * Math.abs(row.cebe_mnav)) {
+            errors.push(`${co.name} residual NAV/share does not match CEBE mNAV`);
+          }
+        }
       }
     }
 
@@ -341,7 +363,9 @@ export async function main() {
   console.log(`BTC $${btc.usd} (${btc.source})`);
   for (const r of out) {
     const sec = r.sec?.form ? `${r.sec.form} ${r.sec.filing_date} ${r.sec.status} | ${r.sec.note} | ${r.sec.url}` : (r.sec?.status || 'n/a');
-    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency} | shares ${r.basic_shares} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | SEC ${sec}`);
+    const residual = r.residual_nav_per_share_usd == null ? 'n/a'
+      : `$${r.residual_nav_per_share_usd.toFixed(2)}${r.residual_nav_per_share_native != null ? ` (${r.residual_nav_per_share_native.toFixed(2)} ${r.stock?.currency})` : ''}${r.residual_nav_per_share_diluted_usd != null ? ` dil $${r.residual_nav_per_share_diluted_usd.toFixed(2)}` : ''} total $${(r.residual_nav_usd / 1e9).toFixed(2)}B`;
+    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency} | residual/sh ${residual} | shares ${r.basic_shares} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | SEC ${sec}`);
   }
   if (errors.length) console.warn('Errors:', errors);
   if (!out.some((r) => r.basic_mnav)) process.exit(1);
