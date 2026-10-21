@@ -19,6 +19,7 @@
       <th title="Market cap ÷ (BTC held × BTC price)">Basic mNAV</th>
       <th title="(Market cap + debt + preferred − cash) ÷ (BTC held × BTC price)">EV mNAV</th>
       <th title="Market cap ÷ (BTC owned by common equity after net senior claims × BTC price)">CEBE mNAV</th>
+      <th title="Latest 8-K, 8-K/A, 10-Q, 10-Q/A, 10-K, or 10-K/A on EDGAR, compared with the date behind the CEBE figures. The figures themselves are not taken from the filing.">SEC filing</th>
     </tr></thead>
     <tbody></tbody>
   </table>
@@ -31,8 +32,9 @@
       <li><b>EV mNAV</b> = (Market cap + Debt + Preferred − Cash) ÷ (BTC held × BTC price).</li>
       <li><b>CEBE mNAV</b> = Market cap ÷ (BTC held × (1 − Senior Claims %) × BTC price), where Senior Claims % = (Debt + Preferred − Cash − issuer-held STRC) ÷ BTC price ÷ BTC held, clamped to 0–100%. Definitions per <a href="https://cebetracker.io/modeler/mnav/">CEBE Tracker’s mNAV modeler</a> and <a href="https://cebetracker.io/api/docs">API formula</a>.</li>
       <li>Market cap = live stock price (USD) × basic shares outstanding. Non-USD prices converted at live FX.</li>
+      <li><b>SEC filing</b> — for companies with an <code>sec_cik</code>, the latest 8-K, 8-K/A, 10-Q, 10-Q/A, 10-K, or 10-K/A on EDGAR. “Up to date” means that filing is not newer than the filing or as-of date behind the CEBE figures. A newer filing is flagged. The numbers on this page still come from CEBE Tracker.</li>
     </ul>
-    <p class="attr">Balance-sheet data (BTC, debt, preferred, cash, basic shares) and CEBE construction: <b>Data via CEBE Tracker, <a href="https://cebetracker.io">cebetracker.io</a></b>. Stock & FX: Yahoo Finance. BTC price: CoinGecko. Not investment advice.</p>
+    <p class="attr">Balance-sheet data (BTC, debt, preferred, cash, basic shares) and CEBE construction: <b>Data via CEBE Tracker, <a href="https://cebetracker.io">cebetracker.io</a></b>. Stock &amp; FX: Yahoo Finance. BTC price: CoinGecko. SEC filing links for US filers: EDGAR (status only; figures are not taken from filings). Not investment advice.</p>
   </section>
 </main>
 <script src="app.js"></script>
