@@ -45,10 +45,14 @@ function secCell(c) {
 }
 
 async function load() {
-  const d = await (await fetch('data.json?t=' + Date.now())).json();
+  // Unique URL plus no-store: GitHub Pages sends Cache-Control max-age=600, and a
+  // fresh index.html must not keep painting the previous data.json.
+  const d = await (await fetch('data.json?t=' + Date.now(), { cache: 'no-store' })).json();
   document.getElementById('btc').textContent = fmtUSD(d.btc.usd, 0);
   document.getElementById('updated').textContent = local(d.generated_at);
-  document.querySelector('#tbl tbody').innerHTML = d.companies.map((c) => {
+  const valuation = [];
+  const holdings = [];
+  for (const c of d.companies) {
     const px = c.stock ? fmtQuote(c.stock.price, c.stock.currency, c.stock.price_usd) : '—';
     const currency = c.stock?.currency || 'USD';
     const rnav = c.residual_nav_per_share_usd == null ? '—'
@@ -62,18 +66,24 @@ async function load() {
         : fmtUSD(c.residual_nav_per_share_diluted_usd)}</span>`
       : '';
     const tracker = c.cebe_tracker?.cebe_mnav_live != null ? `<span class="s"><a href="${c.cebe_tracker.url}" style="color:inherit">cebetracker: ${c.cebe_tracker.cebe_mnav_live.toFixed(2)}×</a></span>` : '';
-    return `<tr>
-      <td class="name"><a href="${c.website}" target="_blank" rel="noopener">${c.name}</a><span class="s">${c.ticker} · ${c.exchange}</span></td>
+    const company = `<td class="name"><a href="${c.website}" target="_blank" rel="noopener">${c.name}</a><span class="s">${c.ticker} · ${c.exchange}</span></td>`;
+    valuation.push(`<tr>
+      ${company}
       <td>${px}<span class="s">mcap ${big(c.market_cap_usd)}</span></td>
       <td>${rnav}${rTotal}${rDil}</td>
-      <td>${fmtN(c.basic_shares)}<span class="s">${c.diluted_shares ? 'fully diluted ' + fmtN(c.diluted_shares) : 'basic'}</span></td>
-      <td>₿${fmtN(c.btc_holdings)}<span class="s">as of ${c.balance_sheet_as_of || '—'}</span></td>
       <td>${mult(c.basic_mnav)}<span class="s">NAV ${big(c.btc_nav_usd)}</span></td>
       <td>${mult(c.ev_mnav)}<span class="s">EV ${big(c.ev_usd)}</span></td>
       <td>${mult(c.cebe_mnav)}<span class="s">claims ${c.senior_claims_pct == null ? '—' : c.senior_claims_pct.toFixed(1) + '%'}</span>${tracker}</td>
+    </tr>`);
+    holdings.push(`<tr>
+      ${company}
+      <td>${fmtN(c.basic_shares)}<span class="s">${c.diluted_shares ? 'fully diluted ' + fmtN(c.diluted_shares) : 'basic'}</span></td>
+      <td>₿${fmtN(c.btc_holdings)}<span class="s">as of ${c.balance_sheet_as_of || '—'}</span></td>
       ${secCell(c)}
-    </tr>`;
-  }).join('');
+    </tr>`);
+  }
+  document.querySelector('#valuation tbody').innerHTML = valuation.join('');
+  document.querySelector('#holdings tbody').innerHTML = holdings.join('');
   document.getElementById('errors').textContent = d.errors?.length ? 'Data warnings: ' + d.errors.join('; ') : '';
 }
 load(); setInterval(load, 5 * 60 * 1000);

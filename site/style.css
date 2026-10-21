@@ -3,12 +3,15 @@
 header{padding:28px 24px 8px;max-width:1680px;margin:auto}h1{margin:0;font-size:26px}h1::first-letter{color:var(--acc)}
 .sub{color:var(--mut);margin:6px 0 0}.sub strong{color:var(--acc)}
 main{max-width:1680px;margin:auto;padding:12px 24px 40px}
+.panel + .panel{margin-top:22px}
+.tbl-h{margin:0 0 8px;font-size:15px;font-weight:600}
 .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
 table{width:100%;border-collapse:collapse}th,td{padding:12px 14px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
 th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);cursor:help}th:first-child,td:first-child{text-align:left}
 tr:last-child td{border-bottom:0}td .s{display:block;font-size:12px;color:var(--mut)}
 td.name a{color:var(--fg);font-weight:600;text-decoration:none}td.name a:hover{color:var(--acc)}
-td.sec{text-align:left;white-space:normal;max-width:14rem;min-width:9.5rem}
+th.sec,td.sec{text-align:left}
+td.sec{white-space:normal;max-width:14rem;min-width:9.5rem}
 td.sec a{color:var(--fg);font-weight:600;text-decoration:none;white-space:nowrap}td.sec a:hover{color:var(--acc)}
 .sec-ok{color:var(--mut)}.sec-new{color:var(--warn)}
 .m{font-weight:700;font-variant-numeric:tabular-nums}.prem{color:var(--up)}.disc{color:var(--dn)}
