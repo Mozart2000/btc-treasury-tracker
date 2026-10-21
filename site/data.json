@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-21T18:21:13.897Z",
+  "generated_at": "2026-10-21T18:36:00.531Z",
   "btc": {
-    "usd": 84670,
-    "time": "2026-10-21T18:20:25.000Z",
+    "usd": 84680,
+    "time": "2026-10-21T18:34:42.000Z",
     "source": "CoinGecko"
   },
   "cebe_feed": {
-    "as_of": "2026-10-21T18:19:05.856Z",
+    "as_of": "2026-10-21T18:35:58.065Z",
     "rules_version": "2026-10-19.1"
   },
   "companies": [
@@ -29,31 +29,40 @@
       "balance_sheet_as_of": "2026-10-18",
       "balance_sheet_source": "8-K filed 2026-10-19, acc 0001193125-26-424688, covering 2026-10-12 to 2026-10-18. Debt carried from the 2026-06-30 balance (Q2 10-Q acc 0001050446-26-000044, all-principal basis); no debt event in this 8-K. Fully diluted count, estimated: basic + Q2 2026 10-Q ADSO spread 29,680,000 (acc 0001050446-26-000044).",
       "cebe_tracker": {
-        "cebe_mnav_live": 1.153,
-        "cebe_sats_live": 158864,
+        "cebe_mnav_live": 1.151,
+        "cebe_sats_live": 158860,
         "senior_claims_pct_live": 20.94,
-        "stock_price_usd": 155.09,
+        "stock_price_usd": 154.78,
         "stock_venue": "Nasdaq",
         "url": "https://cebetracker.io/company/MSTR/"
       },
       "stock": {
-        "price": 154.945,
+        "price": 154.83,
         "currency": "USD",
-        "price_usd": 154.945,
+        "price_usd": 154.83,
         "fx": null,
-        "time": "2026-10-21T18:21:09.000Z",
+        "time": "2026-10-21T18:35:56.000Z",
         "source": "Yahoo Finance (MSTR)"
       },
-      "market_cap_usd": 65427047964.84499,
-      "btc_nav_usd": 71843934390,
-      "basic_mnav": 0.910682975819206,
-      "ev_usd": 80474302064.845,
-      "ev_mnav": 1.1201266014747415,
-      "senior_claims_pct": 20.944362565553533,
-      "cebe_sats": 158860,
-      "cebe_mnav": 1.1519519737910546,
+      "market_cap_usd": 65378488085.43001,
+      "btc_nav_usd": 71852419560,
+      "basic_mnav": 0.9098996037403588,
+      "ev_usd": 80425742185.43001,
+      "ev_mnav": 1.119318495854839,
+      "senior_claims_pct": 20.94188921144801,
+      "cebe_sats": 158865,
+      "cebe_mnav": 1.1509250533116924,
       "sec": {
-        "status": "unavailable"
+        "cik": "0001050446",
+        "entity_name": "Strategy Inc",
+        "form": "8-K",
+        "filing_date": "2026-10-19",
+        "accession": "0001193125-26-424688",
+        "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526424688/mstr-20261019.htm",
+        "cebe_reference_date": "2026-10-19",
+        "cebe_reference": "accession",
+        "status": "current",
+        "note": "Up to date"
       }
     },
     {
@@ -85,19 +94,19 @@
       "stock": {
         "price": 275,
         "currency": "JPY",
-        "price_usd": 1.7390094602114636,
-        "fx": "USD/JPY 158.136",
+        "price_usd": 1.7389214892755969,
+        "fx": "USD/JPY 158.144",
         "time": "2026-10-21T06:30:00.000Z",
         "source": "Yahoo Finance (3350.T)"
       },
-      "market_cap_usd": 2372453561.4913745,
-      "btc_nav_usd": 3725480000,
-      "basic_mnav": 0.6368182251659852,
-      "ev_usd": 3148283429.6513743,
-      "ev_mnav": 0.8450678649868941,
-      "senior_claims_pct": 20.847215081009697,
+      "market_cap_usd": 2372333546.641036,
+      "btc_nav_usd": 3725920000,
+      "basic_mnav": 0.6367108114616085,
+      "ev_usd": 3148163414.801036,
+      "ev_mnav": 0.8449358587412065,
+      "senior_claims_pct": 20.844753199209855,
       "cebe_sats": 2553,
-      "cebe_mnav": 0.804543043959531,
+      "cebe_mnav": 0.8043823210658636,
       "sec": null
     },
     {
@@ -119,36 +128,42 @@
       "balance_sheet_as_of": "2026-10-20",
       "balance_sheet_source": "8-K Oct 20, 2026 (acc 0000950103-26-015849), SATS closing, Items 3.03 and 8.01; holdings, shares, STRC and cash base from 8-K Oct 19, 2026 (acc 0001628280-26-066222), as of Oct 16, 2026; SATS net proceeds from 424B5 Oct 16, 2026 (acc 0000950103-26-015734). EDGAR VERIFIED: https://www.sec.gov/Archives/edgar/data/1920406/000095010326015849/dp255260_8k.htm",
       "cebe_tracker": {
-        "cebe_mnav_live": 1.947,
-        "cebe_sats_live": 18939,
+        "cebe_mnav_live": 1.942,
+        "cebe_sats_live": 18938,
         "senior_claims_pct_live": 36.18,
-        "stock_price_usd": 31.22,
+        "stock_price_usd": 31.14,
         "stock_venue": "Nasdaq",
         "url": "https://cebetracker.io/company/ASST/"
       },
       "stock": {
-        "price": 31.2,
+        "price": 31.18,
         "currency": "USD",
-        "price_usd": 31.2,
+        "price_usd": 31.18,
         "fx": null,
-        "time": "2026-10-21T18:21:02.000Z",
+        "time": "2026-10-21T18:35:57.000Z",
         "source": "Yahoo Finance (ASST)"
       },
-      "market_cap_usd": 3870800731.2,
-      "btc_nav_usd": 3117380060,
-      "basic_mnav": 1.2416839322440523,
-      "ev_usd": 5048168331.2,
-      "ev_mnav": 1.6193624883839155,
-      "senior_claims_pct": 36.18482758884395,
-      "cebe_sats": 18938,
-      "cebe_mnav": 1.945750336995068,
+      "market_cap_usd": 3868319448.68,
+      "btc_nav_usd": 3117748240,
+      "basic_mnav": 1.2407414425098031,
+      "ev_usd": 5045687048.68,
+      "ev_mnav": 1.6183753979699145,
+      "senior_claims_pct": 36.180554463243,
+      "cebe_sats": 18939,
+      "cebe_mnav": 1.9441432498738873,
       "sec": {
-        "status": "unavailable"
+        "cik": "0001920406",
+        "entity_name": "Strive, Inc.",
+        "form": "8-K",
+        "filing_date": "2026-10-21",
+        "accession": "0001628280-26-066608",
+        "url": "https://www.sec.gov/Archives/edgar/data/1920406/000162828026066608/asst-20261021.htm",
+        "cebe_reference_date": "2026-10-20",
+        "cebe_reference": "source",
+        "status": "newer",
+        "note": "New 8-K filed Oct 21 — data may not reflect it yet"
       }
     }
   ],
-  "errors": [
-    "Strategy SEC: HTTP 403 (Your Request Originates from an Undeclared Automated Tool)",
-    "Strive SEC: HTTP 403 (Your Request Originates from an Undeclared Automated Tool)"
-  ]
+  "errors": []
 }
