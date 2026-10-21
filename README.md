@@ -15,6 +15,7 @@ CEBE feed tickers today: MSTR, MTPLF, ASST, TSWCF, ALCPB, OBTC3, SVIA, NAKA, DDC
 1. Create a public GitHub repo, push this folder to `main`.
 2. Repo Settings → Pages → Source: **GitHub Actions**.
 3. Actions tab → run "Update data & deploy" once. Site: https://<user>.github.io/<repo>/
+The workflow rewrites `style.css` and `app.js` in the deployed `index.html` with a content hash (`?v=`), so a browser that cached the previous script cannot render a newer page. `app.js` loads `data.json` with a unique query and `cache: 'no-store'`.
 Note: GitHub disables scheduled workflows in public repos after 60 days with no repo activity; push any commit (or re-enable in the Actions tab) to resume.
 
 ## Data sources

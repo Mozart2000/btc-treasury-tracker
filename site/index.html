@@ -12,20 +12,33 @@
   <p class="sub">BTC <strong id="btc">…</strong> · updated <span id="updated">…</span></p>
 </header>
 <main>
-  <div class="table-wrap">
-  <table id="tbl">
-    <thead><tr>
-      <th>Company</th><th>Stock price</th>
-      <th title="Residual BTC NAV ÷ basic shares outstanding. Residual BTC NAV = BTC held × BTC price × (1 − senior claims %), the same clamped fraction as CEBE mNAV.">Residual NAV / Share</th>
-      <th>Shares outstanding</th><th>BTC held</th>
-      <th title="Market cap ÷ (BTC held × BTC price)">Basic mNAV</th>
-      <th title="(Market cap + debt + preferred − cash) ÷ (BTC held × BTC price)">EV mNAV</th>
-      <th title="Market cap ÷ (BTC owned by common equity after net senior claims × BTC price)">CEBE mNAV</th>
-      <th title="Latest 8-K, 8-K/A, 10-Q, 10-Q/A, 10-K, or 10-K/A on EDGAR, compared with the date behind the CEBE figures. The figures themselves are not taken from the filing.">SEC filing</th>
-    </tr></thead>
-    <tbody></tbody>
-  </table>
-  </div>
+  <section class="panel">
+    <h2 class="tbl-h">Valuation</h2>
+    <div class="table-wrap">
+    <table id="valuation">
+      <thead><tr>
+        <th>Company</th><th>Stock price</th>
+        <th title="Residual BTC NAV ÷ basic shares outstanding. Residual BTC NAV = BTC held × BTC price × (1 − senior claims %), the same clamped fraction as CEBE mNAV.">Residual NAV / Share</th>
+        <th title="Market cap ÷ (BTC held × BTC price)">Basic mNAV</th>
+        <th title="(Market cap + debt + preferred − cash) ÷ (BTC held × BTC price)">EV mNAV</th>
+        <th title="Market cap ÷ (BTC owned by common equity after net senior claims × BTC price)">CEBE mNAV</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+  </section>
+  <section class="panel">
+    <h2 class="tbl-h">Holdings &amp; filings</h2>
+    <div class="table-wrap">
+    <table id="holdings">
+      <thead><tr>
+        <th>Company</th><th>Shares outstanding</th><th>BTC held</th>
+        <th class="sec" title="Latest 8-K, 8-K/A, 10-Q, 10-Q/A, 10-K, or 10-K/A on EDGAR, compared with the date behind the CEBE figures. The figures themselves are not taken from the filing.">SEC filing</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+  </section>
   <p id="errors" class="err"></p>
   <section class="defs">
     <h2>Definitions</h2>
