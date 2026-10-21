@@ -1,19 +1,15 @@
 // Fetches live data and writes site/data.json. Node 20+, no dependencies.
 // Sources: CEBE Tracker open feed (balance sheets, CEBE), Yahoo Finance (stock + FX), CoinGecko (BTC).
 // US filers with sec_cik also get an EDGAR filing-status check (figures stay from CEBE).
-import { execFile } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
-import https from 'node:https';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import zlib from 'node:zlib';
 import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const UA = { 'User-Agent': 'Mozilla/5.0 (btc-treasury-tracker)' };
 
-// SEC fair access: declared User-Agent (app, repo, contact email) plus
-// Accept-Encoding gzip/deflate, and about 1 request/second (limit is 10).
-const SEC_UA = 'btc-treasury-tracker github.com/Mozart2000/btc-treasury-tracker Mozart2000@users.noreply.github.com';
+// SEC fair access: "Name email" User-Agent, about 1 request/second (limit is 10).
+const SEC_UA = 'BTC Treasury Tracker compound1980@proton.me';
 const SEC_MIN_INTERVAL_MS = 1000;
 const SEC_FORMS = new Set(['8-K', '8-K/A', '10-Q', '10-Q/A', '10-K', '10-K/A']);
 const MONTHS = {
@@ -24,7 +20,6 @@ const MONTHS = {
 const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 let secNotBefore = 0;
-let secPreferCurl = false;
 
 async function getJSON(url) {
   const r = await fetch(url, { headers: UA });
@@ -32,89 +27,23 @@ async function getJSON(url) {
   return r.json();
 }
 
-function paceSec() {
-  const wait = secNotBefore - Date.now();
-  const pending = wait > 0 ? new Promise((resolve) => setTimeout(resolve, wait)) : Promise.resolve();
-  return pending.then(() => { secNotBefore = Date.now() + SEC_MIN_INTERVAL_MS; });
-}
-
-function secHttpError(status, text) {
-  const title = String(text || '').match(/<title>([^<]+)<\/title>/i)?.[1]?.replace(/^SEC\.gov\s*\|\s*/i, '').trim();
-  return new Error(title ? `HTTP ${status} (${title})` : `HTTP ${status}`);
-}
-
-function decodeSecBody(buffer, encoding) {
-  if (encoding === 'gzip') return zlib.gunzipSync(buffer).toString('utf8');
-  if (encoding === 'deflate') return zlib.inflateSync(buffer).toString('utf8');
-  return buffer.toString('utf8');
-}
-
-function secFetchHttps(url) {
-  return new Promise((resolve, reject) => {
-    const u = new URL(url);
-    const req = https.request({
-      protocol: u.protocol,
-      hostname: u.hostname,
-      path: `${u.pathname}${u.search}`,
-      method: 'GET',
-      headers: {
-        'User-Agent': SEC_UA,
-        Accept: 'application/json',
-        'Accept-Encoding': 'gzip, deflate',
-        Host: u.hostname,
-      },
-      timeout: 20000,
-    }, (res) => {
-      const chunks = [];
-      res.on('data', (chunk) => chunks.push(chunk));
-      res.on('end', () => {
-        let text = '';
-        try { text = decodeSecBody(Buffer.concat(chunks), res.headers['content-encoding']); }
-        catch (e) { reject(e); return; }
-        if (res.statusCode !== 200) { reject(secHttpError(res.statusCode, text)); return; }
-        try { resolve(JSON.parse(text)); }
-        catch { reject(new Error('response was not JSON')); }
-      });
-    });
-    req.on('timeout', () => req.destroy(new Error('timeout')));
-    req.on('error', reject);
-    req.end();
-  });
-}
-
-function secFetchCurl(url) {
-  return new Promise((resolve, reject) => {
-    execFile('curl', [
-      '-sS', '--compressed', '--http1.1', '--max-time', '25',
-      '-A', SEC_UA,
-      '-H', 'Accept: application/json',
-      '-H', 'Accept-Encoding: gzip, deflate',
-      '-w', '\n%{http_code}',
-      url,
-    ], { maxBuffer: 30 * 1024 * 1024 }, (err, stdout, stderr) => {
-      if (err) { reject(new Error((stderr || err.message || '').trim())); return; }
-      const split = stdout.lastIndexOf('\n');
-      const body = stdout.slice(0, split);
-      const status = Number(stdout.slice(split + 1));
-      if (status !== 200) { reject(secHttpError(status, body)); return; }
-      try { resolve(JSON.parse(body)); }
-      catch { reject(new Error('response was not JSON')); }
-    });
-  });
-}
-
-// Node's fetch fingerprint is often rejected by SEC's edge. Fall back once to curl.
 async function secFetchJSON(url) {
-  await paceSec();
-  if (secPreferCurl) return secFetchCurl(url);
+  const wait = secNotBefore - Date.now();
+  if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
+  secNotBefore = Date.now() + SEC_MIN_INTERVAL_MS;
+  const r = await fetch(url, {
+    headers: { 'User-Agent': SEC_UA },
+    signal: AbortSignal.timeout(20000),
+  });
+  const text = await r.text();
+  if (!r.ok) {
+    const title = text.match(/<title>([^<]+)<\/title>/i)?.[1]?.replace(/^SEC\.gov\s*\|\s*/i, '').trim();
+    throw new Error(title ? `HTTP ${r.status} (${title})` : `HTTP ${r.status}`);
+  }
   try {
-    return await secFetchHttps(url);
-  } catch (e) {
-    if (!/HTTP 403|HTTP 429|HTTP 503/.test(e.message)) throw e;
-    console.warn(`SEC node request blocked (${e.message}); retrying once with curl`);
-    secPreferCurl = true;
-    await paceSec();
-    return secFetchCurl(url);
+    return JSON.parse(text);
+  } catch {
+    throw new Error('response was not JSON');
   }
 }
 
