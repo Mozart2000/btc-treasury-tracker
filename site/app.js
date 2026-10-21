@@ -2,6 +2,19 @@ const fmtN = (n, d = 0) => n == null ? '—' : n.toLocaleString('en-US', { maxim
 const fmtUSD = (n, d = 2) => n == null ? '—' : '$' + fmtN(n, d);
 const big = (n) => n == null ? '—' : n >= 1e9 ? '$' + (n / 1e9).toFixed(2) + 'B' : '$' + (n / 1e6).toFixed(1) + 'M';
 const mult = (x) => x == null ? '<span class="m">—</span>' : `<span class="m ${x >= 1 ? 'prem' : 'disc'}">${x.toFixed(2)}×</span>`;
+const fmtQuote = (amount, currency, usd) => {
+  if (amount == null) return '—';
+  if (currency === 'USD') return fmtUSD(amount);
+  return `${currency === 'JPY' ? '¥' : ''}${fmtN(amount, currency === 'JPY' ? 0 : 2)} ${currency === 'JPY' ? '' : currency}<span class="s">≈ ${fmtUSD(usd)}</span>`;
+};
+const fmtQuoteCompact = (amount, currency, usd) => {
+  if (amount == null) return '—';
+  if (!currency || currency === 'USD') return fmtUSD(amount);
+  const sym = currency === 'JPY' ? '¥' : '';
+  const digits = currency === 'JPY' ? 0 : 2;
+  const code = currency === 'JPY' ? '' : ' ' + currency;
+  return `${sym}${fmtN(amount, digits)}${code} (≈ ${fmtUSD(usd)})`;
+};
 const local = (iso) => iso ? new Date(iso).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) : '—';
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -36,12 +49,23 @@ async function load() {
   document.getElementById('btc').textContent = fmtUSD(d.btc.usd, 0);
   document.getElementById('updated').textContent = local(d.generated_at);
   document.querySelector('#tbl tbody').innerHTML = d.companies.map((c) => {
-    const px = c.stock ? (c.stock.currency === 'USD' ? fmtUSD(c.stock.price) :
-      `${c.stock.currency === 'JPY' ? '¥' : ''}${fmtN(c.stock.price, c.stock.currency === 'JPY' ? 0 : 2)} ${c.stock.currency === 'JPY' ? '' : c.stock.currency}<span class="s">≈ ${fmtUSD(c.stock.price_usd)}</span>`) : '—';
+    const px = c.stock ? fmtQuote(c.stock.price, c.stock.currency, c.stock.price_usd) : '—';
+    const currency = c.stock?.currency || 'USD';
+    const rnav = c.residual_nav_per_share_usd == null ? '—'
+      : (currency !== 'USD' && c.residual_nav_per_share_native != null
+        ? fmtQuote(c.residual_nav_per_share_native, currency, c.residual_nav_per_share_usd)
+        : fmtQuote(c.residual_nav_per_share_usd, 'USD', c.residual_nav_per_share_usd));
+    const rTotal = c.residual_nav_usd != null ? `<span class="s">residual ${big(c.residual_nav_usd)}</span>` : '';
+    const rDil = c.diluted_shares && c.residual_nav_per_share_diluted_usd != null
+      ? `<span class="s">fully diluted ${currency !== 'USD' && c.residual_nav_per_share_diluted_native != null
+        ? fmtQuoteCompact(c.residual_nav_per_share_diluted_native, currency, c.residual_nav_per_share_diluted_usd)
+        : fmtUSD(c.residual_nav_per_share_diluted_usd)}</span>`
+      : '';
     const tracker = c.cebe_tracker?.cebe_mnav_live != null ? `<span class="s"><a href="${c.cebe_tracker.url}" style="color:inherit">cebetracker: ${c.cebe_tracker.cebe_mnav_live.toFixed(2)}×</a></span>` : '';
     return `<tr>
       <td class="name"><a href="${c.website}" target="_blank" rel="noopener">${c.name}</a><span class="s">${c.ticker} · ${c.exchange}</span></td>
       <td>${px}<span class="s">mcap ${big(c.market_cap_usd)}</span></td>
+      <td>${rnav}${rTotal}${rDil}</td>
       <td>${fmtN(c.basic_shares)}<span class="s">${c.diluted_shares ? 'fully diluted ' + fmtN(c.diluted_shares) : 'basic'}</span></td>
       <td>₿${fmtN(c.btc_holdings)}<span class="s">as of ${c.balance_sheet_as_of || '—'}</span></td>
       <td>${mult(c.basic_mnav)}<span class="s">NAV ${big(c.btc_nav_usd)}</span></td>

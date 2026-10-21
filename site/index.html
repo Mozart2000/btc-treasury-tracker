@@ -15,7 +15,9 @@
   <div class="table-wrap">
   <table id="tbl">
     <thead><tr>
-      <th>Company</th><th>Stock price</th><th>Shares outstanding</th><th>BTC held</th>
+      <th>Company</th><th>Stock price</th>
+      <th title="Residual BTC NAV ÷ basic shares outstanding. Residual BTC NAV = BTC held × BTC price × (1 − senior claims %), the same clamped fraction as CEBE mNAV.">Residual NAV / Share</th>
+      <th>Shares outstanding</th><th>BTC held</th>
       <th title="Market cap ÷ (BTC held × BTC price)">Basic mNAV</th>
       <th title="(Market cap + debt + preferred − cash) ÷ (BTC held × BTC price)">EV mNAV</th>
       <th title="Market cap ÷ (BTC owned by common equity after net senior claims × BTC price)">CEBE mNAV</th>
@@ -31,6 +33,7 @@
       <li><b>Basic mNAV</b> = Market cap ÷ (BTC held × BTC price).</li>
       <li><b>EV mNAV</b> = (Market cap + Debt + Preferred − Cash) ÷ (BTC held × BTC price).</li>
       <li><b>CEBE mNAV</b> = Market cap ÷ (BTC held × (1 − Senior Claims %) × BTC price), where Senior Claims % = (Debt + Preferred − Cash − issuer-held STRC) ÷ BTC price ÷ BTC held, clamped to 0–100%. Definitions per <a href="https://cebetracker.io/modeler/mnav/">CEBE Tracker’s mNAV modeler</a> and <a href="https://cebetracker.io/api/docs">API formula</a>.</li>
+      <li><b>Residual NAV / Share</b> = residual BTC NAV ÷ basic shares outstanding, where residual BTC NAV = BTC NAV × (1 − Senior Claims %), i.e. BTC held × BTC price minus (Debt + Preferred − Cash − issuer-held STRC), using the same clamped senior-claims fraction as CEBE mNAV (so stock price ÷ Residual NAV / Share = CEBE mNAV).</li>
       <li>Market cap = live stock price (USD) × basic shares outstanding. Non-USD prices converted at live FX.</li>
       <li><b>SEC filing</b> — for companies with an <code>sec_cik</code>, the latest 8-K, 8-K/A, 10-Q, 10-Q/A, 10-K, or 10-K/A on EDGAR. “Up to date” means that filing is not newer than the filing or as-of date behind the CEBE figures. A newer filing is flagged. The numbers on this page still come from CEBE Tracker.</li>
     </ul>
