@@ -4,9 +4,13 @@ on:
     - cron: '*/15 * * * *'   # every 15 min (GitHub may delay scheduled runs)
   push:
     branches: [main]
+    # History-only commits must not start another run. The commit message
+    # also carries [skip ci], so a token that does trigger workflows still stops.
+    paths-ignore:
+      - 'data/share-history.json'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 concurrency:
@@ -20,11 +24,36 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       # Filing lookups (EDGAR, Metaplanet disclosures) are best-effort. A rejection
       # is recorded on the page and must not fail this deploy.
       - run: node scripts/update.mjs
+      # Persist basic-share history on main. Only that file is committed.
+      # site/data.json stays a deploy artifact and is stashed across the rebase.
+      - name: Commit share history
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/share-history.json
+          if git diff --cached --quiet; then
+            echo "share history unchanged"
+            exit 0
+          fi
+          git commit -m "Record share-count snapshots [skip ci]"
+          stashed=0
+          if ! git diff --quiet -- site/data.json; then
+            git stash push -- site/data.json
+            stashed=1
+          fi
+          git pull --rebase origin main
+          if [ "$stashed" -eq 1 ]; then
+            git stash pop
+          fi
+          git push origin HEAD:main
       # Pages caches every file for 10 minutes. A new index.html must not keep
       # pointing at the previous app.js or style.css URL.
       - run: node scripts/stamp-assets.mjs

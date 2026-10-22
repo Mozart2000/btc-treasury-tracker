@@ -1,0 +1,44 @@
+{
+  "_readme": "One basic-share count per company per distinct CEBE as_of. scripts/update.mjs appends a row when as_of is new and replaces the row when the same as_of comes back with a different count. It does not append a duplicate every run. Change in Shares is the latest row's basic_shares minus the row before it. Seed sources are filing citations; do not invent a count.",
+  "companies": {
+    "strategy": [
+      {
+        "as_of": "2026-10-11",
+        "basic_shares": 422118949,
+        "source": "CEBE snapshot MSTR_20261004 carried 421,993,766 basic shares (CEBE Tracker corrections, pages rendered 2026-10-11). Form 8-K exhibit 99.1 filed 2026-10-13 (acc 0001193125-26-419726, https://www.sec.gov/Archives/edgar/data/1050446/000119312526419726/mstr-ex99_1.htm) reports 125,183 class A shares sold and no class A shares repurchased from 2026-10-05 to 2026-10-11. 421,993,766 + 125,183 = 422,118,949 as of 2026-10-11. Form 8-K filed 2026-10-19 (acc 0001193125-26-424688, https://www.sec.gov/Archives/edgar/data/1050446/000119312526424688/mstr-20261019.htm) reports 140,872 class A shares sold and no class A shares repurchased from 2026-10-12 to 2026-10-18, and 422,118,949 + 140,872 = 422,259,821, the basic count CEBE serves for as_of 2026-10-18."
+      },
+      {
+        "as_of": "2026-10-18",
+        "basic_shares": 422259821,
+        "source": "8-K filed 2026-10-19, acc 0001193125-26-424688, covering 2026-10-12 to 2026-10-18. Debt carried from the 2026-06-30 balance (Q2 10-Q acc 0001050446-26-000044, all-principal basis); no debt event in this 8-K. Fully diluted count, estimated: basic + Q2 2026 10-Q ADSO spread 29,680,000 (acc 0001050446-26-000044).",
+        "recorded_at": "2026-10-22T23:47:37.781Z"
+      }
+    ],
+    "metaplanet": [
+      {
+        "as_of": "2026-08-31",
+        "basic_shares": 1345313741,
+        "source": "Total issued shares excluding treasury shares as of 2026-08-31: 1,345,313,741. Metaplanet Notice Regarding the Status of Share Repurchases, disclosed 2026-09-01, TDnet 140120260901530010 (https://metaplanet.jp/disclosure-pdf/140120260901530010.pdf). The same line as of 2026-09-30 is 1,364,255,696 (TDnet 140120261001544425, https://metaplanet.jp/disclosure-pdf/140120261001544425.pdf), which is the basic count CEBE serves."
+      },
+      {
+        "as_of": "2026-09-30",
+        "basic_shares": 1364255696,
+        "source": "TDnet 140120261005546274 (English; Japanese original 140120261005546273), Notice of Additional Purchase of Bitcoin, disclosed 2026-10-05, for BTC holdings 44,000, fully diluted shares and the filed net of JPY 122,374M in net claims; TDnet 140120261001544425, 2026-10-01, for shares net of treasury at 2026-09-30; debt and preferred carried from the 2026-06-30 basis, H1 FY2026 kessan tanshin TDnet 140120260812518571, EST; cash from that basis plus the filed flows to 2026-09-30, floored at zero, EST; the bitcoin price per the CoinGecko D+1 close convention",
+        "recorded_at": "2026-10-22T23:47:38.763Z"
+      }
+    ],
+    "strive": [
+      {
+        "as_of": "2026-10-09",
+        "basic_shares": 110387204,
+        "source": "Effective Common Shares Outstanding as of 2026-10-09: 110,387,204 (Class A 101,169,907 + Class B 9,217,297). Strive Form 8-K filed 2026-10-19, acc 0001628280-26-066222, column As of October 9, 2026 (https://www.sec.gov/Archives/edgar/data/1920406/000162828026066222/asst-20261019.htm). The column As of October 16, 2026 is 124,064,126. CEBE's latest as_of is 2026-10-20 because of the SATS closing 8-K; the share count on that snapshot is still the October 16 effective count."
+      },
+      {
+        "as_of": "2026-10-20",
+        "basic_shares": 124064126,
+        "source": "8-K Oct 20, 2026 (acc 0000950103-26-015849), SATS closing, Items 3.03 and 8.01; holdings, shares, STRC and cash base from 8-K Oct 19, 2026 (acc 0001628280-26-066222), as of Oct 16, 2026; SATS net proceeds from 424B5 Oct 16, 2026 (acc 0000950103-26-015734). EDGAR VERIFIED: https://www.sec.gov/Archives/edgar/data/1920406/000095010326015849/dp255260_8k.htm",
+        "recorded_at": "2026-10-22T23:47:38.934Z"
+      }
+    ]
+  }
+}
