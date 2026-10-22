@@ -22,8 +22,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      # SEC lookups are best-effort. A rejection from EDGAR is recorded on the page
-      # and must not fail this deploy.
+      # Filing lookups (EDGAR, Metaplanet disclosures) are best-effort. A rejection
+      # is recorded on the page and must not fail this deploy.
       - run: node scripts/update.mjs
       # Pages caches every file for 10 minutes. A new index.html must not keep
       # pointing at the previous app.js or style.css URL.

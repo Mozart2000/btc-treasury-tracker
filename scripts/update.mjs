@@ -1,17 +1,30 @@
 // Fetches live data and writes site/data.json. Node 20+, no dependencies.
 // Sources: CEBE Tracker open feed (balance sheets, CEBE), Yahoo Finance (stock + FX), CoinGecko (BTC).
-// US filers with sec_cik also get an EDGAR filing-status check (figures stay from CEBE).
+// companies.json `filings` adds a freshness check only (figures stay from CEBE):
+// SEC EDGAR for source "sec", Metaplanet's TDnet disclosure list for source "metaplanet".
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const UA = { 'User-Agent': 'Mozilla/5.0 (btc-treasury-tracker)' };
+const PAGE_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
 // SEC fair access: "Name email" User-Agent, about 1 request/second (limit is 10).
 const SEC_UA = 'BTC Treasury Tracker compound1980@proton.me';
 const SEC_MIN_INTERVAL_MS = 1000;
 const SEC_FORMS = new Set(['8-K', '8-K/A', '10-Q', '10-Q/A', '10-K', '10-K/A']);
+const METAPLANET_DISCLOSURES_URL = 'https://metaplanet.jp/en/shareholders/disclosures';
+const PDF_HOSTS = new Set(['contents.xj-storage.jp', 'metaplanet.jp', 'www.metaplanet.jp']);
+const NEWER_LIST_CAP = 25;
+// Order is the order topics are named in the cell.
+const TOPIC_RULES = [
+  ['bitcoin purchases', /(?:bitcoin|ビットコイン|\bbtc\b).{0,80}(?:purchase|acquisition|bought)|(?:purchase|acquisition|bought).{0,80}(?:bitcoin|ビットコイン|\bbtc\b)|ビットコイン.{0,40}購入|購入.{0,40}ビットコイン/i],
+  ['convertible bonds', /convertible|転換社債|euro-yen|ユーロ円/i],
+  ['share repurchases', /repurchase|buy-?back|自己株式/i],
+  ['share issuance', /share issuance|issuance of (?:[\w-]+\s+){0,4}shares|public offering|third-party allotment|第三者割当|新株発行|株式の発行/i],
+  ['preferred', /preferred stock|preferred shares|優先株|\bpreferred\b/i],
+];
 const MONTHS = {
   jan: 1, january: 1, feb: 2, february: 2, mar: 3, march: 3, apr: 4, april: 4, may: 5,
   jun: 6, june: 6, jul: 7, july: 7, aug: 8, august: 8, sep: 9, sept: 9, september: 9,
@@ -25,6 +38,18 @@ async function getJSON(url) {
   const r = await fetch(url, { headers: UA });
   if (!r.ok) throw new Error(`${url} -> HTTP ${r.status}`);
   return r.json();
+}
+
+async function getText(url) {
+  const r = await fetch(url, {
+    headers: { 'User-Agent': PAGE_UA, Accept: 'text/html,application/xhtml+xml' },
+    redirect: 'follow',
+    signal: AbortSignal.timeout(30000),
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const text = await r.text();
+  if (!text) throw new Error('empty response');
+  return text;
 }
 
 async function secFetchJSON(url) {
@@ -122,6 +147,210 @@ export function secNote(form, filingDate, status) {
   return '';
 }
 
+// TDnet timely-disclosure ids are 18 digits beginning with 1401.
+// Digits 5–12 (1-based) are the YYYYMMDD date CEBE is citing.
+export function newestTdnetCitation(text) {
+  let best = null;
+  for (const m of String(text || '').matchAll(/\b(1401\d{14})\b/g)) {
+    const id = m[1];
+    const ymd = id.slice(4, 12);
+    const date = isoDate(+ymd.slice(0, 4), +ymd.slice(4, 6), +ymd.slice(6, 8));
+    if (!date) continue;
+    if (!best || date > best.date || (date === best.date && id > best.id)) best = { id, date };
+  }
+  return best;
+}
+
+export function topicsOf(title) {
+  const text = String(title || '');
+  return TOPIC_RULES.filter(([, re]) => re.test(text)).map(([label]) => label);
+}
+
+export function topicsInDisclosures(list) {
+  const found = new Set();
+  for (const d of list || []) for (const topic of topicsOf(d.title)) found.add(topic);
+  return TOPIC_RULES.map(([label]) => label).filter((label) => found.has(label));
+}
+
+export function formatTopicList(topics) {
+  const list = [...(topics || [])];
+  if (list.length <= 1) return list[0] || '';
+  if (list.length === 2) return `${list[0]} and ${list[1]}`;
+  return `${list.slice(0, -1).join(', ')}, and ${list[list.length - 1]}`;
+}
+
+export function metaplanetNote({ status, count, referenceDate, filingDate, topics }) {
+  if (status === 'current') return 'Up to date';
+  if (status === 'unknown') return 'Could not compare to CEBE date';
+  if (status !== 'newer') return '';
+  const topicBit = topics?.length ? `, including ${formatTopicList(topics)}` : '';
+  if ((count || 0) <= 1) {
+    return `New disclosure ${formatMonthDay(filingDate)}${topicBit} — data may not reflect it yet`;
+  }
+  return `${count} newer disclosures since ${formatMonthDay(referenceDate)}${topicBit} — data may not reflect them yet`;
+}
+
+export function safePdfUrl(url) {
+  if (typeof url !== 'string' || url.includes('..') || url.includes('\\')) return null;
+  try {
+    const u = new URL(url);
+    if (u.protocol !== 'https:' || u.username || u.password) return null;
+    if (!PDF_HOSTS.has(u.hostname)) return null;
+    return u.toString();
+  } catch {
+    return null;
+  }
+}
+
+// Prefer the PDF link embedded in the page. Fall back to Metaplanet's public
+// mirror when the id is a TDnet id and the embedded link is missing or off-host.
+export function disclosurePdfUrl(filePath, id) {
+  const direct = safePdfUrl(filePath);
+  if (direct) return direct;
+  const bare = String(id || '').replace(/\.pdf$/i, '');
+  if (/^1401\d{14}$/.test(bare)) return `https://metaplanet.jp/disclosure-pdf/${bare}.pdf`;
+  return null;
+}
+
+function extractJsonArray(text, start) {
+  if (text[start] !== '[') throw new Error('disclosures payload was not an array');
+  let depth = 0;
+  let inStr = false;
+  let esc = false;
+  for (let j = start; j < text.length; j++) {
+    const ch = text[j];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (ch === '\\') esc = true;
+      else if (ch === '"') inStr = false;
+      continue;
+    }
+    if (ch === '"') inStr = true;
+    else if (ch === '[') depth += 1;
+    else if (ch === ']') {
+      depth -= 1;
+      if (depth === 0) return text.slice(start, j + 1);
+    }
+  }
+  throw new Error('disclosures payload was truncated');
+}
+
+// The disclosures page is server-rendered Next.js. The visible table is only
+// the first page and has no PDF hrefs. The flight payload embeds the full
+// list as { id, date, title, filePath, isEnglish }.
+export function parseMetaplanetDisclosures(html) {
+  const re = /self\.__next_f\.push\(\[1,"([\s\S]*?)"\]\)<\/script>/g;
+  let text = '';
+  let chunks = 0;
+  for (const m of String(html || '').matchAll(re)) {
+    text += JSON.parse(`"${m[1]}"`);
+    chunks += 1;
+  }
+  if (!chunks) throw new Error('disclosures page had no data payload');
+  const key = '"disclosures":[';
+  const at = text.indexOf(key);
+  if (at < 0) throw new Error('disclosures payload not found');
+  const raw = JSON.parse(extractJsonArray(text, at + key.length - 1));
+  if (!Array.isArray(raw)) throw new Error('disclosures payload was not an array');
+  const out = [];
+  for (const d of raw) {
+    if (!d || typeof d.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(d.date)) continue;
+    const [year, month, day] = d.date.split('-').map(Number);
+    if (isoDate(year, month, day) !== d.date) continue;
+    const title = typeof d.title === 'string' ? d.title.replace(/\s+/g, ' ').trim() : '';
+    if (!title) continue;
+    const id = String(d.id || '').replace(/\.pdf$/i, '');
+    out.push({
+      id,
+      date: d.date,
+      title,
+      url: disclosurePdfUrl(d.filePath, id),
+      english: d.isEnglish === true,
+    });
+  }
+  if (!out.length) throw new Error('no disclosures with a date and title');
+  return out;
+}
+
+// Headline is the first row on the newest date. Prefer an English title when
+// the English page has one, matching the table at /en/disclosures.
+export function newestDisclosure(list) {
+  let bestDate = null;
+  for (const d of list || []) {
+    if (!bestDate || d.date > bestDate) bestDate = d.date;
+  }
+  if (!bestDate) return null;
+  const onDay = list.filter((d) => d.date === bestDate);
+  return onDay.find((d) => d.english) || onDay[0];
+}
+
+function disclosureRow(d) {
+  return {
+    date: d.date,
+    title: d.title,
+    url: d.url,
+    id: d.id || null,
+    material: topicsOf(d.title).length > 0,
+  };
+}
+
+// English rows are what /en/shareholders/disclosures lists. Japanese copies of
+// the same notice are not counted again. A later date that exists only in
+// Japanese still flags, using those rows.
+export function metaplanetFilingStatusFromDisclosures(disclosures, source, asOf) {
+  if (!disclosures?.length) throw new Error('no disclosures');
+  const tdnet = newestTdnetCitation(source);
+  const asOfDate = typeof asOf === 'string' ? (asOf.match(/^(\d{4}-\d{2}-\d{2})/) || [])[1] : null;
+  const referenceDate = tdnet?.date || asOfDate || null;
+  const reference = tdnet ? 'tdnet' : (asOfDate ? 'as_of' : null);
+  const english = disclosures.filter((d) => d.english);
+  const display = english.length ? english : disclosures;
+  let newer = referenceDate ? display.filter((d) => d.date > referenceDate) : [];
+  if (referenceDate && !newer.length) {
+    newer = disclosures.filter((d) => d.date > referenceDate && !d.english);
+  }
+  const status = !referenceDate ? 'unknown' : (newer.length ? 'newer' : 'current');
+  const shown = (status === 'newer' ? newestDisclosure(newer) : null) || newestDisclosure(display);
+  if (!shown) throw new Error('no disclosure to show');
+  const topics = topicsInDisclosures(newer);
+  return {
+    source: 'metaplanet',
+    status,
+    filing_date: shown.date,
+    title: shown.title,
+    url: shown.url,
+    id: shown.id || null,
+    material: topicsOf(shown.title).length > 0,
+    topics,
+    newer_count: newer.length,
+    newer: newer.slice(0, NEWER_LIST_CAP).map(disclosureRow),
+    cebe_reference_date: referenceDate,
+    cebe_reference: reference,
+    cebe_tdnet_id: tdnet?.id || null,
+    note: metaplanetNote({
+      status,
+      count: newer.length,
+      referenceDate,
+      filingDate: shown.date,
+      topics,
+    }),
+  };
+}
+
+export function filingSpec(co) {
+  const f = co?.filings;
+  if (f && typeof f === 'object') {
+    const source = String(f.source || f.type || '').trim().toLowerCase();
+    if (source === 'sec') return { source: 'sec', cik: f.cik ?? co.sec_cik, ticker: f.ticker || co.sec_ticker || '' };
+    if (source === 'metaplanet' || source === 'tdnet') {
+      return { source: 'metaplanet', url: f.url || METAPLANET_DISCLOSURES_URL };
+    }
+    throw new Error(`unknown filings source ${f.source || f.type || ''}`);
+  }
+  if (co?.sec_cik) return { source: 'sec', cik: co.sec_cik, ticker: co.sec_ticker || '' };
+  return null;
+}
+
 export function filingUrl(cik, accession, primaryDocument) {
   const cikInt = String(Number(padCik(cik)));
   const dashed = String(accession || '');
@@ -178,9 +407,9 @@ async function loadTickerIndex() {
   return map;
 }
 
-async function secFilingStatus(co, row) {
-  const cik = padCik(co.sec_cik);
-  const ticker = String(co.sec_ticker || co.ticker || '').trim().toUpperCase();
+async function secFilingStatus(co, row, spec) {
+  const cik = padCik(spec?.cik || co.sec_cik);
+  const ticker = String(spec?.ticker || co.sec_ticker || co.ticker || '').trim().toUpperCase();
   if (!ticker) throw new Error('no ticker to verify against');
   // Submissions first. The www.sec.gov ticker file is a cross-check and is
   // often rate-limited; it must not run before the filing lookup.
@@ -237,6 +466,23 @@ async function toUSD(currency) {
 }
 
 const num = (v) => (typeof v === 'number' && isFinite(v) ? v : null);
+
+const disclosurePages = new Map();
+function loadMetaplanetDisclosures(url) {
+  if (!disclosurePages.has(url)) {
+    disclosurePages.set(url, (async () => parseMetaplanetDisclosures(await getText(url)))());
+  }
+  return disclosurePages.get(url);
+}
+
+function filingLog(row) {
+  const f = row.filing;
+  if (!f) return 'n/a';
+  if (f.status === 'unavailable' || !f.filing_date) return f.status || 'unavailable';
+  if (f.source === 'sec') return `${f.form} ${f.filing_date} ${f.status} | ${f.note} | ${f.url}`;
+  const n = f.newer_count ? ` (${f.newer_count} newer)` : '';
+  return `${f.filing_date} ${f.status}${n} | ${f.title} | ${f.note} | ${f.url}`;
+}
 
 export async function main() {
   const cfg = JSON.parse(await readFile(path.join(root, 'config/companies.json'), 'utf8'));
@@ -325,12 +571,34 @@ export async function main() {
 
     // Filing status only. Never overwrite CEBE (or manual) balance-sheet figures.
     row.sec = null;
-    if (co.sec_cik) {
+    row.filing = null;
+    let spec = null;
+    try {
+      spec = filingSpec(co);
+    } catch (e) {
+      errors.push(`${co.name} filings: ${e.message}`);
+      row.filing = { status: 'unavailable' };
+    }
+    if (spec?.source === 'sec') {
       try {
-        row.sec = await secFilingStatus(co, row);
+        row.sec = await secFilingStatus(co, row, spec);
+        row.filing = { source: 'sec', ...row.sec };
       } catch (e) {
         errors.push(`${co.name} SEC: ${e.message}`);
         row.sec = { status: 'unavailable' };
+        row.filing = { source: 'sec', status: 'unavailable' };
+      }
+    } else if (spec?.source === 'metaplanet') {
+      try {
+        const disclosures = await loadMetaplanetDisclosures(spec.url);
+        row.filing = metaplanetFilingStatusFromDisclosures(
+          disclosures,
+          row.balance_sheet_source,
+          row.balance_sheet_as_of,
+        );
+      } catch (e) {
+        errors.push(`${co.name} disclosures: ${e.message}`);
+        row.filing = { source: 'metaplanet', status: 'unavailable' };
       }
     }
     out.push(row);
@@ -342,11 +610,12 @@ export async function main() {
       for (const row of out) {
         if (!row.sec?.cik) continue;
         const co = cfg.companies.find((c) => c.id === row.id);
-        const ticker = String(co?.sec_ticker || co?.ticker || '').trim().toUpperCase();
+        const ticker = String(co?.filings?.ticker || co?.sec_ticker || co?.ticker || '').trim().toUpperCase();
         const listed = tickerIndex.get(ticker);
         if (listed && listed.cik !== row.sec.cik) {
           errors.push(`${row.name} SEC: CIK ${row.sec.cik} does not match EDGAR ticker ${ticker} (${listed.cik}${listed.title ? `, ${listed.title}` : ''})`);
           row.sec = { status: 'unavailable' };
+          row.filing = { source: 'sec', status: 'unavailable' };
         }
       }
     }
@@ -362,10 +631,9 @@ export async function main() {
   await writeFile(path.join(root, 'site/data.json'), JSON.stringify(data, null, 2));
   console.log(`BTC $${btc.usd} (${btc.source})`);
   for (const r of out) {
-    const sec = r.sec?.form ? `${r.sec.form} ${r.sec.filing_date} ${r.sec.status} | ${r.sec.note} | ${r.sec.url}` : (r.sec?.status || 'n/a');
     const residual = r.residual_nav_per_share_usd == null ? 'n/a'
       : `$${r.residual_nav_per_share_usd.toFixed(2)}${r.residual_nav_per_share_native != null ? ` (${r.residual_nav_per_share_native.toFixed(2)} ${r.stock?.currency})` : ''}${r.residual_nav_per_share_diluted_usd != null ? ` dil $${r.residual_nav_per_share_diluted_usd.toFixed(2)}` : ''} total $${(r.residual_nav_usd / 1e9).toFixed(2)}B`;
-    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency} | residual/sh ${residual} | shares ${r.basic_shares} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | SEC ${sec}`);
+    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency} | residual/sh ${residual} | shares ${r.basic_shares} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | filing ${filingLog(r)}`);
   }
   if (errors.length) console.warn('Errors:', errors);
   if (!out.some((r) => r.basic_mnav)) process.exit(1);

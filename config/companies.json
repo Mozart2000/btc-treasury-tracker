@@ -1,5 +1,5 @@
 {
-  "_readme": "Add a company by appending an object to `companies`. `cebeTicker` = ticker used by https://cebetracker.io/api/v1/companies.json (balance-sheet source). `quote` = Yahoo Finance symbol for the live stock price (e.g. MSTR, ASST, 3350.T). `currency` = currency of that quote; non-USD quotes are converted with Yahoo FX (e.g. JPY=X). `manual` = optional overrides used when the CEBE feed lacks a company or you want to pin a value from a filing (btc_holdings, debt_usd, preferred_usd, cash_usd, strc_holdings_usd, basic_shares, diluted_shares, source, as_of). Manual values WIN over the feed, so remove them once stale. `sec_cik` = optional 10-digit SEC CIK. When set, the update script records the latest 8-K, 8-K/A, 10-Q, 10-Q/A, 10-K, or 10-K/A from EDGAR and the page links to it. Figures stay on the CEBE/manual values. Leave `sec_cik` unset for companies that do not file with the SEC. Optional `sec_ticker` overrides `ticker` when the EDGAR symbol differs from the display ticker.",
+  "_readme": "Add a company by appending an object to `companies`. `cebeTicker` = ticker used by https://cebetracker.io/api/v1/companies.json (balance-sheet source). `quote` = Yahoo Finance symbol for the live stock price (e.g. MSTR, ASST, 3350.T). `currency` = currency of that quote; non-USD quotes are converted with Yahoo FX (e.g. JPY=X). `manual` = optional overrides used when the CEBE feed lacks a company or you want to pin a value from a filing (btc_holdings, debt_usd, preferred_usd, cash_usd, strc_holdings_usd, basic_shares, diluted_shares, source, as_of). Manual values WIN over the feed, so remove them once stale. `filings` = optional freshness check. Figures stay on the CEBE/manual values. `filings.source` `sec` with `filings.cik` (10-digit CIK) records the latest 8-K, 8-K/A, 10-Q, 10-Q/A, 10-K, or 10-K/A from EDGAR. Optional `filings.ticker` overrides `ticker` when the EDGAR symbol differs. A legacy `sec_cik` (and optional `sec_ticker`) still selects the SEC check. `filings.source` `metaplanet` (or `tdnet`) reads Metaplanet's TDnet disclosure list at `filings.url`, default https://metaplanet.jp/en/shareholders/disclosures. Metaplanet does not file with the SEC.",
   "companies": [
     {
       "id": "strategy",
@@ -10,7 +10,10 @@
       "quote": "MSTR",
       "currency": "USD",
       "website": "https://www.strategy.com",
-      "sec_cik": "0001050446",
+      "filings": {
+        "source": "sec",
+        "cik": "0001050446"
+      },
       "manual": {}
     },
     {
@@ -22,6 +25,10 @@
       "quote": "3350.T",
       "currency": "JPY",
       "website": "https://metaplanet.jp/en/analytics",
+      "filings": {
+        "source": "metaplanet",
+        "url": "https://metaplanet.jp/en/shareholders/disclosures"
+      },
       "manual": {}
     },
     {
@@ -33,7 +40,10 @@
       "quote": "ASST",
       "currency": "USD",
       "website": "https://strive.com/treasury",
-      "sec_cik": "0001920406",
+      "filings": {
+        "source": "sec",
+        "cik": "0001920406"
+      },
       "manual": {
         "diluted_shares": 126790020,
         "diluted_shares_source": "Strive 8-K filed 2026-10-19 (as of 2026-10-16), Assumed Fully Diluted Shares: https://www.sec.gov/Archives/edgar/data/1920406/000162828026066222/asst-20261019.htm"

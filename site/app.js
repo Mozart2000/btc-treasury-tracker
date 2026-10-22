@@ -22,26 +22,50 @@ const fmtDay = (iso) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
   return m ? `${MONTHS_SHORT[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}` : '';
 };
-const secUrlOk = (url) => {
+const filingUrlOk = (url) => {
   try {
     const u = new URL(url);
-    return u.protocol === 'https:' && (u.hostname === 'www.sec.gov' || u.hostname === 'sec.gov');
+    if (u.protocol !== 'https:') return false;
+    return u.hostname === 'www.sec.gov' || u.hostname === 'sec.gov'
+      || u.hostname === 'contents.xj-storage.jp'
+      || u.hostname === 'metaplanet.jp' || u.hostname === 'www.metaplanet.jp';
   } catch { return false; }
 };
-function secCell(c) {
-  const s = c.sec;
-  if (!s) return '<td class="sec"><span class="s">Not an SEC filer</span></td>';
-  if (s.status === 'unavailable' || !s.form || !s.filing_date) {
-    return '<td class="sec"><span class="s">SEC check unavailable</span></td>';
-  }
-  const label = `${esc(s.form)} · ${esc(fmtDay(s.filing_date))}`;
-  const tip = esc([s.entity_name, s.cik ? `CIK ${s.cik}` : ''].filter(Boolean).join(' · '));
-  const body = secUrlOk(s.url)
-    ? `<a href="${esc(s.url)}" target="_blank" rel="noopener" title="${tip}">${label}</a>`
+function statusClass(status) {
+  if (status === 'newer') return 'filing-new';
+  if (status === 'current') return 'filing-ok';
+  return '';
+}
+function secFilingCell(f) {
+  const label = `${esc(f.form)} · ${esc(fmtDay(f.filing_date))}`;
+  const tip = esc([f.entity_name, f.cik ? `CIK ${f.cik}` : ''].filter(Boolean).join(' · '));
+  const body = filingUrlOk(f.url)
+    ? `<a class="filing-sec" href="${esc(f.url)}" target="_blank" rel="noopener" title="${tip}">${label}</a>`
     : `<span title="${tip}">${label}</span>`;
-  const cls = s.status === 'newer' ? 'sec-new' : (s.status === 'current' ? 'sec-ok' : '');
-  const note = s.note ? `<span class="s ${cls}">${esc(s.note)}</span>` : '';
-  return `<td class="sec">${body}${note}</td>`;
+  const note = f.note ? `<span class="s ${statusClass(f.status)}">${esc(f.note)}</span>` : '';
+  return `<td class="filing">${body}${note}</td>`;
+}
+function metaplanetFilingCell(f) {
+  const titleCls = f.material ? 'filing-title filing-material' : 'filing-title';
+  const label = `${esc(fmtDay(f.filing_date))}<span class="${titleCls}">${esc(f.title || '')}</span>`;
+  const tip = esc(f.title || '');
+  const body = filingUrlOk(f.url)
+    ? `<a href="${esc(f.url)}" target="_blank" rel="noopener" title="${tip}">${label}</a>`
+    : `<span title="${tip}">${label}</span>`;
+  const list = (f.newer || []).map((n) => `${fmtDay(n.date)} — ${n.title}`).join('\n');
+  const noteTip = list ? ` title="${esc(list)}"` : '';
+  const note = f.note ? `<span class="s ${statusClass(f.status)}"${noteTip}>${esc(f.note)}</span>` : '';
+  return `<td class="filing">${body}${note}</td>`;
+}
+function filingCell(c) {
+  const f = c.filing || (c.sec ? { source: 'sec', ...c.sec } : null);
+  if (!f) return '<td class="filing"><span class="s">No filing check</span></td>';
+  const sec = f.source === 'sec' || (!f.source && f.form);
+  if (f.status === 'unavailable' || !f.filing_date || (sec && !f.form)) {
+    const label = sec ? 'SEC check unavailable' : 'Filing check unavailable';
+    return `<td class="filing"><span class="s">${label}</span></td>`;
+  }
+  return sec ? secFilingCell(f) : metaplanetFilingCell(f);
 }
 
 async function load() {
@@ -79,7 +103,7 @@ async function load() {
       ${company}
       <td>${fmtN(c.basic_shares)}<span class="s">${c.diluted_shares ? 'fully diluted ' + fmtN(c.diluted_shares) : 'basic'}</span></td>
       <td>₿${fmtN(c.btc_holdings)}<span class="s">as of ${c.balance_sheet_as_of || '—'}</span></td>
-      ${secCell(c)}
+      ${filingCell(c)}
     </tr>`);
   }
   document.querySelector('#valuation tbody').innerHTML = valuation.join('');
