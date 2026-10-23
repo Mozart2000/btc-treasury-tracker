@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-22T15:52:37.551Z",
+  "generated_at": "2026-10-22T23:47:42.430Z",
   "btc": {
-    "usd": 81533,
-    "time": "2026-10-22T15:51:41.000Z",
+    "usd": 81288,
+    "time": "2026-10-22T23:47:12.000Z",
     "source": "CoinGecko"
   },
   "cebe_feed": {
-    "as_of": "2026-10-22T15:51:59.705Z",
+    "as_of": "2026-10-22T23:47:38.639Z",
     "rules_version": "2026-10-19.1"
   },
   "companies": [
@@ -29,31 +29,31 @@
       "balance_sheet_as_of": "2026-10-18",
       "balance_sheet_source": "8-K filed 2026-10-19, acc 0001193125-26-424688, covering 2026-10-12 to 2026-10-18. Debt carried from the 2026-06-30 balance (Q2 10-Q acc 0001050446-26-000044, all-principal basis); no debt event in this 8-K. Fully diluted count, estimated: basic + Q2 2026 10-Q ADSO spread 29,680,000 (acc 0001050446-26-000044).",
       "cebe_tracker": {
-        "cebe_mnav_live": 1.148,
-        "cebe_sats_live": 157240,
-        "senior_claims_pct_live": 21.75,
-        "stock_price_usd": 147.15,
+        "cebe_mnav_live": 1.142,
+        "cebe_sats_live": 157110,
+        "senior_claims_pct_live": 21.82,
+        "stock_price_usd": 145.8,
         "stock_venue": "Nasdaq",
         "url": "https://cebetracker.io/company/MSTR/"
       },
       "stock": {
-        "price": 146.68,
+        "price": 145.8,
         "currency": "USD",
-        "price_usd": 146.68,
+        "price_usd": 145.8,
         "fx": null,
-        "time": "2026-10-22T15:52:34.000Z",
+        "time": "2026-10-22T20:00:01.000Z",
         "source": "Yahoo Finance (MSTR)"
       },
-      "market_cap_usd": 61937070544.28001,
-      "btc_nav_usd": 69182136561,
-      "basic_mnav": 0.89527548039324,
-      "ev_usd": 76984324644.28,
-      "ev_mnav": 1.1127774953350937,
-      "senior_claims_pct": 21.75020149418539,
-      "cebe_sats": 157240,
-      "cebe_mnav": 1.144124965800025,
-      "residual_nav_usd": 54134882461.00001,
-      "residual_nav_per_share_usd": 128.20277887864688,
+      "market_cap_usd": 61565481901.8,
+      "btc_nav_usd": 68974249896,
+      "basic_mnav": 0.8925864651609694,
+      "ev_usd": 76612736001.8,
+      "ev_mnav": 1.1107440257388428,
+      "senior_claims_pct": 21.815756057787343,
+      "cebe_sats": 157109,
+      "cebe_mnav": 1.1416449404060178,
+      "residual_nav_usd": 53926995796,
+      "residual_nav_per_share_usd": 127.71045956560475,
       "sec": {
         "cik": "0001050446",
         "entity_name": "Strategy Inc",
@@ -78,6 +78,14 @@
         "cebe_reference": "accession",
         "status": "current",
         "note": "Up to date"
+      },
+      "share_change": {
+        "as_of": "2026-10-18",
+        "basic_shares": 422259821,
+        "previous_as_of": "2026-10-11",
+        "previous_basic_shares": 422118949,
+        "delta": 140872,
+        "direction": "up"
       }
     },
     {
@@ -99,32 +107,32 @@
       "balance_sheet_as_of": "2026-09-30",
       "balance_sheet_source": "TDnet 140120261005546274 (English; Japanese original 140120261005546273), Notice of Additional Purchase of Bitcoin, disclosed 2026-10-05, for BTC holdings 44,000, fully diluted shares and the filed net of JPY 122,374M in net claims; TDnet 140120261001544425, 2026-10-01, for shares net of treasury at 2026-09-30; debt and preferred carried from the 2026-06-30 basis, H1 FY2026 kessan tanshin TDnet 140120260812518571, EST; cash from that basis plus the filed flows to 2026-09-30, floored at zero, EST; the bitcoin price per the CoinGecko D+1 close convention",
       "cebe_tracker": {
-        "cebe_mnav_live": 0.811,
-        "cebe_sats_live": 2527,
-        "senior_claims_pct_live": 21.65,
-        "stock_price_usd": 1.67,
+        "cebe_mnav_live": 0.804,
+        "cebe_sats_live": 2525,
+        "senior_claims_pct_live": 21.71,
+        "stock_price_usd": 1.65,
         "stock_venue": "OTC",
         "url": "https://cebetracker.io/company/MTPLF/"
       },
       "stock": {
         "price": 269,
         "currency": "JPY",
-        "price_usd": 1.7124595757683787,
-        "fx": "USD/JPY 157.084",
+        "price_usd": 1.7192672981298975,
+        "fx": "USD/JPY 156.462",
         "time": "2026-10-22T06:30:00.000Z",
         "source": "Yahoo Finance (3350.T)"
       },
-      "market_cap_usd": 2336232730.411754,
-      "btc_nav_usd": 3587452000,
-      "basic_mnav": 0.6512234116057174,
-      "ev_usd": 3112062598.571754,
-      "ev_mnav": 0.8674855018469247,
-      "senior_claims_pct": 21.649316238935043,
-      "cebe_sats": 2527,
-      "cebe_mnav": 0.8311649373624634,
-      "residual_nav_usd": 2810793171.6,
-      "residual_nav_per_share_usd": 2.0603125791164003,
-      "residual_nav_per_share_native": 323.6421411779206,
+      "market_cap_usd": 2345520204.420243,
+      "btc_nav_usd": 3576672000,
+      "basic_mnav": 0.655782863069424,
+      "ev_usd": 3121350072.5802426,
+      "ev_mnav": 0.8726967618445982,
+      "senior_claims_pct": 21.714566736899556,
+      "cebe_sats": 2525,
+      "cebe_mnav": 0.837681846717868,
+      "residual_nav_usd": 2800013171.6,
+      "residual_nav_per_share_usd": 2.052410834574225,
+      "residual_nav_per_share_native": 321.12430399915235,
       "sec": null,
       "filing": {
         "source": "metaplanet",
@@ -187,6 +195,14 @@
         "cebe_reference": "tdnet",
         "cebe_tdnet_id": "140120261005546274",
         "note": "6 newer disclosures since Oct 5, including convertible bonds and share repurchases — data may not reflect them yet"
+      },
+      "share_change": {
+        "as_of": "2026-09-30",
+        "basic_shares": 1364255696,
+        "previous_as_of": "2026-08-31",
+        "previous_basic_shares": 1345313741,
+        "delta": 18941955,
+        "direction": "up"
       }
     },
     {
@@ -208,32 +224,32 @@
       "balance_sheet_as_of": "2026-10-20",
       "balance_sheet_source": "8-K Oct 20, 2026 (acc 0000950103-26-015849), SATS closing, Items 3.03 and 8.01; holdings, shares, STRC and cash base from 8-K Oct 19, 2026 (acc 0001628280-26-066222), as of Oct 16, 2026; SATS net proceeds from 424B5 Oct 16, 2026 (acc 0000950103-26-015734). EDGAR VERIFIED: https://www.sec.gov/Archives/edgar/data/1920406/000095010326015849/dp255260_8k.htm",
       "cebe_tracker": {
-        "cebe_mnav_live": 1.915,
-        "cebe_sats_live": 18525,
-        "senior_claims_pct_live": 37.58,
-        "stock_price_usd": 28.93,
+        "cebe_mnav_live": 1.931,
+        "cebe_sats_live": 18492,
+        "senior_claims_pct_live": 37.69,
+        "stock_price_usd": 29.03,
         "stock_venue": "Nasdaq",
         "url": "https://cebetracker.io/company/ASST/"
       },
       "stock": {
-        "price": 28.96,
+        "price": 29.03,
         "currency": "USD",
-        "price_usd": 28.96,
+        "price_usd": 29.03,
         "fx": null,
-        "time": "2026-10-22T15:52:28.000Z",
+        "time": "2026-10-22T20:00:01.000Z",
         "source": "Yahoo Finance (ASST)"
       },
-      "market_cap_usd": 3592897088.96,
-      "btc_nav_usd": 3001881994,
-      "basic_mnav": 1.1968815217058129,
-      "ev_usd": 4770264688.96,
-      "ev_mnav": 1.589091342862427,
-      "senior_claims_pct": 37.577046741165134,
-      "cebe_sats": 18525,
-      "cebe_mnav": 1.9173740735126392,
-      "residual_nav_usd": 1873863394,
-      "residual_nav_per_share_usd": 15.103990608856584,
-      "residual_nav_per_share_diluted_usd": 14.779265702458284,
+      "market_cap_usd": 3601581577.78,
+      "btc_nav_usd": 2992861584,
+      "basic_mnav": 1.2033906268950927,
+      "ev_usd": 4778949177.780001,
+      "ev_mnav": 1.5967825586483924,
+      "senior_claims_pct": 37.690303020709294,
+      "cebe_sats": 18491,
+      "cebe_mnav": 1.9313055354691457,
+      "residual_nav_usd": 1864842984,
+      "residual_nav_per_share_usd": 15.031282967326106,
+      "residual_nav_per_share_diluted_usd": 14.708121222790249,
       "sec": {
         "cik": "0001920406",
         "entity_name": "Strive, Inc.",
@@ -258,6 +274,14 @@
         "cebe_reference": "source",
         "status": "newer",
         "note": "New 8-K filed Oct 21 — data may not reflect it yet"
+      },
+      "share_change": {
+        "as_of": "2026-10-20",
+        "basic_shares": 124064126,
+        "previous_as_of": "2026-10-09",
+        "previous_basic_shares": 110387204,
+        "delta": 13676922,
+        "direction": "up"
       }
     }
   ],

@@ -22,6 +22,24 @@ const fmtDay = (iso) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
   return m ? `${MONTHS_SHORT[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}` : '';
 };
+const vsDate = (prev, current) => {
+  const a = /^(\d{4})-(\d{2})-(\d{2})$/.exec(prev || '');
+  if (!a) return prev ? `vs ${prev}` : '';
+  const md = `${MONTHS_SHORT[Number(a[2]) - 1]} ${Number(a[3])}`;
+  const b = /^(\d{4})-(\d{2})-(\d{2})$/.exec(current || '');
+  return `vs ${md}${b && a[1] !== b[1] ? `, ${a[1]}` : ''}`;
+};
+function shareChangeCell(c) {
+  const ch = c.share_change;
+  if (!ch || ch.direction === 'none' || ch.previous_as_of == null || ch.delta == null) {
+    return '<td>—<span class="s">no prior count yet</span></td>';
+  }
+  const amount = fmtN(Math.abs(ch.delta));
+  const main = ch.direction === 'up' ? `▲ ${amount}`
+    : ch.direction === 'down' ? `▼ ${amount}`
+    : 'Unchanged';
+  return `<td>${main}<span class="s">${esc(vsDate(ch.previous_as_of, ch.as_of))}</span></td>`;
+}
 const filingUrlOk = (url) => {
   try {
     const u = new URL(url);
@@ -102,6 +120,7 @@ async function load() {
     holdings.push(`<tr>
       ${company}
       <td>${fmtN(c.basic_shares)}<span class="s">${c.diluted_shares ? 'fully diluted ' + fmtN(c.diluted_shares) : 'basic'}</span></td>
+      ${shareChangeCell(c)}
       <td>₿${fmtN(c.btc_holdings)}<span class="s">as of ${c.balance_sheet_as_of || '—'}</span></td>
       ${filingCell(c)}
     </tr>`);

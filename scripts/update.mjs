@@ -2,6 +2,9 @@
 // Sources: CEBE Tracker open feed (balance sheets, CEBE), Yahoo Finance (stock + FX), CoinGecko (BTC).
 // companies.json `filings` adds a freshness check only (figures stay from CEBE):
 // SEC EDGAR for source "sec", Metaplanet's TDnet disclosure list for source "metaplanet".
+// Basic-share history is data/share-history.json: one entry per company per distinct
+// as_of. The CEBE feed only has the latest snapshot, and the Pages artifact does
+// not survive the next run, so the workflow commits this file.
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
@@ -88,6 +91,93 @@ export function formatMonthDayYear(iso) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
   if (!m) return iso || '';
   return `${MONTHS_SHORT[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}`;
+}
+
+export function asOfDate(value) {
+  const m = /^(\d{4}-\d{2}-\d{2})/.exec(typeof value === 'string' ? value : '');
+  return m ? m[1] : null;
+}
+
+function blankShareChange(asOf, basicShares) {
+  return {
+    as_of: asOf || null,
+    basic_shares: Number.isInteger(basicShares) ? basicShares : null,
+    previous_as_of: null,
+    previous_basic_shares: null,
+    delta: null,
+    direction: 'none',
+  };
+}
+
+// One row per company per as_of. A repeat of the same date and count is a no-op.
+// A different count on a date already stored replaces that row.
+export function applyShareSnapshot(history, { id, asOf, basicShares, source } = {}) {
+  if (!history || typeof history !== 'object') throw new Error('share history missing');
+  if (!history.companies || typeof history.companies !== 'object' || Array.isArray(history.companies)) {
+    history.companies = {};
+  }
+  if (!id || typeof id !== 'string') return false;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(asOf || '')) return false;
+  if (!Number.isInteger(basicShares)) return false;
+  const list = Array.isArray(history.companies[id]) ? history.companies[id] : (history.companies[id] = []);
+  const note = typeof source === 'string' && source.trim() ? source.trim() : null;
+  const existing = list.find((e) => e && e.as_of === asOf);
+  if (existing) {
+    if (existing.basic_shares === basicShares) return false;
+    existing.basic_shares = basicShares;
+    if (note) existing.source = note;
+    existing.recorded_at = new Date().toISOString();
+    return true;
+  }
+  const entry = { as_of: asOf, basic_shares: basicShares };
+  if (note) entry.source = note;
+  entry.recorded_at = new Date().toISOString();
+  list.push(entry);
+  list.sort((a, b) => (a.as_of < b.as_of ? -1 : a.as_of > b.as_of ? 1 : 0));
+  return true;
+}
+
+// Change for the snapshot on screen: that as_of's basic count minus the prior
+// distinct as_of. direction is none when there is no earlier count.
+export function describeShareChange(entries, asOf, basicShares) {
+  const list = [];
+  for (const e of entries || []) {
+    if (!e || !/^\d{4}-\d{2}-\d{2}$/.test(e.as_of || '') || !Number.isInteger(e.basic_shares)) continue;
+    if (!list.some((row) => row.as_of === e.as_of)) list.push({ as_of: e.as_of, basic_shares: e.basic_shares });
+  }
+  if (asOf && Number.isInteger(basicShares) && !list.some((row) => row.as_of === asOf)) {
+    list.push({ as_of: asOf, basic_shares: basicShares });
+  }
+  list.sort((a, b) => (a.as_of < b.as_of ? -1 : a.as_of > b.as_of ? 1 : 0));
+  const idx = list.findIndex((row) => row.as_of === asOf);
+  if (idx < 1) return blankShareChange(asOf, basicShares);
+  const prev = list[idx - 1];
+  const cur = list[idx];
+  const delta = cur.basic_shares - prev.basic_shares;
+  return {
+    as_of: cur.as_of,
+    basic_shares: cur.basic_shares,
+    previous_as_of: prev.as_of,
+    previous_basic_shares: prev.basic_shares,
+    delta,
+    direction: delta === 0 ? 'unchanged' : delta > 0 ? 'up' : 'down',
+  };
+}
+
+export async function loadShareHistory(file) {
+  try {
+    const data = JSON.parse(await readFile(file, 'utf8'));
+    if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('share history was not an object');
+    if (!data.companies || typeof data.companies !== 'object' || Array.isArray(data.companies)) data.companies = {};
+    return data;
+  } catch (e) {
+    if (e && e.code === 'ENOENT') return { companies: {} };
+    throw e;
+  }
+}
+
+export async function saveShareHistory(file, history) {
+  await writeFile(file, `${JSON.stringify(history, null, 2)}\n`);
 }
 
 function isoDate(year, month, day) {
@@ -486,6 +576,9 @@ function filingLog(row) {
 
 export async function main() {
   const cfg = JSON.parse(await readFile(path.join(root, 'config/companies.json'), 'utf8'));
+  const historyPath = path.join(root, 'data/share-history.json');
+  const history = await loadShareHistory(historyPath);
+  let historyDirty = false;
   const errors = [];
   const btc = await btcPrice();
 
@@ -601,6 +694,15 @@ export async function main() {
         row.filing = { source: 'metaplanet', status: 'unavailable' };
       }
     }
+    const shareAsOf = asOfDate(row.balance_sheet_as_of);
+    const shareCount = Number.isInteger(row.basic_shares) ? row.basic_shares : null;
+    if (applyShareSnapshot(history, {
+      id: co.id,
+      asOf: shareAsOf,
+      basicShares: shareCount,
+      source: row.balance_sheet_source,
+    })) historyDirty = true;
+    row.share_change = describeShareChange(history.companies?.[co.id], shareAsOf, shareCount);
     out.push(row);
   }
 
@@ -621,6 +723,13 @@ export async function main() {
     }
   }
 
+  if (historyDirty) {
+    await saveShareHistory(historyPath, history);
+    console.log('Updated data/share-history.json');
+  } else {
+    console.log('Share history unchanged');
+  }
+
   const data = {
     generated_at: new Date().toISOString(),
     btc,
@@ -628,12 +737,16 @@ export async function main() {
     companies: out,
     errors,
   };
-  await writeFile(path.join(root, 'site/data.json'), JSON.stringify(data, null, 2));
+  await writeFile(path.join(root, 'site/data.json'), JSON.stringify(data, null, 2) + '\n');
   console.log(`BTC $${btc.usd} (${btc.source})`);
   for (const r of out) {
     const residual = r.residual_nav_per_share_usd == null ? 'n/a'
       : `$${r.residual_nav_per_share_usd.toFixed(2)}${r.residual_nav_per_share_native != null ? ` (${r.residual_nav_per_share_native.toFixed(2)} ${r.stock?.currency})` : ''}${r.residual_nav_per_share_diluted_usd != null ? ` dil $${r.residual_nav_per_share_diluted_usd.toFixed(2)}` : ''} total $${(r.residual_nav_usd / 1e9).toFixed(2)}B`;
-    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency} | residual/sh ${residual} | shares ${r.basic_shares} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | filing ${filingLog(r)}`);
+    const ch = r.share_change;
+    const chText = !ch || ch.direction === 'none' ? 'no prior'
+      : ch.direction === 'unchanged' ? `unchanged vs ${ch.previous_as_of}`
+      : `${ch.delta > 0 ? '+' : ''}${ch.delta} vs ${ch.previous_as_of}`;
+    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency} | residual/sh ${residual} | shares ${r.basic_shares} | Δ ${chText} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | filing ${filingLog(r)}`);
   }
   if (errors.length) console.warn('Errors:', errors);
   if (!out.some((r) => r.basic_mnav)) process.exit(1);
