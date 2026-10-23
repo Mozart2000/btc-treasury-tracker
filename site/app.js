@@ -29,6 +29,28 @@ const vsDate = (prev, current) => {
   const b = /^(\d{4})-(\d{2})-(\d{2})$/.exec(current || '');
   return `vs ${md}${b && a[1] !== b[1] ? `, ${a[1]}` : ''}`;
 };
+function closeSubtext(stock) {
+  if (!stock || stock.close == null || !stock.symbol) return '';
+  const amount = stock.currency === 'JPY' ? `¥${fmtN(stock.close, 0)}`
+    : !stock.currency || stock.currency === 'USD' ? fmtUSD(stock.close)
+      : `${fmtN(stock.close, 2)} ${stock.currency}`;
+  return `<span class="s">${esc(`${stock.symbol} ${amount} (close)`)}</span>`;
+}
+function stockPriceCell(c) {
+  const mcap = `<span class="s">mcap ${big(c.market_cap_usd)}</span>`;
+  const s = c.stock;
+  if (!s) return `<td>—${mcap}</td>`;
+  const d = s.display;
+  if (d && d.price != null) {
+    const label = d.symbol ? ` <span class="px-ticker">${esc(d.symbol)}</span>` : '';
+    const basis = s.symbol
+      ? `Live ${d.symbol} quote. Valuation uses ${s.symbol}.`
+      : `Live ${d.symbol} quote.`;
+    return `<td><span title="${esc(basis)}">${fmtQuote(d.price, d.currency, d.price_usd)}${label}</span>${closeSubtext(s)}${mcap}</td>`;
+  }
+  const note = s.display_fallback ? `<span class="s">${esc(s.display_fallback)}</span>` : '';
+  return `<td>${fmtQuote(s.price, s.currency, s.price_usd)}${note}${mcap}</td>`;
+}
 function shareChangeCell(c) {
   const ch = c.share_change;
   if (!ch || ch.direction === 'none' || ch.previous_as_of == null || ch.delta == null) {
@@ -95,7 +117,6 @@ async function load() {
   const valuation = [];
   const holdings = [];
   for (const c of d.companies) {
-    const px = c.stock ? fmtQuote(c.stock.price, c.stock.currency, c.stock.price_usd) : '—';
     const currency = c.stock?.currency || 'USD';
     const rnav = c.residual_nav_per_share_usd == null ? '—'
       : (currency !== 'USD' && c.residual_nav_per_share_native != null
@@ -111,7 +132,7 @@ async function load() {
     const company = `<td class="name"><a href="${c.website}" target="_blank" rel="noopener">${c.name}</a><span class="s">${c.ticker} · ${c.exchange}</span></td>`;
     valuation.push(`<tr>
       ${company}
-      <td>${px}<span class="s">mcap ${big(c.market_cap_usd)}</span></td>
+      ${stockPriceCell(c)}
       <td>${rnav}${rTotal}${rDil}</td>
       <td>${mult(c.basic_mnav)}<span class="s">NAV ${big(c.btc_nav_usd)}</span></td>
       <td>${mult(c.ev_mnav)}<span class="s">EV ${big(c.ev_usd)}</span></td>
