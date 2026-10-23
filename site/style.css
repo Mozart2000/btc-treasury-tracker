@@ -9,6 +9,7 @@ main{max-width:1680px;margin:auto;padding:12px 24px 40px}
 table{width:100%;border-collapse:collapse}th,td{padding:12px 14px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
 th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);cursor:help}th:first-child,td:first-child{text-align:left}
 tr:last-child td{border-bottom:0}td .s{display:block;font-size:12px;color:var(--mut)}
+.px-ticker{font-size:12px;font-weight:600;margin-left:.35em;letter-spacing:.03em}
 td.name a{color:var(--fg);font-weight:600;text-decoration:none}td.name a:hover{color:var(--acc)}
 th.filing,td.filing{text-align:left}
 td.filing{white-space:normal;max-width:26rem;min-width:12rem}

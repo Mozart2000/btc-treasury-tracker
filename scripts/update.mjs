@@ -528,11 +528,34 @@ async function secFilingStatus(co, row, spec) {
   };
 }
 
+// Latest completed regular-session close. While that session is open, the
+// regular price is the live print, so the close is the previous session.
+// Outside it, regularMarketPrice is that close (Yahoo leaves it there through
+// the next pre-market). `previousClose` is often absent on this endpoint;
+// `chartPreviousClose` on range=1d is the prior session.
+export function regularSessionClose(meta, nowSec = Date.now() / 1000) {
+  if (!meta || typeof meta.regularMarketPrice !== 'number') return null;
+  const regular = meta.currentTradingPeriod?.regular;
+  const prev = typeof meta.previousClose === 'number' ? meta.previousClose
+    : typeof meta.chartPreviousClose === 'number' ? meta.chartPreviousClose
+      : null;
+  const open = regular && typeof regular.start === 'number' && typeof regular.end === 'number'
+    && nowSec >= regular.start && nowSec < regular.end;
+  if (open && prev != null) return prev;
+  return meta.regularMarketPrice;
+}
+
 async function yahooQuote(symbol) {
   const j = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=1d`);
   const m = j?.chart?.result?.[0]?.meta;
   if (!m || typeof m.regularMarketPrice !== 'number') throw new Error(`no Yahoo quote for ${symbol}`);
-  return { price: m.regularMarketPrice, currency: m.currency, time: new Date(m.regularMarketTime * 1000).toISOString(), source: 'Yahoo Finance' };
+  return {
+    price: m.regularMarketPrice,
+    currency: m.currency,
+    time: new Date(m.regularMarketTime * 1000).toISOString(),
+    source: 'Yahoo Finance',
+    close: regularSessionClose(m),
+  };
 }
 
 async function btcPrice() {
@@ -608,8 +631,10 @@ export async function main() {
       balance_sheet_source: m.source || f.source || null,
       cebe_tracker: f.ticker ? { cebe_mnav_live: num(f.cebe_mnav_live), cebe_sats_live: num(f.cebe_sats_live), senior_claims_pct_live: num(f.senior_claims_pct_live), stock_price_usd: num(f.stock_price), stock_venue: f.stock_price_venue, url: `https://cebetracker.io/company/${f.ticker}/` } : null,
     };
+    let valuationQuote = null;
     try {
       const q = await yahooQuote(co.quote);
+      valuationQuote = q;
       const fx = await toUSD(q.currency);
       row.stock = { price: q.price, currency: q.currency, price_usd: q.price * fx.rate, fx: fx.pair, time: q.time, source: `Yahoo Finance (${co.quote})` };
     } catch (e) {
@@ -658,6 +683,36 @@ export async function main() {
           if (Math.abs(implied - row.cebe_mnav) > 1e-8 * Math.abs(row.cebe_mnav)) {
             errors.push(`${co.name} residual NAV/share does not match CEBE mNAV`);
           }
+        }
+      }
+    }
+
+    // Display quote is the Stock price cell only. It is attached after mNAV
+    // and residual NAV are computed from `quote`, and those fields are not read again.
+    const displaySymbol = typeof co.display_quote === 'string' ? co.display_quote.trim() : '';
+    if (displaySymbol) {
+      if (row.stock && valuationQuote) {
+        row.stock.symbol = co.quote;
+        row.stock.close = valuationQuote.close ?? valuationQuote.price;
+      }
+      if (!row.stock) {
+        errors.push(`${co.name} display quote: no price to fall back to for ${displaySymbol}`);
+      } else {
+        try {
+          const dq = await yahooQuote(displaySymbol);
+          const fx = await toUSD(dq.currency);
+          row.stock.display = {
+            symbol: displaySymbol,
+            price: dq.price,
+            currency: dq.currency,
+            price_usd: dq.price * fx.rate,
+            fx: fx.pair,
+            time: dq.time,
+            source: `Yahoo Finance (${displaySymbol})`,
+          };
+        } catch (e) {
+          errors.push(`${co.name} display quote: ${e.message}; showing ${co.quote}`);
+          row.stock.display_fallback = `${displaySymbol} unavailable; showing ${co.quote}`;
         }
       }
     }
@@ -746,7 +801,10 @@ export async function main() {
     const chText = !ch || ch.direction === 'none' ? 'no prior'
       : ch.direction === 'unchanged' ? `unchanged vs ${ch.previous_as_of}`
       : `${ch.delta > 0 ? '+' : ''}${ch.delta} vs ${ch.previous_as_of}`;
-    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency} | residual/sh ${residual} | shares ${r.basic_shares} | Δ ${chText} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | filing ${filingLog(r)}`);
+    const shown = r.stock?.display
+      ? ` | display ${r.stock.display.symbol} ${r.stock.display.price} ${r.stock.display.currency} | close ${r.stock.symbol} ${r.stock.close}`
+      : r.stock?.display_fallback ? ` | ${r.stock.display_fallback}` : '';
+    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency}${shown} | residual/sh ${residual} | shares ${r.basic_shares} | Δ ${chText} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | filing ${filingLog(r)}`);
   }
   if (errors.length) console.warn('Errors:', errors);
   if (!out.some((r) => r.basic_mnav)) process.exit(1);
