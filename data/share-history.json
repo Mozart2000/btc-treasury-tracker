@@ -12,6 +12,12 @@
         "basic_shares": 422259821,
         "source": "8-K filed 2026-10-19, acc 0001193125-26-424688, covering 2026-10-12 to 2026-10-18. Debt carried from the 2026-06-30 balance (Q2 10-Q acc 0001050446-26-000044, all-principal basis); no debt event in this 8-K. Fully diluted count, estimated: basic + Q2 2026 10-Q ADSO spread 29,680,000 (acc 0001050446-26-000044).",
         "recorded_at": "2026-10-22T23:47:37.781Z"
+      },
+      {
+        "as_of": "2026-10-26",
+        "basic_shares": 422259821,
+        "source": "8-K filed 2026-10-26, acc 0001193125-26-431146, covering 2026-10-19 to 2026-10-25, balances as of 2026-10-25; priced at the 2026-10-25 close. Debt carried from the 2026-06-30 balance (Q2 10-Q acc 0001050446-26-000044, all-principal basis); no debt event in this 8-K. Carried from MSTR_20261018_R, EST, not stated in this 8-K: debt, the STRK, STRF, STRD and STRE faces, eurusd_rate 1.1408 and the STRC rate 12.00%. Fully diluted count, estimated: basic + Q2 2026 10-Q ADSO spread 29,680,000 (acc 0001050446-26-000044).",
+        "recorded_at": "2026-10-26T14:07:19.536Z"
       }
     ],
     "metaplanet": [
@@ -38,6 +44,12 @@
         "basic_shares": 124064126,
         "source": "8-K Oct 20, 2026 (acc 0000950103-26-015849), SATS closing, Items 3.03 and 8.01; holdings, shares, STRC and cash base from 8-K Oct 19, 2026 (acc 0001628280-26-066222), as of Oct 16, 2026; SATS net proceeds from 424B5 Oct 16, 2026 (acc 0000950103-26-015734). EDGAR VERIFIED: https://www.sec.gov/Archives/edgar/data/1920406/000095010326015849/dp255260_8k.htm",
         "recorded_at": "2026-10-22T23:47:38.934Z"
+      },
+      {
+        "as_of": "2026-10-26",
+        "basic_shares": 127328346,
+        "source": "8-K Oct 26, 2026 (acc 0001628280-26-067141), as of Oct 23, 2026; no consolidated indebtedness as of Oct 23, 2026 from 424B5 Oct 26, 2026 (acc 0000950103-26-016137); priced at the 2026-10-25 close. EDGAR VERIFIED: https://www.sec.gov/Archives/edgar/data/1920406/000162828026067141/asst-20261026.htm",
+        "recorded_at": "2026-10-26T14:07:20.805Z"
       }
     ]
   }
