@@ -51,6 +51,149 @@ function stockPriceCell(c) {
   const note = s.display_fallback ? `<span class="s">${esc(s.display_fallback)}</span>` : '';
   return `<td>${fmtQuote(s.price, s.currency, s.price_usd)}${note}${mcap}</td>`;
 }
+const ownUrlOk = (url) => {
+  try {
+    const u = new URL(url);
+    if (u.protocol !== 'https:') return false;
+    return u.hostname === 'www.sec.gov' || u.hostname === 'sec.gov'
+      || u.hostname === 'www.nasdaq.com' || u.hostname === 'nasdaq.com'
+      || u.hostname === 'contents.xj-storage.jp'
+      || u.hostname === 'metaplanet.jp' || u.hostname === 'www.metaplanet.jp';
+  } catch { return false; }
+};
+const fmtPct = (n) => n == null || !isFinite(n) ? '—' : `${n.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;
+function holderLine(h) {
+  const pct = fmtPct(h.pct);
+  const when = h.as_of_label ? ` as of ${h.as_of_label}` : '';
+  const src = [h.source, h.report].filter(Boolean).join(', ');
+  const label = `${esc(h.name)} — ${esc(fmtN(h.shares))} shares — ${esc(pct)}${esc(when)}${src ? ` — ${esc(src)}` : ''}`;
+  const extra = h.preferred_excluded
+    ? ` ${esc(fmtN(h.preferred_excluded))} non-voting Class B preferred shares in that filing are not included.`
+    : '';
+  if (ownUrlOk(h.url)) return `<li><a href="${esc(h.url)}" target="_blank" rel="noopener">${label}</a>${extra}</li>`;
+  return `<li>${label}${extra}</li>`;
+}
+function ownershipBody(o) {
+  const parts = [];
+  if (o.reported === false) {
+    parts.push(`<p>${esc(o.reason || 'Not reported.')}</p>`);
+  } else if (o.unavailable || o.pct == null) {
+    parts.push(`<p>${esc(o.reason || 'Institutional ownership is unavailable.')}</p>`);
+  } else {
+    parts.push(`<p>${esc(fmtPct(o.pct))} = ${esc(fmtN(o.institutional_shares))} institutional shares ÷ ${esc(fmtN(o.basic_shares))} basic shares outstanding.${o.holders_count ? ` ${esc(fmtN(o.holders_count))} holders.` : ''} ${esc(o.as_of_label || 'Form 13F')}. The percent uses the basic shares on this page, not a third-party percent.</p>`);
+  }
+  const holders = o.holders || [];
+  const owners = holders.filter((h) => h.group !== 'register');
+  const register = holders.filter((h) => h.group === 'register');
+  const heading = o.fallback_top
+    ? 'No reported holder is above 5% of current basic shares. Largest reported holders:'
+    : 'Above 5% of current basic shares:';
+  if (owners.length) parts.push(`<h3>${esc(heading)}</h3><ul>${owners.map(holderLine).join('')}</ul>`);
+  else if (!register.length && o.reported !== false) parts.push(`<p>${esc(heading)}</p>`);
+  if (register.length) {
+    const regHead = o.fallback_top && !owners.length
+      ? heading
+      : 'Shareholder register, above 5% of current basic shares. These are names on the register, often a standing proxy, not a confirmed single beneficial owner:';
+    parts.push(`<h3>${esc(regHead)}</h3><ul>${register.map(holderLine).join('')}</ul>`);
+  }
+  if (!owners.length && !register.length && o.reported === false) {
+    parts.push('<p>No holder above 5% of current basic shares was found in the saved disclosures.</p>');
+  }
+  for (const note of o.notes || []) parts.push(`<p class="note">${esc(note)}</p>`);
+  return parts.join('');
+}
+function ownershipCell(c) {
+  const o = c.ownership;
+  if (!o) return '<td class="own">—<span class="s">unavailable</span></td>';
+  const id = `own-${esc(c.id)}`;
+  let fig = '—';
+  let sub = 'unavailable';
+  let label = 'Institutional ownership unavailable';
+  if (o.reported === false) {
+    fig = 'Not reported';
+    sub = '';
+    label = `Institutional ownership not reported for ${c.name}. Show holders.`;
+  } else if (!o.unavailable && o.pct != null) {
+    fig = fmtPct(o.pct);
+    sub = o.as_of_label || '';
+    label = `Institutional ownership ${fig}${sub ? `, ${sub}` : ''}. Show holders.`;
+  }
+  const subHtml = sub ? `<span class="s">${esc(sub)}</span>` : '';
+  return `<td class="own"><button type="button" class="own-btn" aria-expanded="false" aria-controls="${id}" aria-label="${esc(label)}"><span class="own-fig">${esc(fig)}</span>${subHtml}</button><div id="${id}" class="own-pop" popover="manual" role="dialog" aria-label="${esc(`Institutional ownership, ${c.name}`)}">${ownershipBody(o)}</div></td>`;
+}
+function bindOwnershipTips() {
+  document.querySelectorAll('body > .own-pop').forEach((n) => n.remove());
+  document.querySelectorAll('.own-btn').forEach((btn) => {
+    const pop = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!pop || typeof pop.showPopover !== 'function') return;
+    let overBtn = false;
+    let overPop = false;
+    let hideTimer = 0;
+    const place = () => {
+      const r = btn.getBoundingClientRect();
+      const width = Math.min(448, window.innerWidth - 16);
+      pop.style.position = 'fixed';
+      pop.style.margin = '0';
+      pop.style.inset = 'auto';
+      pop.style.width = `${width}px`;
+      const left = Math.max(8, Math.min(r.left, window.innerWidth - width - 8));
+      let top = r.bottom + 6;
+      pop.style.left = `${left}px`;
+      pop.style.top = `${top}px`;
+      const h = pop.offsetHeight;
+      if (top + h > window.innerHeight - 8) pop.style.top = `${Math.max(8, r.top - h - 6)}px`;
+    };
+    const show = () => {
+      clearTimeout(hideTimer);
+      if (pop.parentElement !== document.body) document.body.appendChild(pop);
+      if (!pop.matches(':popover-open')) pop.showPopover();
+      btn.setAttribute('aria-expanded', 'true');
+      place();
+    };
+    const hide = () => {
+      clearTimeout(hideTimer);
+      if (btn.dataset.pinned === '1') return;
+      if (pop.matches(':popover-open')) pop.hidePopover();
+      btn.setAttribute('aria-expanded', 'false');
+    };
+    const scheduleHide = () => {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => { if (!overBtn && !overPop) hide(); }, 150);
+    };
+    const isMouse = (e) => !e.pointerType || e.pointerType === 'mouse';
+    btn.addEventListener('pointerenter', (e) => {
+      if (!isMouse(e)) return;
+      overBtn = true;
+      show();
+    });
+    btn.addEventListener('pointerleave', (e) => {
+      if (!isMouse(e)) return;
+      overBtn = false;
+      scheduleHide();
+    });
+    btn.addEventListener('focus', () => show());
+    btn.addEventListener('blur', () => {
+      overBtn = false;
+      setTimeout(() => { if (!pop.contains(document.activeElement)) scheduleHide(); }, 0);
+    });
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (btn.dataset.pinned === '1') {
+        btn.dataset.pinned = '0';
+        hide();
+        return;
+      }
+      btn.dataset.pinned = '1';
+      show();
+    });
+    pop.addEventListener('pointerenter', () => { overPop = true; clearTimeout(hideTimer); });
+    pop.addEventListener('pointerleave', () => { overPop = false; scheduleHide(); });
+    pop.addEventListener('toggle', () => {
+      if (!pop.matches(':popover-open')) btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
 function shareChangeCell(c) {
   const ch = c.share_change;
   if (!ch || ch.direction === 'none' || ch.previous_as_of == null || ch.delta == null) {
@@ -142,12 +285,31 @@ async function load() {
       ${company}
       <td>${fmtN(c.basic_shares)}<span class="s">${c.diluted_shares ? 'fully diluted ' + fmtN(c.diluted_shares) : 'basic'}</span></td>
       ${shareChangeCell(c)}
+      ${ownershipCell(c)}
       <td>₿${fmtN(c.btc_holdings)}<span class="s">as of ${c.balance_sheet_as_of || '—'}</span></td>
       ${filingCell(c)}
     </tr>`);
   }
   document.querySelector('#valuation tbody').innerHTML = valuation.join('');
   document.querySelector('#holdings tbody').innerHTML = holdings.join('');
+  bindOwnershipTips();
   document.getElementById('errors').textContent = d.errors?.length ? 'Data warnings: ' + d.errors.join('; ') : '';
 }
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.own-pop').forEach((pop) => {
+    if (pop.matches(':popover-open')) pop.hidePopover();
+  });
+  document.querySelectorAll('.own-btn').forEach((btn) => { btn.dataset.pinned = '0'; btn.setAttribute('aria-expanded', 'false'); });
+});
+document.addEventListener('click', (e) => {
+  document.querySelectorAll('.own-btn').forEach((btn) => {
+    if (btn.dataset.pinned !== '1') return;
+    const pop = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!pop || btn.contains(e.target) || pop.contains(e.target)) return;
+    btn.dataset.pinned = '0';
+    if (pop.matches(':popover-open')) pop.hidePopover();
+    btn.setAttribute('aria-expanded', 'false');
+  });
+});
 load(); setInterval(load, 5 * 60 * 1000);

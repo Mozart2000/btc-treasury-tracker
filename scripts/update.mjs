@@ -8,6 +8,9 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
+import {
+  buildOwnershipView, formatOwnershipLog, loadOwnership, refreshOwnershipCache, saveOwnership,
+} from './ownership.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const UA = { 'User-Agent': 'Mozilla/5.0 (btc-treasury-tracker)' };
@@ -785,6 +788,48 @@ export async function main() {
     console.log('Share history unchanged');
   }
 
+  // Institutional ownership changes quarterly. Refresh at most about once a
+  // day and keep the last good fetch when a source fails. The percent shown
+  // on the page is this total divided by basic shares, computed below.
+  const ownershipPath = path.join(root, 'data/institutional-ownership.json');
+  const ownership = await loadOwnership(ownershipPath);
+  let disclosures = null;
+  try {
+    disclosures = await loadMetaplanetDisclosures(METAPLANET_DISCLOSURES_URL);
+  } catch {
+    disclosures = null;
+  }
+  const ownershipTasks = cfg.companies.map((co) => {
+    let kind = 'none';
+    try {
+      const spec = filingSpec(co);
+      if (spec?.source === 'sec') kind = 'us';
+      else if (spec?.source === 'metaplanet') kind = 'jp';
+    } catch {
+      kind = 'none';
+    }
+    const row = out.find((r) => r.id === co.id);
+    return {
+      id: co.id,
+      name: co.name,
+      ticker: String(co.filings?.ticker || co.sec_ticker || co.ticker || '').trim().toUpperCase(),
+      cik: co.filings?.cik || co.sec_cik || null,
+      kind,
+      basicShares: row?.basic_shares,
+    };
+  });
+  const ownershipResult = await refreshOwnershipCache(ownership, ownershipTasks, { disclosures });
+  for (const message of ownershipResult.errors) errors.push(message);
+  if (ownershipResult.dirty) {
+    await saveOwnership(ownershipPath, ownershipResult.cache);
+    console.log('Updated data/institutional-ownership.json');
+  } else {
+    console.log('Institutional ownership unchanged');
+  }
+  for (const row of out) {
+    row.ownership = buildOwnershipView(ownershipResult.cache.companies?.[row.id], row.basic_shares);
+  }
+
   const data = {
     generated_at: new Date().toISOString(),
     btc,
@@ -805,6 +850,7 @@ export async function main() {
       ? ` | display ${r.stock.display.symbol} ${r.stock.display.price} ${r.stock.display.currency} | close ${r.stock.symbol} ${r.stock.close}`
       : r.stock?.display_fallback ? ` | ${r.stock.display_fallback}` : '';
     console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency}${shown} | residual/sh ${residual} | shares ${r.basic_shares} | Δ ${chText} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | filing ${filingLog(r)}`);
+    console.log(`  ownership: ${formatOwnershipLog(r.ownership)}`);
   }
   if (errors.length) console.warn('Errors:', errors);
   if (!out.some((r) => r.basic_mnav)) process.exit(1);

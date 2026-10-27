@@ -8,6 +8,7 @@ on:
     # also carries [skip ci], so a token that does trigger workflows still stops.
     paths-ignore:
       - 'data/share-history.json'
+      - 'data/institutional-ownership.json'
   workflow_dispatch:
 permissions:
   contents: write
@@ -28,22 +29,26 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
+      # pdftotext reads Metaplanet shareholder PDFs. The ownership cache is
+      # reused when the tool or a download fails.
+      - name: Install poppler
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
       # Filing lookups (EDGAR, Metaplanet disclosures) are best-effort. A rejection
       # is recorded on the page and must not fail this deploy.
       - run: node scripts/update.mjs
-      # Persist basic-share history on main. Only that file is committed.
+      # Persist basic-share history and the institutional-ownership cache on main.
       # site/data.json stays a deploy artifact and is stashed across the rebase.
-      - name: Commit share history
+      - name: Commit share history and ownership cache
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- data/share-history.json
+          git add -- data/share-history.json data/institutional-ownership.json
           if git diff --cached --quiet; then
-            echo "share history unchanged"
+            echo "share history and ownership cache unchanged"
             exit 0
           fi
-          git commit -m "Record share-count snapshots [skip ci]"
+          git commit -m "Record share-count and ownership snapshots [skip ci]"
           stashed=0
           if ! git diff --quiet -- site/data.json; then
             git stash push -- site/data.json
