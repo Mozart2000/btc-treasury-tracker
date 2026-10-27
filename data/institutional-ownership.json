@@ -1,0 +1,615 @@
+{
+  "_readme": "Last good institutional-ownership fetch per company. scripts/update.mjs refreshes a company when attempted_at is at least 20 hours old. A failed fetch keeps the previous figures and still updates attempted_at so the next run does not retry immediately. The page divides institutional_shares by the current basic shares; it does not store a third-party percent.",
+  "companies": {
+    "strategy": {
+      "ok": true,
+      "reported": true,
+      "institutional_shares": 234146230,
+      "holders_count": 1078,
+      "as_of": "2026-06-30",
+      "source": "Nasdaq institutional holdings (Form 13F)",
+      "source_url": "https://www.nasdaq.com/market-activity/stocks/MSTR/institutional-holdings",
+      "positions": [
+        {
+          "name": "Capital International Investors",
+          "shares": 34902002,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-international-investors-893016",
+          "group": "owners"
+        },
+        {
+          "name": "Vanguard Group Inc",
+          "shares": 24062886,
+          "as_of": "2025-12-31",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-group-inc-61322",
+          "group": "owners"
+        },
+        {
+          "name": "Blackrock, Inc.",
+          "shares": 19394284,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/blackrock-inc-1287173",
+          "group": "owners"
+        },
+        {
+          "name": "Vanguard Portfolio Management Llc",
+          "shares": 15353408,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-portfolio-management-llc-1366704",
+          "group": "owners"
+        },
+        {
+          "name": "Vanguard Capital Management Llc",
+          "shares": 14938599,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-capital-management-llc-1383464",
+          "group": "owners"
+        },
+        {
+          "name": "Invesco Ltd.",
+          "shares": 9340682,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/invesco-ltd-12291",
+          "group": "owners"
+        },
+        {
+          "name": "Morgan Stanley",
+          "shares": 9330454,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/morgan-stanley-5929",
+          "group": "owners"
+        },
+        {
+          "name": "State Street Corp",
+          "shares": 7527561,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/state-street-corp-6697",
+          "group": "owners"
+        },
+        {
+          "name": "Goldman Sachs Group Inc",
+          "shares": 5810162,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/goldman-sachs-group-inc-11158",
+          "group": "owners"
+        },
+        {
+          "name": "Ubs Group Ag",
+          "shares": 4943411,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/ubs-group-ag-940594",
+          "group": "owners"
+        },
+        {
+          "name": "Geode Capital Management, Llc",
+          "shares": 4606751,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/geode-capital-management-llc-396991",
+          "group": "owners"
+        },
+        {
+          "name": "Capital World Investors",
+          "shares": 4310934,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-world-investors-767199",
+          "group": "owners"
+        },
+        {
+          "name": "Norges Bank",
+          "shares": 3979476,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/norges-bank-720003",
+          "group": "owners"
+        },
+        {
+          "name": "Harvest Portfolios Group Inc.",
+          "shares": 3121927,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/harvest-portfolios-group-inc-1248204",
+          "group": "owners"
+        },
+        {
+          "name": "Capital Research Global Investors",
+          "shares": 2993437,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-research-global-investors-767200",
+          "group": "owners"
+        },
+        {
+          "name": "Jane Street Group, Llc",
+          "shares": 2677622,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/jane-street-group-llc-934867",
+          "group": "owners"
+        },
+        {
+          "name": "Renaissance Technologies Llc",
+          "shares": 2553692,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/renaissance-technologies-llc-63203",
+          "group": "owners"
+        },
+        {
+          "name": "Susquehanna International Group, Llp",
+          "shares": 2520930,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/susquehanna-international-group-llp-792195",
+          "group": "owners"
+        },
+        {
+          "name": "Vanguard Fiduciary Trust Co",
+          "shares": 2094345,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-fiduciary-trust-co-49733",
+          "group": "owners"
+        },
+        {
+          "name": "Wells Fargo & Company/Mn",
+          "shares": 1994253,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/wells-fargo--companymn-8130",
+          "group": "owners"
+        },
+        {
+          "name": "Northern Trust Corp",
+          "shares": 1831554,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/northern-trust-corp-10923",
+          "group": "owners"
+        },
+        {
+          "name": "Charles Schwab Investment Management Inc",
+          "shares": 1795815,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/charles-schwab-investment-management-inc-63069",
+          "group": "owners"
+        },
+        {
+          "name": "Clear Street Group Inc.",
+          "shares": 1554968,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/clear-street-group-inc-1176140",
+          "group": "owners"
+        },
+        {
+          "name": "Marex Group Ltd",
+          "shares": 1471629,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/marex-group-ltd-1290809",
+          "group": "owners"
+        },
+        {
+          "name": "Legal & General Group Plc",
+          "shares": 1420987,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/legal--general-group-plc-63443",
+          "group": "owners"
+        }
+      ],
+      "beneficial": [
+        {
+          "name": "Susquehanna Securities, LLC",
+          "shares": 8373599,
+          "percent_reported": 4.6,
+          "as_of": "2024-11-14",
+          "filing_date": "2024-11-14",
+          "source": "SC 13G/A",
+          "url": "https://www.sec.gov/Archives/edgar/data/1446580/000110465924118681/tm2428264d19_sc13ga.htm",
+          "group": "owners",
+          "joint_names": [
+            "Capital Ventures International",
+            "Susquehanna Advisors Group, Inc",
+            "Darby Financial Products",
+            "G1 Execution Services, LLC",
+            "SIG Brokerage, LP",
+            "Susquehanna Investment Group",
+            "Susquehanna Portfolio Strategies, LLC"
+          ]
+        },
+        {
+          "name": "BlackRock, Inc",
+          "shares": 9477813,
+          "percent_reported": 5.2,
+          "as_of": "2024-09-30",
+          "filing_date": "2024-11-08",
+          "source": "SC 13G/A",
+          "url": "https://www.sec.gov/Archives/edgar/data/2012383/000201238324004177/us5949724083_110824.txt",
+          "group": "owners",
+          "joint_names": []
+        },
+        {
+          "name": "Michael J. Saylor",
+          "shares": 19998580,
+          "percent_reported": 9.9,
+          "as_of": "2024-09-30",
+          "filing_date": "2024-10-25",
+          "source": "SC 13G/A",
+          "url": "https://www.sec.gov/Archives/edgar/data/1079782/000119312524244223/d886741dsc13ga.htm",
+          "group": "owners",
+          "joint_names": []
+        }
+      ],
+      "register": [],
+      "notes": [],
+      "fetched_at": "2026-10-27T11:08:13.014Z",
+      "attempted_at": "2026-10-27T11:08:13.014Z",
+      "last_error": null
+    },
+    "metaplanet": {
+      "reported": false,
+      "reason": "Japan has no Form 13F. Metaplanet does not publish a total of shares held by institutions, so this percentage is not reported.",
+      "source": "Metaplanet disclosures (no 13F)",
+      "source_url": "https://metaplanet.jp/en/shareholders/disclosures",
+      "as_of": "2026-06-30",
+      "positions": [],
+      "beneficial": [
+        {
+          "name": "Capital Research and Management Company",
+          "shares": 143301084,
+          "as_of": "2026-10-16",
+          "ceased": false,
+          "report": "Change Report No. 31",
+          "report_filed": "2026-10-23",
+          "preferred_excluded": 5902500,
+          "group": "owners",
+          "source": "Major shareholder notice 2026-10-23",
+          "url": "https://metaplanet.jp/disclosure-pdf/140120261023555451.pdf",
+          "notice_date": "2026-10-23",
+          "notice_title": "Notice Regarding Changes in Major Shareholders and the Largest Major Shareholder"
+        }
+      ],
+      "register": [
+        {
+          "name": "CLEARSTREAM BANKING S.A.",
+          "shares": 123787665,
+          "register_pct": 9.49,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        },
+        {
+          "name": "STATE STREET BANK AND TRUST COMPANY 505001",
+          "shares": 80188344,
+          "register_pct": 6.15,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        },
+        {
+          "name": "NATIONAL FINANCIAL SERVICES LLC",
+          "shares": 73551305,
+          "register_pct": 5.64,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        },
+        {
+          "name": "CHARLES SCHWAB FBO CUSTOMER",
+          "shares": 56319052,
+          "register_pct": 4.32,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        },
+        {
+          "name": "INTERACTIVE BROKERS LLC",
+          "shares": 48454067,
+          "register_pct": 3.71,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        },
+        {
+          "name": "MMXX VENTURES LIMITED",
+          "shares": 42474750,
+          "register_pct": 3.26,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        },
+        {
+          "name": "DEUTSCHE BANK TRUST COMPANY AMERICAS",
+          "shares": 34207944,
+          "register_pct": 2.62,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        },
+        {
+          "name": "BNP PARIBAS LONDON BRANCH FOR PRIME BROKERAGE CLEARANCE ACC FOR THIRD PARTY",
+          "shares": 30000050,
+          "register_pct": 2.3,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        },
+        {
+          "name": "EUROCLEAR Bank S.A./N.V.",
+          "shares": 19770947,
+          "register_pct": 1.52,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        },
+        {
+          "name": "MORGAN STANLEY SMITH BARNEY LLC CLIENTS FULLY PAID SEG ACCOUNT",
+          "shares": 17621072,
+          "register_pct": 1.35,
+          "as_of": "2026-06-30",
+          "source": "Shareholder register",
+          "group": "register",
+          "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
+        }
+      ],
+      "notes": [
+        "Evo Fund and its joint holders reported 334,732,550 share-equivalents (株券等, which can include rights as well as shares) as of 2026-05-08 in a large-shareholding change report. Metaplanet said it could not confirm the shares actually held, so that figure is not listed as a share holding.",
+        "The shareholder-register counts include Class B preferred shares, which do not vote. Several names are standing proxies for custody accounts, not confirmed beneficial owners, and they are not added to the large-shareholding figures.",
+        "EDINET is not queried directly. Figures are from Metaplanet's disclosures, which cite the large-shareholding reports. Register source: 半期報告書－第28期(2026/01/01－2026/12/31) (2026-08-13)."
+      ],
+      "report_id": "S100YWMP",
+      "notice_ids": [
+        "140120261023555451",
+        "140120260915536773",
+        "140120260721596946",
+        "140120260317583863",
+        "140120250925562490",
+        "140120250715515157"
+      ],
+      "ok": true,
+      "fetched_at": "2026-10-27T10:59:12.182Z",
+      "attempted_at": "2026-10-27T10:59:12.182Z",
+      "last_error": null
+    },
+    "strive": {
+      "ok": true,
+      "reported": true,
+      "institutional_shares": 42124623,
+      "holders_count": 206,
+      "as_of": "2026-06-30",
+      "source": "Nasdaq institutional holdings (Form 13F)",
+      "source_url": "https://www.nasdaq.com/market-activity/stocks/ASST/institutional-holdings",
+      "positions": [
+        {
+          "name": "Fmr Llc",
+          "shares": 9887332,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/fmr-llc-12407",
+          "group": "owners"
+        },
+        {
+          "name": "Blackrock, Inc.",
+          "shares": 5266454,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/blackrock-inc-1287173",
+          "group": "owners"
+        },
+        {
+          "name": "Capital International Investors",
+          "shares": 3017663,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-international-investors-893016",
+          "group": "owners"
+        },
+        {
+          "name": "Vanguard Capital Management Llc",
+          "shares": 2747298,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-capital-management-llc-1383464",
+          "group": "owners"
+        },
+        {
+          "name": "Vanguard Group Inc",
+          "shares": 2133910,
+          "as_of": "2025-12-31",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-group-inc-61322",
+          "group": "owners"
+        },
+        {
+          "name": "Goldman Sachs Group Inc",
+          "shares": 2089455,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/goldman-sachs-group-inc-11158",
+          "group": "owners"
+        },
+        {
+          "name": "Geode Capital Management, Llc",
+          "shares": 1837679,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/geode-capital-management-llc-396991",
+          "group": "owners"
+        },
+        {
+          "name": "State Street Corp",
+          "shares": 1502726,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/state-street-corp-6697",
+          "group": "owners"
+        },
+        {
+          "name": "Morgan Stanley",
+          "shares": 1422922,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/morgan-stanley-5929",
+          "group": "owners"
+        },
+        {
+          "name": "Susquehanna International Group, Llp",
+          "shares": 1229275,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/susquehanna-international-group-llp-792195",
+          "group": "owners"
+        },
+        {
+          "name": "Ubs Group Ag",
+          "shares": 1047291,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/ubs-group-ag-940594",
+          "group": "owners"
+        },
+        {
+          "name": "Interchange Capital Partners, Llc",
+          "shares": 882086,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/interchange-capital-partners-llc-1146376",
+          "group": "owners"
+        },
+        {
+          "name": "First Trust Advisors Lp",
+          "shares": 700482,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/first-trust-advisors-lp-86408",
+          "group": "owners"
+        },
+        {
+          "name": "Alpine Fox Capital Llc",
+          "shares": 560000,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/alpine-fox-capital-llc-1356391",
+          "group": "owners"
+        },
+        {
+          "name": "Northern Trust Corp",
+          "shares": 504643,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/northern-trust-corp-10923",
+          "group": "owners"
+        },
+        {
+          "name": "Vanguard Portfolio Management Llc",
+          "shares": 426365,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-portfolio-management-llc-1366704",
+          "group": "owners"
+        },
+        {
+          "name": "Vanguard Fiduciary Trust Co",
+          "shares": 404376,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-fiduciary-trust-co-49733",
+          "group": "owners"
+        },
+        {
+          "name": "Nuveen, Llc",
+          "shares": 332661,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/nuveen-llc-1334899",
+          "group": "owners"
+        },
+        {
+          "name": "Moneta Group Investment Advisors Llc",
+          "shares": 291087,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/moneta-group-investment-advisors-llc-78608",
+          "group": "owners"
+        },
+        {
+          "name": "Raymond James Financial Inc",
+          "shares": 251226,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/raymond-james-financial-inc-4542",
+          "group": "owners"
+        },
+        {
+          "name": "Group One Trading Llc",
+          "shares": 223465,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/group-one-trading-llc-127309",
+          "group": "owners"
+        },
+        {
+          "name": "Capital Fund Management S.A.",
+          "shares": 219622,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-fund-management-sa-672275",
+          "group": "owners"
+        },
+        {
+          "name": "Jump Financial, Llc",
+          "shares": 207300,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/jump-financial-llc-1134345",
+          "group": "owners"
+        },
+        {
+          "name": "Imc-Chicago, Llc",
+          "shares": 201830,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/imc-chicago-llc-797361",
+          "group": "owners"
+        },
+        {
+          "name": "Summit Financial, Llc",
+          "shares": 198296,
+          "as_of": "2026-06-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/summit-financial-llc-1076889",
+          "group": "owners"
+        }
+      ],
+      "beneficial": [],
+      "register": [],
+      "notes": [],
+      "fetched_at": "2026-10-27T11:08:13.014Z",
+      "attempted_at": "2026-10-27T11:08:13.014Z",
+      "last_error": null
+    }
+  }
+}
