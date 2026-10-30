@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { applyShareSnapshot, describeShareChange } from './update.mjs';
+import { applyShareSnapshot, describeShareChange, formatSharePct } from './update.mjs';
 
 test('change is the latest basic count minus the prior as_of', () => {
   const history = { companies: {} };
@@ -76,6 +76,18 @@ test('an earlier as_of is inserted in date order and does not duplicate', () => 
   assert.equal(change.delta, 1364255696 - 1345313741);
   assert.equal(change.direction, 'up');
   assert.equal(change.previous_as_of, '2026-08-31');
+});
+
+test('percent change uses two decimals and does not round a tiny move to 0.00%', () => {
+  assert.equal(formatSharePct(0, 422259821), 'Unchanged');
+  assert.equal(formatSharePct(18941955, 1345313741), '▲ 1.41%');
+  assert.equal(formatSharePct(3264220, 124064126), '▲ 2.63%');
+  assert.equal(formatSharePct(-781, 1000), '▼ 78.10%');
+  assert.equal(formatSharePct(1, 100000000), '▲ <0.01%');
+  assert.equal(formatSharePct(-1, 100000000), '▼ <0.01%');
+  assert.equal(formatSharePct(140872, 422118949), '▲ 0.03%');
+  assert.equal(formatSharePct(null, 100), null);
+  assert.equal(formatSharePct(10, 0), null);
 });
 
 test('missing count or date is not stored', () => {

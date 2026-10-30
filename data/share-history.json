@@ -1,5 +1,5 @@
 {
-  "_readme": "One basic-share count per company per distinct CEBE as_of. scripts/update.mjs appends a row when as_of is new and replaces the row when the same as_of comes back with a different count. It does not append a duplicate every run. Change in Shares is the latest row's basic_shares minus the row before it. Seed sources are filing citations; do not invent a count.",
+  "_readme": "One basic-share count per company per distinct CEBE as_of. scripts/update.mjs appends a row when as_of is new and replaces the row when the same as_of comes back with a different count. It does not append a duplicate every run. Δ Shares is the latest row's basic_shares minus the row before it. % Δ Shares is that change divided by the previous count. Seed sources are filing citations; do not invent a count.",
   "companies": {
     "strategy": [
       {

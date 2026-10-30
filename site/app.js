@@ -194,16 +194,28 @@ function bindOwnershipTips() {
     });
   });
 }
-function shareChangeCell(c) {
+// Same rules as formatSharePct in scripts/update.mjs.
+function formatSharePct(delta, previousShares) {
+  if (delta == null || !(previousShares > 0)) return null;
+  if (delta === 0) return 'Unchanged';
+  const abs = Math.abs(delta / previousShares * 100);
+  const arrow = delta > 0 ? '▲' : '▼';
+  const shown = abs.toFixed(2);
+  return `${arrow} ${shown === '0.00' ? '<0.01%' : `${shown}%`}`;
+}
+function shareChangeCells(c) {
   const ch = c.share_change;
   if (!ch || ch.direction === 'none' || ch.previous_as_of == null || ch.delta == null) {
-    return '<td>—<span class="s">no prior count yet</span></td>';
+    const empty = '<td>—<span class="s">no prior count yet</span></td>';
+    return empty + empty;
   }
+  const sub = `<span class="s">${esc(vsDate(ch.previous_as_of, ch.as_of))}</span>`;
   const amount = fmtN(Math.abs(ch.delta));
   const main = ch.direction === 'up' ? `▲ ${amount}`
     : ch.direction === 'down' ? `▼ ${amount}`
     : 'Unchanged';
-  return `<td>${main}<span class="s">${esc(vsDate(ch.previous_as_of, ch.as_of))}</span></td>`;
+  const pct = formatSharePct(ch.delta, ch.previous_basic_shares) || '—';
+  return `<td>${main}${sub}</td><td>${esc(pct)}${sub}</td>`;
 }
 const filingUrlOk = (url) => {
   try {
@@ -284,7 +296,7 @@ async function load() {
     holdings.push(`<tr>
       ${company}
       <td>${fmtN(c.basic_shares)}<span class="s">${c.diluted_shares ? 'fully diluted ' + fmtN(c.diluted_shares) : 'basic'}</span></td>
-      ${shareChangeCell(c)}
+      ${shareChangeCells(c)}
       ${ownershipCell(c)}
       <td>₿${fmtN(c.btc_holdings)}<span class="s">as of ${c.balance_sheet_as_of || '—'}</span></td>
       ${filingCell(c)}
