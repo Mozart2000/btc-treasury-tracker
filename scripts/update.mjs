@@ -127,6 +127,23 @@ export function resolveShareCount({ cebeShares, cebeAsOf, override } = {}) {
   };
 }
 
+// Cash spent on the buyback, in USD. Residual NAV subtracts net claims
+// (debt + preferred − cash), so the spend has to leave cash and increase
+// net claims together. Both adjustments exist only while the share override
+// is active.
+export function applyBuybackCash({ cashUsd, netClaimsUsd, spentJpy, usdPerJpy } = {}) {
+  if (!(spentJpy > 0) || !(usdPerJpy > 0)) {
+    return { cashUsd: cashUsd ?? null, netClaimsUsd: netClaimsUsd ?? null, spentUsd: null, applied: false };
+  }
+  const spentUsd = spentJpy * usdPerJpy;
+  return {
+    cashUsd: cashUsd == null ? null : cashUsd - spentUsd,
+    netClaimsUsd: netClaimsUsd == null ? null : netClaimsUsd + spentUsd,
+    spentUsd,
+    applied: true,
+  };
+}
+
 // English or Japanese notices that a treasury-share purchase has been completed.
 // Monthly "status" notices are not results. Used to warn when a configured
 // share-count override may have been overtaken by a later buyback.
@@ -720,6 +737,37 @@ export async function main() {
     } catch (e) {
       errors.push(`${co.name} quote: ${e.message}`);
       if (f.stock_price) row.stock = { price: f.stock_price_native, currency: f.stock_price_currency, price_usd: f.stock_price, time: f.stock_price_as_of, source: `CEBE Tracker (${f.stock_price_venue})` };
+    }
+
+    // The buyback cash leaves the balance sheet only while the share override
+    // is the count in use. Residual NAV subtracts net claims, not cash_usd,
+    // so the same USD amount is added there.
+    if (row.share_count_override && co.share_count?.cash_spent_jpy > 0) {
+      let usdPerJpy = null;
+      if (row.stock?.currency === 'JPY' && row.stock.price > 0 && row.stock.price_usd > 0) {
+        usdPerJpy = row.stock.price_usd / row.stock.price;
+      } else {
+        try {
+          usdPerJpy = (await toUSD('JPY')).rate;
+        } catch (e) {
+          errors.push(`${co.name} buyback cash: ${e.message}`);
+        }
+      }
+      if (usdPerJpy) {
+        row.cash_usd_before_buyback = row.cash_usd;
+        row.net_claims_usd_before_buyback = row.net_claims_usd;
+        const adj = applyBuybackCash({
+          cashUsd: row.cash_usd,
+          netClaimsUsd: row.net_claims_usd,
+          spentJpy: co.share_count.cash_spent_jpy,
+          usdPerJpy,
+        });
+        row.cash_usd = adj.cashUsd;
+        row.net_claims_usd = adj.netClaimsUsd;
+        row.buyback_cash_jpy = co.share_count.cash_spent_jpy;
+        row.buyback_cash_usd = adj.spentUsd;
+        row.buyback_usd_per_jpy = usdPerJpy;
+      }
     }
 
     // Metrics at the live BTC price

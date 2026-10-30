@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { applyShareSnapshot, describeShareChange, formatSharePct, resolveShareCount, treasuryAcquisitionResults } from './update.mjs';
+import { applyShareSnapshot, describeShareChange, formatSharePct, resolveShareCount, treasuryAcquisitionResults, applyBuybackCash } from './update.mjs';
 
 test('change is the latest basic count minus the prior as_of', () => {
   const history = { companies: {} };
@@ -92,6 +92,32 @@ test('a newer share-count override replaces CEBE until CEBE is newer', () => {
   assert.equal(newer.basic_shares, 1300000000);
   const absent = resolveShareCount({ cebeShares: 10, cebeAsOf: '2026-01-01', override: {} });
   assert.equal(absent.basic_shares, 10);
+});
+
+test('buyback cash leaves cash, raises net claims, and is accretive below NAV', () => {
+  const usdPerJpy = 1 / 157.272;
+  const spentJpy = 19309145400;
+  const adj = applyBuybackCash({
+    cashUsd: 76621737.36,
+    netClaimsUsd: 776658828.4,
+    spentJpy,
+    usdPerJpy,
+  });
+  assert.equal(adj.applied, true);
+  assert.ok(Math.abs(adj.spentUsd - spentJpy * usdPerJpy) < 1e-6);
+  assert.ok(Math.abs((adj.cashUsd + adj.spentUsd) - 76621737.36) < 1e-6);
+  assert.ok(Math.abs((adj.netClaimsUsd - adj.spentUsd) - 776658828.4) < 1e-6);
+  assert.equal(applyBuybackCash({ cashUsd: 1, netClaimsUsd: 2, spentJpy: 0, usdPerJpy }).applied, false);
+
+  const btc = 76738;
+  const held = 44000;
+  const btcValue = btc * held;
+  const residual = (netClaims, shares) => (btcValue - netClaims) / shares;
+  const before = residual(776658828.4, 1364255696);
+  const after = residual(adj.netClaimsUsd, 1290274296);
+  assert.ok(after > before);
+  const navYen = before * (1 / usdPerJpy);
+  assert.ok(261 < navYen);
 });
 
 test('a later treasury-acquisition result is flagged and the configured buyback is not', () => {
