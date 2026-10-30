@@ -4,8 +4,8 @@
     "strategy": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 234379055,
-      "holders_count": 1088,
+      "institutional_shares": 234711452,
+      "holders_count": 1092,
       "as_of": "2026-06-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/MSTR/institutional-holdings",
@@ -256,8 +256,8 @@
       ],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-10-29T04:16:34.995Z",
-      "attempted_at": "2026-10-29T04:16:34.995Z",
+      "fetched_at": "2026-10-30T01:12:29.011Z",
+      "attempted_at": "2026-10-30T01:12:29.011Z",
       "last_error": null
     },
     "metaplanet": {
@@ -390,15 +390,15 @@
         "140120250715515157"
       ],
       "ok": true,
-      "fetched_at": "2026-10-29T04:16:34.995Z",
-      "attempted_at": "2026-10-29T04:16:34.995Z",
+      "fetched_at": "2026-10-30T01:12:29.011Z",
+      "attempted_at": "2026-10-30T01:12:29.011Z",
       "last_error": null
     },
     "strive": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 42126532,
-      "holders_count": 207,
+      "institutional_shares": 42174895,
+      "holders_count": 210,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/ASST/institutional-holdings",
@@ -607,8 +607,8 @@
       "beneficial": [],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-10-29T04:16:34.995Z",
-      "attempted_at": "2026-10-29T04:16:34.995Z",
+      "fetched_at": "2026-10-30T01:12:29.011Z",
+      "attempted_at": "2026-10-30T01:12:29.011Z",
       "last_error": null
     }
   }
