@@ -167,6 +167,18 @@ export function describeShareChange(entries, asOf, basicShares) {
   };
 }
 
+// Percent change versus the previous basic count. Two decimals, matching the
+// ▲ / ▼ / Unchanged wording of the share delta. A non-zero move that would
+// round to 0.00% is shown as <0.01% so it is not mistaken for no change.
+export function formatSharePct(delta, previousShares) {
+  if (delta == null || !(previousShares > 0)) return null;
+  if (delta === 0) return 'Unchanged';
+  const abs = Math.abs(delta / previousShares * 100);
+  const arrow = delta > 0 ? '▲' : '▼';
+  const shown = abs.toFixed(2);
+  return `${arrow} ${shown === '0.00' ? '<0.01%' : `${shown}%`}`;
+}
+
 export async function loadShareHistory(file) {
   try {
     const data = JSON.parse(await readFile(file, 'utf8'));
@@ -843,13 +855,15 @@ export async function main() {
     const residual = r.residual_nav_per_share_usd == null ? 'n/a'
       : `$${r.residual_nav_per_share_usd.toFixed(2)}${r.residual_nav_per_share_native != null ? ` (${r.residual_nav_per_share_native.toFixed(2)} ${r.stock?.currency})` : ''}${r.residual_nav_per_share_diluted_usd != null ? ` dil $${r.residual_nav_per_share_diluted_usd.toFixed(2)}` : ''} total $${(r.residual_nav_usd / 1e9).toFixed(2)}B`;
     const ch = r.share_change;
+    const pctText = !ch || ch.direction === 'none' ? 'no prior'
+      : (formatSharePct(ch.delta, ch.previous_basic_shares) || 'n/a');
     const chText = !ch || ch.direction === 'none' ? 'no prior'
       : ch.direction === 'unchanged' ? `unchanged vs ${ch.previous_as_of}`
       : `${ch.delta > 0 ? '+' : ''}${ch.delta} vs ${ch.previous_as_of}`;
     const shown = r.stock?.display
       ? ` | display ${r.stock.display.symbol} ${r.stock.display.price} ${r.stock.display.currency} | close ${r.stock.symbol} ${r.stock.close}`
       : r.stock?.display_fallback ? ` | ${r.stock.display_fallback}` : '';
-    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency}${shown} | residual/sh ${residual} | shares ${r.basic_shares} | Δ ${chText} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | filing ${filingLog(r)}`);
+    console.log(`${r.ticker}: px ${r.stock?.price} ${r.stock?.currency}${shown} | residual/sh ${residual} | shares ${r.basic_shares} | Δ ${chText} | % Δ ${pctText} | mNAV ${r.basic_mnav?.toFixed(3)} | EV ${r.ev_mnav?.toFixed(3)} | CEBE ${r.cebe_mnav?.toFixed(3)} (tracker ${r.cebe_tracker?.cebe_mnav_live}) | filing ${filingLog(r)}`);
     console.log(`  ownership: ${formatOwnershipLog(r.ownership)}`);
   }
   if (errors.length) console.warn('Errors:', errors);
