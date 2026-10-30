@@ -101,6 +101,55 @@ export function asOfDate(value) {
   return m ? m[1] : null;
 }
 
+// A filing override replaces CEBE's basic shares only while its as_of is newer
+// than CEBE's share-count date. Once CEBE's date moves past the override, the
+// feed is used again. An equal date is not newer, so CEBE wins.
+export function resolveShareCount({ cebeShares, cebeAsOf, override } = {}) {
+  const cebeCount = Number.isInteger(cebeShares) ? cebeShares : null;
+  const cebeDate = asOfDate(cebeAsOf);
+  const overDate = asOfDate(override?.as_of);
+  const overCount = Number.isInteger(override?.basic_shares) ? override.basic_shares : null;
+  const base = {
+    basic_shares: cebeCount,
+    as_of: cebeDate,
+    source: null,
+    url: null,
+    overridden: false,
+  };
+  if (overCount == null || !overDate) return base;
+  if (cebeDate && overDate <= cebeDate) return base;
+  return {
+    basic_shares: overCount,
+    as_of: overDate,
+    source: typeof override.source === 'string' ? override.source : null,
+    url: typeof override.url === 'string' ? override.url : null,
+    overridden: true,
+  };
+}
+
+// English or Japanese notices that a treasury-share purchase has been completed.
+// Monthly "status" notices are not results. Used to warn when a configured
+// share-count override may have been overtaken by a later buyback.
+export function treasuryAcquisitionResults(disclosures, asOf) {
+  const floor = asOfDate(asOf);
+  const out = [];
+  const seen = new Set();
+  for (const d of disclosures || []) {
+    if (!d?.date || !d.title) continue;
+    if (floor && d.date <= floor) continue;
+    const title = String(d.title);
+    const english = /result of share repurchase/i.test(title)
+      || (/share repurchase/i.test(title) && /result/i.test(title));
+    const japanese = /自己株式の取得結果/.test(title) || /自己株式立会外買付取引/.test(title) && /取得結果/.test(title);
+    if (!english && !japanese) continue;
+    const key = `${d.date}|${title}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push({ date: d.date, title, id: d.id || null, url: d.url || null });
+  }
+  return out;
+}
+
 function blankShareChange(asOf, basicShares) {
   return {
     as_of: asOf || null,
@@ -639,13 +688,29 @@ export async function main() {
       strc_holdings_usd: num(pick('strc_holdings_usd')) ?? 0,
       net_claims_usd: m.net_claims_usd !== undefined ? num(m.net_claims_usd) : num(f.net_claims_usd),
       btc_claim_static: num(pick('btc_claim_static')) ?? 0,
-      basic_shares: num(pick('basic_shares')),
+      basic_shares: num(m.basic_shares !== undefined ? m.basic_shares : f.basic_shares),
       diluted_shares: num(m.diluted_shares),
       diluted_shares_source: m.diluted_shares_source || null,
       balance_sheet_as_of: m.as_of || f.as_of || null,
       balance_sheet_source: m.source || f.source || null,
       cebe_tracker: f.ticker ? { cebe_mnav_live: num(f.cebe_mnav_live), cebe_sats_live: num(f.cebe_sats_live), senior_claims_pct_live: num(f.senior_claims_pct_live), stock_price_usd: num(f.stock_price), stock_venue: f.stock_price_venue, url: `https://cebetracker.io/company/${f.ticker}/` } : null,
     };
+    if (m.basic_shares === undefined) {
+      const resolved = resolveShareCount({
+        cebeShares: Number.isInteger(num(f.basic_shares)) ? num(f.basic_shares) : null,
+        cebeAsOf: f.as_of,
+        override: co.share_count,
+      });
+      row.basic_shares = resolved.basic_shares;
+      row.share_count_as_of = resolved.as_of;
+      row.share_count_override = resolved.overridden;
+      row.share_count_source = resolved.source;
+      row.share_count_url = resolved.url;
+      if (resolved.overridden && row.cebe_tracker) {
+        row.cebe_tracker.uses_page_shares = false;
+        row.cebe_tracker.cebe_basic_shares = Number.isInteger(num(f.basic_shares)) ? num(f.basic_shares) : null;
+      }
+    }
     let valuationQuote = null;
     try {
       const q = await yahooQuote(co.quote);
@@ -759,18 +824,27 @@ export async function main() {
           row.balance_sheet_source,
           row.balance_sheet_as_of,
         );
+        if (row.share_count_override && co.share_count?.as_of) {
+          const later = treasuryAcquisitionResults(disclosures, co.share_count.as_of);
+          for (const notice of later) {
+            const msg = `${co.name} share count: a later treasury-share acquisition result (${notice.date}, ${notice.title}) is newer than the configured override as of ${co.share_count.as_of}`;
+            console.warn(msg);
+            errors.push(msg);
+          }
+        }
       } catch (e) {
         errors.push(`${co.name} disclosures: ${e.message}`);
         row.filing = { source: 'metaplanet', status: 'unavailable' };
       }
     }
-    const shareAsOf = asOfDate(row.balance_sheet_as_of);
+    const shareAsOf = row.share_count_override ? row.share_count_as_of : asOfDate(row.balance_sheet_as_of);
     const shareCount = Number.isInteger(row.basic_shares) ? row.basic_shares : null;
+    const shareSource = row.share_count_override ? (row.share_count_source || row.balance_sheet_source) : row.balance_sheet_source;
     if (applyShareSnapshot(history, {
       id: co.id,
       asOf: shareAsOf,
       basicShares: shareCount,
-      source: row.balance_sheet_source,
+      source: shareSource,
     })) historyDirty = true;
     row.share_change = describeShareChange(history.companies?.[co.id], shareAsOf, shareCount);
     out.push(row);

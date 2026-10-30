@@ -280,6 +280,39 @@ test('register rows and unconfirmed Evo footnote', () => {
   assert.match(note[0], /not listed/);
 });
 
+test('a Japan large-holder floor is the cell percent and keeps holders above 5%', () => {
+  const view = buildOwnershipView({
+    reported: false,
+    ok: true,
+    reason: 'Japan has no Form 13F.',
+    positions: [],
+    beneficial: [{ name: 'Capital Research and Management Company', shares: 143301084, as_of: '2026-10-16', source: 'Major shareholder notice 2026-10-23', group: 'owners' }],
+    register: [{ name: 'CLEARSTREAM BANKING S.A.', shares: 123787665, as_of: '2026-06-30', source: 'Shareholder register', group: 'register' }],
+    notes: [],
+    floor: {
+      pct: 11.11326,
+      label: '≥5% institutional filers (Japan large-holding reports)',
+      as_of: '2026-10-16',
+      shares: 143301084,
+      voting_rights: 1433010,
+      voting_rights_total: 12894494,
+      holder: 'Capital Research and Management Company',
+      report: 'Change Report No. 31',
+    },
+    estimate: { as_of: '2025-12-31', pct: 44.6, raw_pct: 69.3 },
+    insiders: { text: 'Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%.' },
+  }, 1290274296);
+  assert.equal(view.floor, true);
+  assert.equal(view.reported, true);
+  assert.equal(view.pct.toFixed(1), '11.1');
+  assert.equal(view.as_of_label, '≥5% institutional filers (Japan large-holding reports)');
+  assert.match(view.floor_detail, /1,433,010 voting rights/);
+  assert.equal(view.holders.length, 2);
+  assert.match(view.notes.join('\n'), /~44\.6%/);
+  assert.match(view.notes.join('\n'), /69\.3%/);
+  assert.match(view.notes.join('\n'), /9\.5–10\.9%/);
+});
+
 test('Metaplanet view is not reported and still lists holders above 5%', () => {
   const view = buildOwnershipView({
     reported: false,

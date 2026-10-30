@@ -514,6 +514,37 @@ function mergeOwners(positions, beneficial) {
   return [...byKey.values()];
 }
 
+function floorDetail(floor) {
+  const shares = Number.isInteger(floor.shares) ? floor.shares.toLocaleString('en-US') : null;
+  const rights = Number.isInteger(floor.voting_rights) ? floor.voting_rights.toLocaleString('en-US') : null;
+  const total = Number.isInteger(floor.voting_rights_total) ? floor.voting_rights_total.toLocaleString('en-US') : null;
+  const ratio = rights && total ? `${rights} voting rights ÷ ${total} total voting rights` : null;
+  const holder = floor.holder || 'The reporting holder';
+  const when = floor.as_of || 'the report date';
+  const report = floor.report ? `, ${floor.report}` : '';
+  const bits = [
+    `${Number(floor.pct).toFixed(1)}% is a floor: only holders that have filed a Japan large-shareholding report above 5%. It is not a total of every institution.`,
+    shares ? `${holder} reports ${shares} shares${ratio ? ` (${ratio})` : ''} as of ${when}${report}.` : null,
+  ];
+  return bits.filter(Boolean).join(' ');
+}
+
+function supplementalOwnershipNotes(entry) {
+  const notes = [];
+  const est = entry?.estimate;
+  if (est && Number.isFinite(Number(est.pct))) {
+    const raw = Number.isFinite(Number(est.raw_pct)) ? ` The raw financial-institution plus foreign-corporation share is ${Number(est.raw_pct).toFixed(1)}%.` : '';
+    const excluded = est.excluded || 'That estimate excludes retail custody and nominee accounts (Charles Schwab FBO, National Financial Services, Interactive Brokers, and Morgan Stanley Smith Barney) and the CEO\'s MMXX Ventures.';
+    const when = /^(\d{4})-(\d{2})-(\d{2})$/.test(est.as_of || '')
+      ? `${MONTHS_SHORT[Number(est.as_of.slice(5, 7)) - 1]} ${Number(est.as_of.slice(8, 10))}, ${est.as_of.slice(0, 4)}`
+      : (est.as_of || 'the report date');
+    notes.push(`Estimated institutional (owner-type table, ${when}): ~${Number(est.pct).toFixed(1)}%.${raw} ${excluded}`);
+  }
+  const ins = entry?.insiders;
+  if (ins && ins.text) notes.push(ins.text);
+  return notes;
+}
+
 export function buildOwnershipView(entry, basicShares, now = new Date()) {
   if (!entry || typeof entry !== 'object') return null;
   const basic = Number(basicShares);
@@ -552,6 +583,29 @@ export function buildOwnershipView(entry, basicShares, now = new Date()) {
       const more = b.joint_names.length > 8 ? `, and ${b.joint_names.length - 8} more` : '';
       notes.push(`${b.name}'s ${b.source} reports the same ${b.shares.toLocaleString('en-US')} shares for ${listed}${more}. Those names were not added together.`);
     }
+  }
+  const supplements = supplementalOwnershipNotes(entry);
+  notes.push(...supplements);
+  if (entry.floor && Number.isFinite(Number(entry.floor.pct))) {
+    const floor = entry.floor;
+    return {
+      reported: true,
+      floor: true,
+      pct: Number(floor.pct),
+      institutional_shares: Number.isInteger(floor.shares) ? floor.shares : null,
+      basic_shares: basicOk,
+      as_of: floor.as_of || null,
+      as_of_label: floor.label || '',
+      floor_detail: floorDetail(floor),
+      source: floor.source || entry.source || null,
+      source_url: floor.url || entry.source_url || null,
+      holders,
+      above_5: above.length > 0,
+      fallback_top: fallback && holders.length > 0,
+      notes,
+      fetched_at: entry.fetched_at || null,
+      unavailable: false,
+    };
   }
   if (entry.reported === false) {
     return {
@@ -862,7 +916,13 @@ async function refreshOne(task, prev, disclosures, now) {
   const nowIso = now.toISOString();
   if (task.kind === 'jp') {
     const fresh = await fetchMetaplanet(disclosures);
-    return { ...fresh, ok: true, fetched_at: nowIso, attempted_at: nowIso, last_error: null };
+    // Hand-maintained floor, estimate, and insider figures survive a refresh.
+    // fetchMetaplanet rebuilds holders and notes; these fields are not in the PDFs it parses.
+    const kept = {};
+    for (const key of ['floor', 'estimate', 'insiders']) {
+      if (prev && prev[key] && typeof prev[key] === 'object') kept[key] = prev[key];
+    }
+    return { ...fresh, ...kept, ok: true, fetched_at: nowIso, attempted_at: nowIso, last_error: null };
   }
   if (task.kind !== 'us') {
     return {

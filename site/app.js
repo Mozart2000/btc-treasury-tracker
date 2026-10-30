@@ -75,7 +75,9 @@ function holderLine(h) {
 }
 function ownershipBody(o) {
   const parts = [];
-  if (o.reported === false) {
+  if (o.floor) {
+    parts.push(`<p>${esc(o.floor_detail || o.as_of_label || '')}</p>`);
+  } else if (o.reported === false) {
     parts.push(`<p>${esc(o.reason || 'Not reported.')}</p>`);
   } else if (o.unavailable || o.pct == null) {
     parts.push(`<p>${esc(o.reason || 'Institutional ownership is unavailable.')}</p>`);
@@ -283,7 +285,14 @@ async function load() {
         ? fmtQuoteCompact(c.residual_nav_per_share_diluted_native, currency, c.residual_nav_per_share_diluted_usd)
         : fmtUSD(c.residual_nav_per_share_diluted_usd)}</span>`
       : '';
-    const tracker = c.cebe_tracker?.cebe_mnav_live != null ? `<span class="s"><a href="${c.cebe_tracker.url}" style="color:inherit">cebetracker: ${c.cebe_tracker.cebe_mnav_live.toFixed(2)}×</a></span>` : '';
+    const trackerLive = c.cebe_tracker?.cebe_mnav_live;
+    const trackerStale = c.cebe_tracker?.uses_page_shares === false;
+    const trackerTitle = trackerStale
+      ? `CEBE Tracker's published mNAV. It still uses CEBE's share count${c.cebe_tracker.cebe_basic_shares ? ` (${fmtN(c.cebe_tracker.cebe_basic_shares)})` : ''}, not the share count on this page.`
+      : 'CEBE Tracker live mNAV';
+    const tracker = trackerLive != null
+      ? `<span class="s"><a href="${c.cebe_tracker.url}" style="color:inherit" title="${esc(trackerTitle)}">cebetracker: ${trackerLive.toFixed(2)}×${trackerStale ? ' (CEBE share count)' : ''}</a></span>`
+      : '';
     const company = `<td class="name"><a href="${c.website}" target="_blank" rel="noopener">${c.name}</a><span class="s">${c.ticker} · ${c.exchange}</span></td>`;
     valuation.push(`<tr>
       ${company}
@@ -295,7 +304,7 @@ async function load() {
     </tr>`);
     holdings.push(`<tr>
       ${company}
-      <td>${fmtN(c.basic_shares)}<span class="s">${c.diluted_shares ? 'fully diluted ' + fmtN(c.diluted_shares) : 'basic'}</span></td>
+      <td>${fmtN(c.basic_shares)}<span class="s">${c.diluted_shares ? 'fully diluted ' + fmtN(c.diluted_shares) : 'basic'}${c.share_count_override && c.share_count_as_of ? ` · as of ${esc(fmtDay(c.share_count_as_of))}` : ''}</span></td>
       ${shareChangeCells(c)}
       ${ownershipCell(c)}
       <td>₿${fmtN(c.btc_holdings)}<span class="s">as of ${c.balance_sheet_as_of || '—'}</span></td>

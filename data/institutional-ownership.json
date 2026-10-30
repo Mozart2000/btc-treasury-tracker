@@ -375,6 +375,29 @@
           "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
         }
       ],
+      "floor": {
+        "pct": 11.11326,
+        "label": "≥5% institutional filers (Japan large-holding reports)",
+        "as_of": "2026-10-16",
+        "shares": 143301084,
+        "voting_rights": 1433010,
+        "voting_rights_total": 12894494,
+        "holder": "Capital Research and Management Company",
+        "report": "Change Report No. 31, notice dated 2026-10-23",
+        "url": "https://metaplanet.jp/disclosure-pdf/140120261023555451.pdf",
+        "source": "Metaplanet major-shareholder notice 2026-10-23 (TDnet 140120261023555451). 1,433,010 voting rights ÷ 12,894,494 total voting rights = 11.11%, shown as 11.1%."
+      },
+      "estimate": {
+        "as_of": "2025-12-31",
+        "pct": 44.6,
+        "raw_pct": 69.3,
+        "url": "https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf",
+        "source": "FY2025 annual securities report (有価証券報告書, S100XTWY), ordinary-share owner-type table as of Dec 31, 2025.",
+        "excluded": "44.6% excludes retail custody and nominee accounts (Charles Schwab FBO, National Financial Services, Interactive Brokers, and Morgan Stanley Smith Barney) and the CEO's MMXX Ventures. Those names are in the Dec 31, 2025 major-shareholder table of the same report."
+      },
+      "insiders": {
+        "text": "Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%. At Dec 31, 2025 the annual report shows MMXX at 42,474,750 shares (3.64% of shares outstanding excluding treasury; 3.72% of voting rights) and Simon Gerovich at 15,555,500 shares. A large-shareholding report as of Sep 9, 2025 reported MMXX at 5.62% of 株券等, which can include rights. The Oct 2, 2026 correction says Gerovich does not hold a majority of MMXX, so the two are added rather than treated as one controlled block. Sources: https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf and https://metaplanet.jp/disclosure-pdf/S100Z5LW.pdf."
+      },
       "notes": [
         "Evo Fund and its joint holders reported 334,732,550 share-equivalents (株券等, which can include rights as well as shares) as of 2026-05-08 in a large-shareholding change report. Metaplanet said it could not confirm the shares actually held, so that figure is not listed as a share holding.",
         "The shareholder-register counts include Class B preferred shares, which do not vote. Several names are standing proxies for custody accounts, not confirmed beneficial owners, and they are not added to the large-shareholding figures.",

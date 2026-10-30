@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { applyShareSnapshot, describeShareChange, formatSharePct } from './update.mjs';
+import { applyShareSnapshot, describeShareChange, formatSharePct, resolveShareCount, treasuryAcquisitionResults } from './update.mjs';
 
 test('change is the latest basic count minus the prior as_of', () => {
   const history = { companies: {} };
@@ -76,6 +76,35 @@ test('an earlier as_of is inserted in date order and does not duplicate', () => 
   assert.equal(change.delta, 1364255696 - 1345313741);
   assert.equal(change.direction, 'up');
   assert.equal(change.previous_as_of, '2026-08-31');
+});
+
+test('a newer share-count override replaces CEBE until CEBE is newer', () => {
+  const override = { basic_shares: 1290274296, as_of: '2026-10-14', source: 'buyback', url: 'https://metaplanet.jp/disclosure-pdf/140120261014550251.pdf' };
+  const used = resolveShareCount({ cebeShares: 1364255696, cebeAsOf: '2026-09-30', override });
+  assert.equal(used.overridden, true);
+  assert.equal(used.basic_shares, 1290274296);
+  assert.equal(used.as_of, '2026-10-14');
+  const sameDay = resolveShareCount({ cebeShares: 1300000000, cebeAsOf: '2026-10-14', override });
+  assert.equal(sameDay.overridden, false);
+  assert.equal(sameDay.basic_shares, 1300000000);
+  const newer = resolveShareCount({ cebeShares: 1300000000, cebeAsOf: '2026-10-20', override });
+  assert.equal(newer.overridden, false);
+  assert.equal(newer.basic_shares, 1300000000);
+  const absent = resolveShareCount({ cebeShares: 10, cebeAsOf: '2026-01-01', override: {} });
+  assert.equal(absent.basic_shares, 10);
+});
+
+test('a later treasury-acquisition result is flagged and the configured buyback is not', () => {
+  const rows = [
+    { date: '2026-10-14', title: 'Notice Regarding the Result of Share Repurchases through Off-Auction Own Share Repurchase Trading (ToSTNeT-3)', english: true },
+    { date: '2026-10-13', title: 'Notice Regarding the Repurchase of Shares', english: true },
+    { date: '2026-11-02', title: 'Notice Regarding the Result of Share Repurchases', english: true, id: 'later' },
+    { date: '2026-11-02', title: '自己株式立会外買付取引（ToSTNeT-3）による自己株式の取得結果に関するお知らせ', english: false },
+  ];
+  const hits = treasuryAcquisitionResults(rows, '2026-10-14');
+  assert.equal(hits.length, 2);
+  assert.equal(hits[0].id, 'later');
+  assert.equal(treasuryAcquisitionResults(rows, '2026-11-02').length, 0);
 });
 
 test('percent change uses two decimals and does not round a tiny move to 0.00%', () => {

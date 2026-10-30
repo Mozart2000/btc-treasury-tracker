@@ -31,6 +31,12 @@
         "basic_shares": 1364255696,
         "source": "TDnet 140120261005546274 (English; Japanese original 140120261005546273), Notice of Additional Purchase of Bitcoin, disclosed 2026-10-05, for BTC holdings 44,000, fully diluted shares and the filed net of JPY 122,374M in net claims; TDnet 140120261001544425, 2026-10-01, for shares net of treasury at 2026-09-30; debt and preferred carried from the 2026-06-30 basis, H1 FY2026 kessan tanshin TDnet 140120260812518571, EST; cash from that basis plus the filed flows to 2026-09-30, floored at zero, EST; the bitcoin price per the CoinGecko D+1 close convention",
         "recorded_at": "2026-10-22T23:47:38.763Z"
+      },
+      {
+        "as_of": "2026-10-14",
+        "basic_shares": 1290274296,
+        "source": "Outstanding shares as of 2026-10-14: 1,290,274,296 = issued 1,364,282,624 − treasury 74,008,328. Sep 30, 2026 (TDnet 140120261001544425, https://metaplanet.jp/disclosure-pdf/140120261001544425.pdf): issued excluding treasury 1,364,255,696 and treasury 26,928, so issued is 1,364,282,624. Oct 14, 2026 ToSTNeT-3 buyback (TDnet 140120261014550251, https://metaplanet.jp/disclosure-pdf/140120261014550251.pdf): 73,981,400 shares at ¥261, held as treasury and not cancelled. Treasury 26,928 + 73,981,400 = 74,008,328. The Oct 23, 2026 notice (TDnet 140120261023555451, https://metaplanet.jp/disclosure-pdf/140120261023555451.pdf) deducts 739,814 voting rights for those treasury shares.",
+        "recorded_at": "2026-10-30T18:37:51.110Z"
       }
     ],
     "strive": [
