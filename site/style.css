@@ -18,7 +18,8 @@ td.filing a.filing-sec{white-space:nowrap}
 td.filing .filing-title{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-weight:500;white-space:normal}
 td.filing a .filing-material{color:var(--warn)}
 .filing-ok{color:var(--mut)}.filing-new{color:var(--warn)}
-.own-btn{appearance:none;background:none;border:0;color:inherit;font:inherit;padding:0;margin:0;cursor:help;text-align:right;display:block;width:100%;border-radius:4px}
+td.own{white-space:normal}
+.own-btn{appearance:none;background:none;border:0;color:inherit;font:inherit;padding:0;margin:0;cursor:help;text-align:right;display:block;width:100%;max-width:16rem;margin-left:auto;border-radius:4px;white-space:normal}
 .own-btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .own-btn .own-fig{border-bottom:1px dotted var(--mut)}
 .own-pop{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;width:min(28rem,calc(100vw - 16px));max-height:min(70vh,32rem);overflow:auto;font-size:13px;line-height:1.45;text-align:left;white-space:normal;box-shadow:0 12px 40px rgba(0,0,0,.45)}
