@@ -4,8 +4,8 @@
     "strategy": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 234711452,
-      "holders_count": 1092,
+      "institutional_shares": 234782170,
+      "holders_count": 1096,
       "as_of": "2026-06-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/MSTR/institutional-holdings",
@@ -256,8 +256,8 @@
       ],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-10-30T01:12:29.011Z",
-      "attempted_at": "2026-10-30T01:12:29.011Z",
+      "fetched_at": "2026-10-30T21:48:37.620Z",
+      "attempted_at": "2026-10-30T21:48:37.620Z",
       "last_error": null
     },
     "metaplanet": {
@@ -375,6 +375,20 @@
           "url": "https://metaplanet.jp/disclosure-pdf/S100YWMP.pdf"
         }
       ],
+      "notes": [
+        "Evo Fund and its joint holders reported 334,732,550 share-equivalents (株券等, which can include rights as well as shares) as of 2026-05-08 in a large-shareholding change report. Metaplanet said it could not confirm the shares actually held, so that figure is not listed as a share holding.",
+        "The shareholder-register counts include Class B preferred shares, which do not vote. Several names are standing proxies for custody accounts, not confirmed beneficial owners, and they are not added to the large-shareholding figures.",
+        "EDINET is not queried directly. Figures are from Metaplanet's disclosures, which cite the large-shareholding reports. Register source: 半期報告書－第28期(2026/01/01－2026/12/31) (2026-08-13)."
+      ],
+      "report_id": "S100YWMP",
+      "notice_ids": [
+        "140120261023555451",
+        "140120260915536773",
+        "140120260721596946",
+        "140120260317583863",
+        "140120250925562490",
+        "140120250715515157"
+      ],
       "floor": {
         "pct": 11.11326,
         "label": "≥5% institutional filers (Japan large-holding reports)",
@@ -398,30 +412,16 @@
       "insiders": {
         "text": "Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%. At Dec 31, 2025 the annual report shows MMXX at 42,474,750 shares (3.64% of shares outstanding excluding treasury; 3.72% of voting rights) and Simon Gerovich at 15,555,500 shares. A large-shareholding report as of Sep 9, 2025 reported MMXX at 5.62% of 株券等, which can include rights. The Oct 2, 2026 correction says Gerovich does not hold a majority of MMXX, so the two are added rather than treated as one controlled block. Sources: https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf and https://metaplanet.jp/disclosure-pdf/S100Z5LW.pdf."
       },
-      "notes": [
-        "Evo Fund and its joint holders reported 334,732,550 share-equivalents (株券等, which can include rights as well as shares) as of 2026-05-08 in a large-shareholding change report. Metaplanet said it could not confirm the shares actually held, so that figure is not listed as a share holding.",
-        "The shareholder-register counts include Class B preferred shares, which do not vote. Several names are standing proxies for custody accounts, not confirmed beneficial owners, and they are not added to the large-shareholding figures.",
-        "EDINET is not queried directly. Figures are from Metaplanet's disclosures, which cite the large-shareholding reports. Register source: 半期報告書－第28期(2026/01/01－2026/12/31) (2026-08-13)."
-      ],
-      "report_id": "S100YWMP",
-      "notice_ids": [
-        "140120261023555451",
-        "140120260915536773",
-        "140120260721596946",
-        "140120260317583863",
-        "140120250925562490",
-        "140120250715515157"
-      ],
       "ok": true,
-      "fetched_at": "2026-10-30T01:12:29.011Z",
-      "attempted_at": "2026-10-30T01:12:29.011Z",
+      "fetched_at": "2026-10-30T21:48:37.620Z",
+      "attempted_at": "2026-10-30T21:48:37.620Z",
       "last_error": null
     },
     "strive": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 42174895,
-      "holders_count": 210,
+      "institutional_shares": 42168330,
+      "holders_count": 211,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/ASST/institutional-holdings",
@@ -630,8 +630,8 @@
       "beneficial": [],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-10-30T01:12:29.011Z",
-      "attempted_at": "2026-10-30T01:12:29.011Z",
+      "fetched_at": "2026-10-30T21:48:37.620Z",
+      "attempted_at": "2026-10-30T21:48:37.620Z",
       "last_error": null
     }
   }
