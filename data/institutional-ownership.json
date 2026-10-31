@@ -4,7 +4,7 @@
     "strategy": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 234782170,
+      "institutional_shares": 234783427,
       "holders_count": 1096,
       "as_of": "2026-06-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
@@ -256,8 +256,8 @@
       ],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-10-30T21:48:37.620Z",
-      "attempted_at": "2026-10-30T21:48:37.620Z",
+      "fetched_at": "2026-10-31T18:00:14.841Z",
+      "attempted_at": "2026-10-31T18:00:14.841Z",
       "last_error": null
     },
     "metaplanet": {
@@ -413,14 +413,14 @@
         "text": "Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%. At Dec 31, 2025 the annual report shows MMXX at 42,474,750 shares (3.64% of shares outstanding excluding treasury; 3.72% of voting rights) and Simon Gerovich at 15,555,500 shares. A large-shareholding report as of Sep 9, 2025 reported MMXX at 5.62% of 株券等, which can include rights. The Oct 2, 2026 correction says Gerovich does not hold a majority of MMXX, so the two are added rather than treated as one controlled block. Sources: https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf and https://metaplanet.jp/disclosure-pdf/S100Z5LW.pdf."
       },
       "ok": true,
-      "fetched_at": "2026-10-30T21:48:37.620Z",
-      "attempted_at": "2026-10-30T21:48:37.620Z",
+      "fetched_at": "2026-10-31T18:00:14.841Z",
+      "attempted_at": "2026-10-31T18:00:14.841Z",
       "last_error": null
     },
     "strive": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 42168330,
+      "institutional_shares": 42168319,
       "holders_count": 211,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
@@ -630,8 +630,8 @@
       "beneficial": [],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-10-30T21:48:37.620Z",
-      "attempted_at": "2026-10-30T21:48:37.620Z",
+      "fetched_at": "2026-10-31T18:00:14.841Z",
+      "attempted_at": "2026-10-31T18:00:14.841Z",
       "last_error": null
     }
   }
