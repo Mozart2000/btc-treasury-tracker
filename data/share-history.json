@@ -18,6 +18,12 @@
         "basic_shares": 422259821,
         "source": "8-K filed 2026-10-26, acc 0001193125-26-431146, covering 2026-10-19 to 2026-10-25, balances as of 2026-10-25; priced at the 2026-10-25 close. Debt carried from the 2026-06-30 balance (Q2 10-Q acc 0001050446-26-000044, all-principal basis); no debt event in this 8-K. Carried from MSTR_20261018_R, EST, not stated in this 8-K: debt, the STRK, STRF, STRD and STRE faces, eurusd_rate 1.1408 and the STRC rate 12.00%. Fully diluted count, estimated: basic + Q2 2026 10-Q ADSO spread 29,680,000 (acc 0001050446-26-000044).",
         "recorded_at": "2026-10-26T14:07:19.536Z"
+      },
+      {
+        "as_of": "2026-11-02",
+        "basic_shares": 423438373,
+        "source": "8-K filed 2026-11-02, acc 0001193125-26-442707, covering 2026-10-26 to 2026-11-01, balances as of 2026-11-01; priced at the 2026-11-01 close. Shares sold under the ATM include shares not yet settled as of 2026-10-30, as the 8-K states. Debt carried from the 2026-06-30 balance (Q2 10-Q acc 0001050446-26-000044, all-principal basis); no debt event in this 8-K. Carried from MSTR_20261026_R, EST, not stated in this 8-K: debt, the STRK, STRF, STRD and STRE faces, eurusd_rate 1.1408 and the STRC rate 12.00%. Fully diluted count, estimated: basic + Q2 2026 10-Q ADSO spread 29,680,000 (acc 0001050446-26-000044).",
+        "recorded_at": "2026-11-02T13:41:33.948Z"
       }
     ],
     "metaplanet": [
@@ -37,6 +43,12 @@
         "basic_shares": 1290274296,
         "source": "Outstanding shares as of 2026-10-14: 1,290,274,296 = issued 1,364,282,624 − treasury 74,008,328. Sep 30, 2026 (TDnet 140120261001544425, https://metaplanet.jp/disclosure-pdf/140120261001544425.pdf): issued excluding treasury 1,364,255,696 and treasury 26,928, so issued is 1,364,282,624. Oct 14, 2026 ToSTNeT-3 buyback (TDnet 140120261014550251, https://metaplanet.jp/disclosure-pdf/140120261014550251.pdf): 73,981,400 shares at ¥261, held as treasury and not cancelled. Treasury 26,928 + 73,981,400 = 74,008,328. The Oct 23, 2026 notice (TDnet 140120261023555451, https://metaplanet.jp/disclosure-pdf/140120261023555451.pdf) deducts 739,814 voting rights for those treasury shares.",
         "recorded_at": "2026-10-30T18:37:51.110Z"
+      },
+      {
+        "as_of": "2026-11-02",
+        "basic_shares": 1267808197,
+        "source": "TDnet 140120261102562846 (2026-11-02, 15:30 JST), status of treasury share acquisition, for shares outstanding excluding treasury at 2026-10-31 and the 96,447,400 shares bought for JPY 25,269,031,500 from 2026-10-14 to 2026-10-31; TDnet 140120261102562849 (2026-11-02), 27th Series monthly exercise status, for issued shares at 2026-10-31 and no exercise in October; TDnet 140120261102562853 (2026-11-02), early redemption in full of the 20th Series bonds, JPY 8,000,000,000, from cash on hand; base row MTPLF_20260930 per TDnet 140120261005546273; priced at the 2026-11-01 close (BTC daily close, CoinGecko 00:00 UTC print of 2026-11-02), the latest close printed at build time",
+        "recorded_at": "2026-11-02T13:41:34.844Z"
       }
     ],
     "strive": [
@@ -56,6 +68,12 @@
         "basic_shares": 127328346,
         "source": "8-K Oct 26, 2026 (acc 0001628280-26-067141), as of Oct 23, 2026; no consolidated indebtedness as of Oct 23, 2026 from 424B5 Oct 26, 2026 (acc 0000950103-26-016137); priced at the 2026-10-25 close. EDGAR VERIFIED: https://www.sec.gov/Archives/edgar/data/1920406/000162828026067141/asst-20261026.htm",
         "recorded_at": "2026-10-26T14:07:20.805Z"
+      },
+      {
+        "as_of": "2026-11-02",
+        "basic_shares": 127331109,
+        "source": "8-K Nov 2, 2026 (acc 0001628280-26-068660), as of Oct 30, 2026; no consolidated indebtedness as of Oct 23, 2026 from 424B5 Oct 26, 2026 (acc 0000950103-26-016137), carried; priced at the 2026-11-01 close. EDGAR VERIFIED: https://www.sec.gov/Archives/edgar/data/1920406/000162828026068660/asst-20261102.htm",
+        "recorded_at": "2026-11-02T13:41:34.927Z"
       }
     ]
   }
