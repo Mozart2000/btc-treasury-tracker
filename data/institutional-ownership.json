@@ -4,8 +4,8 @@
     "strategy": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 234743743,
-      "holders_count": 1107,
+      "institutional_shares": 234365288,
+      "holders_count": 1105,
       "as_of": "2026-06-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/MSTR/institutional-holdings",
@@ -256,8 +256,8 @@
       ],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-05T00:54:49.340Z",
-      "attempted_at": "2026-11-05T00:54:49.340Z",
+      "fetched_at": "2026-11-05T21:27:39.914Z",
+      "attempted_at": "2026-11-05T21:27:39.914Z",
       "last_error": null
     },
     "metaplanet": {
@@ -413,15 +413,15 @@
         "text": "Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%. At Dec 31, 2025 the annual report shows MMXX at 42,474,750 shares (3.64% of shares outstanding excluding treasury; 3.72% of voting rights) and Simon Gerovich at 15,555,500 shares. A large-shareholding report as of Sep 9, 2025 reported MMXX at 5.62% of 株券等, which can include rights. The Oct 2, 2026 correction says Gerovich does not hold a majority of MMXX, so the two are added rather than treated as one controlled block. Sources: https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf and https://metaplanet.jp/disclosure-pdf/S100Z5LW.pdf."
       },
       "ok": true,
-      "fetched_at": "2026-11-05T00:54:49.340Z",
-      "attempted_at": "2026-11-05T00:54:49.340Z",
+      "fetched_at": "2026-11-05T21:27:39.914Z",
+      "attempted_at": "2026-11-05T21:27:39.914Z",
       "last_error": null
     },
     "strive": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 42333790,
-      "holders_count": 212,
+      "institutional_shares": 42153077,
+      "holders_count": 214,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/ASST/institutional-holdings",
@@ -587,6 +587,14 @@
           "group": "owners"
         },
         {
+          "name": "Bank Of New York Mellon Corp",
+          "shares": 237100,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/bank-of-new-york-mellon-corp-736081",
+          "group": "owners"
+        },
+        {
           "name": "Group One Trading Llc",
           "shares": 223465,
           "as_of": "2026-06-30",
@@ -611,14 +619,6 @@
           "group": "owners"
         },
         {
-          "name": "Imc-Chicago, Llc",
-          "shares": 201830,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/imc-chicago-llc-797361",
-          "group": "owners"
-        },
-        {
           "name": "Summit Financial, Llc",
           "shares": 198296,
           "as_of": "2026-06-30",
@@ -630,8 +630,8 @@
       "beneficial": [],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-05T00:54:49.340Z",
-      "attempted_at": "2026-11-05T00:54:49.340Z",
+      "fetched_at": "2026-11-05T21:27:39.914Z",
+      "attempted_at": "2026-11-05T21:27:39.914Z",
       "last_error": null
     }
   }
