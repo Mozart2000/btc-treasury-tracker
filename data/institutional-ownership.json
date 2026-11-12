@@ -4,7 +4,7 @@
     "strategy": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 234854747,
+      "institutional_shares": 235781697,
       "holders_count": 1111,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
@@ -68,8 +68,8 @@
         },
         {
           "name": "State Street Corp",
-          "shares": 7527561,
-          "as_of": "2026-06-30",
+          "shares": 7946663,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/state-street-corp-6697",
           "group": "owners"
@@ -256,8 +256,8 @@
       ],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-11T20:11:16.652Z",
-      "attempted_at": "2026-11-11T20:11:16.652Z",
+      "fetched_at": "2026-11-12T16:55:05.022Z",
+      "attempted_at": "2026-11-12T16:55:05.022Z",
       "last_error": null
     },
     "metaplanet": {
@@ -413,15 +413,15 @@
         "text": "Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%. At Dec 31, 2025 the annual report shows MMXX at 42,474,750 shares (3.64% of shares outstanding excluding treasury; 3.72% of voting rights) and Simon Gerovich at 15,555,500 shares. A large-shareholding report as of Sep 9, 2025 reported MMXX at 5.62% of 株券等, which can include rights. The Oct 2, 2026 correction says Gerovich does not hold a majority of MMXX, so the two are added rather than treated as one controlled block. Sources: https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf and https://metaplanet.jp/disclosure-pdf/S100Z5LW.pdf."
       },
       "ok": true,
-      "fetched_at": "2026-11-11T20:11:16.652Z",
-      "attempted_at": "2026-11-11T20:11:16.652Z",
+      "fetched_at": "2026-11-12T16:55:05.022Z",
+      "attempted_at": "2026-11-12T16:55:05.022Z",
       "last_error": null
     },
     "strive": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 43807433,
-      "holders_count": 218,
+      "institutional_shares": 44049618,
+      "holders_count": 217,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/ASST/institutional-holdings",
@@ -484,8 +484,8 @@
         },
         {
           "name": "State Street Corp",
-          "shares": 1502726,
-          "as_of": "2026-06-30",
+          "shares": 1679917,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/state-street-corp-6697",
           "group": "owners"
@@ -630,8 +630,8 @@
       "beneficial": [],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-11T20:11:16.652Z",
-      "attempted_at": "2026-11-11T20:11:16.652Z",
+      "fetched_at": "2026-11-12T16:55:05.022Z",
+      "attempted_at": "2026-11-12T16:55:05.022Z",
       "last_error": null
     }
   }
