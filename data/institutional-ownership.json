@@ -4,16 +4,16 @@
     "strategy": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 235781697,
-      "holders_count": 1111,
+      "institutional_shares": 240230085,
+      "holders_count": 1117,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/MSTR/institutional-holdings",
       "positions": [
         {
           "name": "Capital International Investors",
-          "shares": 34902002,
-          "as_of": "2026-06-30",
+          "shares": 36467109,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-international-investors-893016",
           "group": "owners"
@@ -52,8 +52,8 @@
         },
         {
           "name": "Invesco Ltd.",
-          "shares": 9340682,
-          "as_of": "2026-06-30",
+          "shares": 10362698,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/invesco-ltd-12291",
           "group": "owners"
@@ -92,10 +92,26 @@
         },
         {
           "name": "Capital World Investors",
-          "shares": 4310934,
-          "as_of": "2026-06-30",
+          "shares": 4409837,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-world-investors-767199",
+          "group": "owners"
+        },
+        {
+          "name": "Capital Research Global Investors",
+          "shares": 4257970,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-research-global-investors-767200",
+          "group": "owners"
+        },
+        {
+          "name": "Jane Street Group, Llc",
+          "shares": 4119097,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/jane-street-group-llc-934867",
           "group": "owners"
         },
         {
@@ -120,30 +136,6 @@
           "as_of": "2026-06-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/harvest-portfolios-group-inc-1248204",
-          "group": "owners"
-        },
-        {
-          "name": "Capital Research Global Investors",
-          "shares": 2993437,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-research-global-investors-767200",
-          "group": "owners"
-        },
-        {
-          "name": "Jane Street Group, Llc",
-          "shares": 2677622,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/jane-street-group-llc-934867",
-          "group": "owners"
-        },
-        {
-          "name": "Renaissance Technologies Llc",
-          "shares": 2553692,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/renaissance-technologies-llc-63203",
           "group": "owners"
         },
         {
@@ -203,6 +195,14 @@
           "group": "owners"
         },
         {
+          "name": "Renaissance Technologies Llc",
+          "shares": 1515560,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/renaissance-technologies-llc-63203",
+          "group": "owners"
+        },
+        {
           "name": "Marex Group Ltd",
           "shares": 1471629,
           "as_of": "2026-06-30",
@@ -256,8 +256,8 @@
       ],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-12T16:55:05.022Z",
-      "attempted_at": "2026-11-12T16:55:05.022Z",
+      "fetched_at": "2026-11-13T13:55:34.950Z",
+      "attempted_at": "2026-11-13T13:55:34.950Z",
       "last_error": null
     },
     "metaplanet": {
@@ -413,15 +413,15 @@
         "text": "Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%. At Dec 31, 2025 the annual report shows MMXX at 42,474,750 shares (3.64% of shares outstanding excluding treasury; 3.72% of voting rights) and Simon Gerovich at 15,555,500 shares. A large-shareholding report as of Sep 9, 2025 reported MMXX at 5.62% of 株券等, which can include rights. The Oct 2, 2026 correction says Gerovich does not hold a majority of MMXX, so the two are added rather than treated as one controlled block. Sources: https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf and https://metaplanet.jp/disclosure-pdf/S100Z5LW.pdf."
       },
       "ok": true,
-      "fetched_at": "2026-11-12T16:55:05.022Z",
-      "attempted_at": "2026-11-12T16:55:05.022Z",
+      "fetched_at": "2026-11-13T13:55:34.950Z",
+      "attempted_at": "2026-11-13T13:55:34.950Z",
       "last_error": null
     },
     "strive": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 44049618,
-      "holders_count": 217,
+      "institutional_shares": 41267417,
+      "holders_count": 218,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/ASST/institutional-holdings",
@@ -440,14 +440,6 @@
           "as_of": "2026-06-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/blackrock-inc-1287173",
-          "group": "owners"
-        },
-        {
-          "name": "Capital International Investors",
-          "shares": 3017663,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-international-investors-893016",
           "group": "owners"
         },
         {
@@ -515,11 +507,11 @@
           "group": "owners"
         },
         {
-          "name": "First Trust Advisors Lp",
-          "shares": 700482,
-          "as_of": "2026-06-30",
+          "name": "Capital International Investors",
+          "shares": 637732,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/first-trust-advisors-lp-86408",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-international-investors-893016",
           "group": "owners"
         },
         {
@@ -588,10 +580,18 @@
         },
         {
           "name": "Raymond James Financial Inc",
-          "shares": 251226,
-          "as_of": "2026-06-30",
+          "shares": 246783,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/raymond-james-financial-inc-4542",
+          "group": "owners"
+        },
+        {
+          "name": "Summit Financial, Llc",
+          "shares": 241902,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/summit-financial-llc-1076889",
           "group": "owners"
         },
         {
@@ -611,27 +611,27 @@
           "group": "owners"
         },
         {
+          "name": "First Trust Advisors Lp",
+          "shares": 209969,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/first-trust-advisors-lp-86408",
+          "group": "owners"
+        },
+        {
           "name": "Jump Financial, Llc",
           "shares": 207300,
           "as_of": "2026-06-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/jump-financial-llc-1134345",
           "group": "owners"
-        },
-        {
-          "name": "Summit Financial, Llc",
-          "shares": 198296,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/summit-financial-llc-1076889",
-          "group": "owners"
         }
       ],
       "beneficial": [],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-12T16:55:05.022Z",
-      "attempted_at": "2026-11-12T16:55:05.022Z",
+      "fetched_at": "2026-11-13T13:55:34.950Z",
+      "attempted_at": "2026-11-13T13:55:34.950Z",
       "last_error": null
     }
   }
