@@ -4,8 +4,8 @@
     "strategy": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 240230085,
-      "holders_count": 1117,
+      "institutional_shares": 246119580,
+      "holders_count": 1122,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/MSTR/institutional-holdings",
@@ -28,26 +28,34 @@
         },
         {
           "name": "Blackrock, Inc.",
-          "shares": 19394284,
-          "as_of": "2026-06-30",
+          "shares": 20421395,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/blackrock-inc-1287173",
           "group": "owners"
         },
         {
           "name": "Vanguard Portfolio Management Llc",
-          "shares": 15353408,
-          "as_of": "2026-06-30",
+          "shares": 16744407,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-portfolio-management-llc-1366704",
           "group": "owners"
         },
         {
           "name": "Vanguard Capital Management Llc",
-          "shares": 14938599,
-          "as_of": "2026-06-30",
+          "shares": 16381074,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-capital-management-llc-1383464",
+          "group": "owners"
+        },
+        {
+          "name": "Morgan Stanley",
+          "shares": 10881757,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/morgan-stanley-5929",
           "group": "owners"
         },
         {
@@ -56,14 +64,6 @@
           "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/invesco-ltd-12291",
-          "group": "owners"
-        },
-        {
-          "name": "Morgan Stanley",
-          "shares": 9330454,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/morgan-stanley-5929",
           "group": "owners"
         },
         {
@@ -123,19 +123,19 @@
           "group": "owners"
         },
         {
+          "name": "Harvest Portfolios Group Inc.",
+          "shares": 3479820,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/harvest-portfolios-group-inc-1248204",
+          "group": "owners"
+        },
+        {
           "name": "Ubs Group Ag",
           "shares": 3261021,
           "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/ubs-group-ag-940594",
-          "group": "owners"
-        },
-        {
-          "name": "Harvest Portfolios Group Inc.",
-          "shares": 3121927,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/harvest-portfolios-group-inc-1248204",
           "group": "owners"
         },
         {
@@ -148,8 +148,8 @@
         },
         {
           "name": "Vanguard Fiduciary Trust Co",
-          "shares": 2094345,
-          "as_of": "2026-06-30",
+          "shares": 2311438,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-fiduciary-trust-co-49733",
           "group": "owners"
@@ -256,8 +256,8 @@
       ],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-13T13:55:34.950Z",
-      "attempted_at": "2026-11-13T13:55:34.950Z",
+      "fetched_at": "2026-11-14T10:16:25.574Z",
+      "attempted_at": "2026-11-14T10:16:25.574Z",
       "last_error": null
     },
     "metaplanet": {
@@ -413,15 +413,15 @@
         "text": "Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%. At Dec 31, 2025 the annual report shows MMXX at 42,474,750 shares (3.64% of shares outstanding excluding treasury; 3.72% of voting rights) and Simon Gerovich at 15,555,500 shares. A large-shareholding report as of Sep 9, 2025 reported MMXX at 5.62% of 株券等, which can include rights. The Oct 2, 2026 correction says Gerovich does not hold a majority of MMXX, so the two are added rather than treated as one controlled block. Sources: https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf and https://metaplanet.jp/disclosure-pdf/S100Z5LW.pdf."
       },
       "ok": true,
-      "fetched_at": "2026-11-13T13:55:34.950Z",
-      "attempted_at": "2026-11-13T13:55:34.950Z",
+      "fetched_at": "2026-11-14T10:16:25.574Z",
+      "attempted_at": "2026-11-14T10:16:25.574Z",
       "last_error": null
     },
     "strive": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 41267417,
-      "holders_count": 218,
+      "institutional_shares": 42240158,
+      "holders_count": 227,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/ASST/institutional-holdings",
@@ -436,16 +436,16 @@
         },
         {
           "name": "Blackrock, Inc.",
-          "shares": 5266454,
-          "as_of": "2026-06-30",
+          "shares": 5619005,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/blackrock-inc-1287173",
           "group": "owners"
         },
         {
           "name": "Vanguard Capital Management Llc",
-          "shares": 2747298,
-          "as_of": "2026-06-30",
+          "shares": 2915305,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-capital-management-llc-1383464",
           "group": "owners"
@@ -475,19 +475,19 @@
           "group": "owners"
         },
         {
+          "name": "Morgan Stanley",
+          "shares": 1749530,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/morgan-stanley-5929",
+          "group": "owners"
+        },
+        {
           "name": "State Street Corp",
           "shares": 1679917,
           "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/state-street-corp-6697",
-          "group": "owners"
-        },
-        {
-          "name": "Morgan Stanley",
-          "shares": 1422922,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/morgan-stanley-5929",
           "group": "owners"
         },
         {
@@ -515,19 +515,19 @@
           "group": "owners"
         },
         {
-          "name": "Alpine Fox Capital Llc",
-          "shares": 560000,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/alpine-fox-capital-llc-1356391",
-          "group": "owners"
-        },
-        {
           "name": "Ubs Group Ag",
           "shares": 543957,
           "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/ubs-group-ag-940594",
+          "group": "owners"
+        },
+        {
+          "name": "Vanguard Portfolio Management Llc",
+          "shares": 512146,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-portfolio-management-llc-1366704",
           "group": "owners"
         },
         {
@@ -539,19 +539,19 @@
           "group": "owners"
         },
         {
-          "name": "Vanguard Portfolio Management Llc",
-          "shares": 426365,
-          "as_of": "2026-06-30",
+          "name": "Vanguard Fiduciary Trust Co",
+          "shares": 491228,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-portfolio-management-llc-1366704",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-fiduciary-trust-co-49733",
           "group": "owners"
         },
         {
-          "name": "Vanguard Fiduciary Trust Co",
-          "shares": 404376,
-          "as_of": "2026-06-30",
+          "name": "Alpine Fox Capital Llc",
+          "shares": 400000,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-fiduciary-trust-co-49733",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/alpine-fox-capital-llc-1356391",
           "group": "owners"
         },
         {
@@ -563,11 +563,11 @@
           "group": "owners"
         },
         {
-          "name": "Moneta Group Investment Advisors Llc",
-          "shares": 291087,
-          "as_of": "2026-06-30",
+          "name": "Hrt Financial Lp",
+          "shares": 278494,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/moneta-group-investment-advisors-llc-78608",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/hrt-financial-lp-851971",
           "group": "owners"
         },
         {
@@ -603,14 +603,6 @@
           "group": "owners"
         },
         {
-          "name": "Capital Fund Management S.A.",
-          "shares": 219622,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-fund-management-sa-672275",
-          "group": "owners"
-        },
-        {
           "name": "First Trust Advisors Lp",
           "shares": 209969,
           "as_of": "2026-09-30",
@@ -619,19 +611,27 @@
           "group": "owners"
         },
         {
-          "name": "Jump Financial, Llc",
-          "shares": 207300,
-          "as_of": "2026-06-30",
+          "name": "Moneta Group Investment Advisors Llc",
+          "shares": 202372,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/jump-financial-llc-1134345",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/moneta-group-investment-advisors-llc-78608",
+          "group": "owners"
+        },
+        {
+          "name": "Invesco Ltd.",
+          "shares": 196384,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/invesco-ltd-12291",
           "group": "owners"
         }
       ],
       "beneficial": [],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-13T13:55:34.950Z",
-      "attempted_at": "2026-11-13T13:55:34.950Z",
+      "fetched_at": "2026-11-14T10:16:25.574Z",
+      "attempted_at": "2026-11-14T10:16:25.574Z",
       "last_error": null
     }
   }
