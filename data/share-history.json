@@ -55,6 +55,12 @@
         "basic_shares": 1267808197,
         "source": "TDnet 140120261102562846 (2026-11-02, 15:30 JST), status of treasury share acquisition, for shares outstanding excluding treasury at 2026-10-31 and the 96,447,400 shares bought for JPY 25,269,031,500 from 2026-10-14 to 2026-10-31; TDnet 140120261102562849 (2026-11-02), 27th Series monthly exercise status, for issued shares at 2026-10-31 and no exercise in October; TDnet 140120261102562853 (2026-11-02), early redemption in full of the 20th Series bonds, JPY 8,000,000,000, from cash on hand; base row MTPLF_20260930 per TDnet 140120261005546273; priced at the 2026-11-01 close (BTC daily close, CoinGecko 00:00 UTC print of 2026-11-02), the latest close printed at build time",
         "recorded_at": "2026-11-02T13:41:34.844Z"
+      },
+      {
+        "as_of": "2026-11-13",
+        "basic_shares": 1255551997,
+        "source": "TDnet 140120261113578478 (2026-11-13, 15:30 JST), status of treasury share acquisition, for the 12,256,200 shares bought for JPY 2,999,916,700 from 2026-11-01 to 2026-11-12 and the cumulative 108,703,600 shares at 2026-11-12; TDnet 140120261102562846 (2026-11-02, 15:30 JST), status of treasury share acquisition, for shares outstanding excluding treasury at 2026-10-31 and the 96,447,400 shares bought for JPY 25,269,031,500 from 2026-10-14 to 2026-10-31; TDnet 140120261102562849 (2026-11-02), 27th Series monthly exercise status, for issued shares at 2026-10-31 and no exercise in October; TDnet 140120261102562853 (2026-11-02), early redemption in full of the 20th Series bonds, JPY 8,000,000,000, from cash on hand; base row Q3 FY2026 kessan tanshin, TDnet 140120261113578827 per the Q3 FY2026 kessan tanshin, TDnet 140120261113578827 (2026-11-13, Japanese original), pp.6, 10 and 11, with the convertible bond payment completed 2026-10-29 (p.21); priced at the 2026-11-13 close (BTC daily close, CoinGecko 00:00 UTC print of 2026-11-14), the row date, as the stock close",
+        "recorded_at": "2026-11-14T03:31:42.067Z"
       }
     ],
     "strive": [
