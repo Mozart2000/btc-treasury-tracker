@@ -27,9 +27,9 @@
       },
       {
         "as_of": "2026-11-09",
-        "basic_shares": 425489721,
-        "source": "8-K filed 2026-11-09, acc 0001193125-26-452693, covering 2026-11-02 to 2026-11-08, balances as of 2026-11-08; priced at the 2026-11-08 close. Shares sold under the ATM include shares not yet settled as of 2026-11-06, as the 8-K states. Debt carried from the 2026-06-30 balance (Q2 10-Q acc 0001050446-26-000044, all-principal basis); no debt event in this 8-K. Carried from 8-K filed 2026-11-02, acc 0001193125-26-442707, EST, not stated in this 8-K: debt, the STRK, STRF, STRD and STRE faces, eurusd_rate 1.1408 and the STRC rate 12.00%. Fully diluted count, estimated: basic + Q2 2026 10-Q ADSO spread 29,680,000 (acc 0001050446-26-000044).",
-        "recorded_at": "2026-11-09T14:52:30.162Z"
+        "basic_shares": 425584507,
+        "source": "8-K filed 2026-11-09, acc 0001193125-26-452693, covering 2026-11-02 to 2026-11-08, balances as of 2026-11-08; priced at the 2026-11-08 close. Shares sold under the ATM include shares not yet settled as of 2026-11-06, as the 8-K states. Re-based on the Q3 2026 10-Q (acc 0001050446-26-000060, filed 2026-11-02, balances at 2026-09-30) plus what was filed since. Carried from that report, EST: debt at principal 6,753,553,000 (Note 6), no debt event in this 8-K; the STRK, STRF, STRD and STRE faces at the 2026-09-30 share counts and stated amounts (Note 10), STRF at its 100 stated amount, no higher preference being filed at the row date; the preferred total from the 2026-09-30 aggregate (14,109,839 thousand) less STRF's filed preference above its stated amount (45,838,100) and the STRC repurchases since, with STRE at the row's EUR cross. STRE in USD: EUR 775,000,000 at 1.1147, the EUR cross of the 2026-11-08 close the row is priced at (74,740.42 USD over 67,047.91 EUR a bitcoin), EST; the Note 10 STRE aggregate implies 1.1343 at 2026-09-30 (879,083 thousand over EUR 775,000,000). STRC: 90,964,532 shares at 2026-09-30 less the repurchases filed since, 370,317 of them executed by 2026-09-30 and settled after (the 10-Q's October repurchases, 7,050,335, less 6,680,018 in the October 8-Ks). Basic shares: the 10-Q cover count at 2026-10-25, 402,714,357 class A plus 19,640,250 class B = 422,354,607, plus the class A ATM shares in each later 8-K. The STRC rate 12.00% is carried, EST. Fully diluted count, estimated: basic + Q3 2026 10-Q ADSO spread 29,599,000 (451,577 thousand less 421,978 thousand).",
+        "recorded_at": "2026-11-15T18:03:23.042Z"
       }
     ],
     "metaplanet": [
