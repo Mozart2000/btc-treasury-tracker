@@ -4,8 +4,8 @@
     "strategy": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 246119580,
-      "holders_count": 1122,
+      "institutional_shares": 248431353,
+      "holders_count": 1137,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/MSTR/institutional-holdings",
@@ -75,14 +75,6 @@
           "group": "owners"
         },
         {
-          "name": "Goldman Sachs Group Inc",
-          "shares": 5810162,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/goldman-sachs-group-inc-11158",
-          "group": "owners"
-        },
-        {
           "name": "Geode Capital Management, Llc",
           "shares": 4897677,
           "as_of": "2026-09-30",
@@ -139,11 +131,35 @@
           "group": "owners"
         },
         {
-          "name": "Susquehanna International Group, Llp",
-          "shares": 2520930,
-          "as_of": "2026-06-30",
+          "name": "Clear Street Group Inc.",
+          "shares": 3203716,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/susquehanna-international-group-llp-792195",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/clear-street-group-inc-1176140",
+          "group": "owners"
+        },
+        {
+          "name": "Goldman Sachs Group Inc",
+          "shares": 2760766,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/goldman-sachs-group-inc-11158",
+          "group": "owners"
+        },
+        {
+          "name": "Cantor Fitzgerald, L. P.",
+          "shares": 2618684,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/cantor-fitzgerald-l-p-166210",
+          "group": "owners"
+        },
+        {
+          "name": "Marex Group Ltd",
+          "shares": 2376660,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/marex-group-ltd-1290809",
           "group": "owners"
         },
         {
@@ -155,11 +171,11 @@
           "group": "owners"
         },
         {
-          "name": "Wells Fargo & Company/Mn",
-          "shares": 1994253,
-          "as_of": "2026-06-30",
+          "name": "Northern Trust Corp",
+          "shares": 2038816,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/wells-fargo--companymn-8130",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/northern-trust-corp-10923",
           "group": "owners"
         },
         {
@@ -171,43 +187,27 @@
           "group": "owners"
         },
         {
-          "name": "Northern Trust Corp",
-          "shares": 1831554,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/northern-trust-corp-10923",
-          "group": "owners"
-        },
-        {
-          "name": "Charles Schwab Investment Management Inc",
-          "shares": 1795815,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/charles-schwab-investment-management-inc-63069",
-          "group": "owners"
-        },
-        {
-          "name": "Clear Street Group Inc.",
-          "shares": 1554968,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/clear-street-group-inc-1176140",
-          "group": "owners"
-        },
-        {
-          "name": "Renaissance Technologies Llc",
-          "shares": 1515560,
+          "name": "Bank Of America Corp /De/",
+          "shares": 1865485,
           "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/renaissance-technologies-llc-63203",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/bank-of-america-corp-de-15519",
           "group": "owners"
         },
         {
-          "name": "Marex Group Ltd",
-          "shares": 1471629,
-          "as_of": "2026-06-30",
+          "name": "National Bank Of Canada /Fi/",
+          "shares": 1864098,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/marex-group-ltd-1290809",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/national-bank-of-canada-fi-49329",
+          "group": "owners"
+        },
+        {
+          "name": "Susquehanna International Group, Llp",
+          "shares": 1626962,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/susquehanna-international-group-llp-792195",
           "group": "owners"
         }
       ],
@@ -256,8 +256,8 @@
       ],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-16T04:00:33.614Z",
-      "attempted_at": "2026-11-16T04:00:33.614Z",
+      "fetched_at": "2026-11-17T00:12:01.534Z",
+      "attempted_at": "2026-11-17T00:12:01.534Z",
       "last_error": null
     },
     "metaplanet": {
@@ -413,15 +413,15 @@
         "text": "Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%. At Dec 31, 2025 the annual report shows MMXX at 42,474,750 shares (3.64% of shares outstanding excluding treasury; 3.72% of voting rights) and Simon Gerovich at 15,555,500 shares. A large-shareholding report as of Sep 9, 2025 reported MMXX at 5.62% of 株券等, which can include rights. The Oct 2, 2026 correction says Gerovich does not hold a majority of MMXX, so the two are added rather than treated as one controlled block. Sources: https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf and https://metaplanet.jp/disclosure-pdf/S100Z5LW.pdf."
       },
       "ok": true,
-      "fetched_at": "2026-11-16T04:00:33.614Z",
-      "attempted_at": "2026-11-16T04:00:33.614Z",
+      "fetched_at": "2026-11-17T00:12:01.534Z",
+      "attempted_at": "2026-11-17T00:12:01.534Z",
       "last_error": null
     },
     "strive": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 42240158,
-      "holders_count": 227,
+      "institutional_shares": 44364184,
+      "holders_count": 235,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/ASST/institutional-holdings",
@@ -459,14 +459,6 @@
           "group": "owners"
         },
         {
-          "name": "Goldman Sachs Group Inc",
-          "shares": 2089455,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/goldman-sachs-group-inc-11158",
-          "group": "owners"
-        },
-        {
           "name": "Geode Capital Management, Llc",
           "shares": 1897085,
           "as_of": "2026-09-30",
@@ -491,11 +483,27 @@
           "group": "owners"
         },
         {
-          "name": "Susquehanna International Group, Llp",
-          "shares": 1229275,
-          "as_of": "2026-06-30",
+          "name": "Goldman Sachs Group Inc",
+          "shares": 1199730,
+          "as_of": "2026-09-30",
           "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/susquehanna-international-group-llp-792195",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/goldman-sachs-group-inc-11158",
+          "group": "owners"
+        },
+        {
+          "name": "Charles Schwab Investment Management Inc",
+          "shares": 938927,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/charles-schwab-investment-management-inc-63069",
+          "group": "owners"
+        },
+        {
+          "name": "Ameriprise Financial Inc",
+          "shares": 908756,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/ameriprise-financial-inc-14081",
           "group": "owners"
         },
         {
@@ -507,11 +515,43 @@
           "group": "owners"
         },
         {
+          "name": "Susquehanna International Group, Llp",
+          "shares": 872693,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/susquehanna-international-group-llp-792195",
+          "group": "owners"
+        },
+        {
+          "name": "D. E. Shaw & Co., Inc.",
+          "shares": 802269,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/d-e-shaw--co-inc-63744",
+          "group": "owners"
+        },
+        {
           "name": "Capital International Investors",
           "shares": 637732,
           "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/capital-international-investors-893016",
+          "group": "owners"
+        },
+        {
+          "name": "Northern Trust Corp",
+          "shares": 595904,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/northern-trust-corp-10923",
+          "group": "owners"
+        },
+        {
+          "name": "Millennium Management Llc",
+          "shares": 544096,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/millennium-management-llc-610045",
           "group": "owners"
         },
         {
@@ -528,14 +568,6 @@
           "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/vanguard-portfolio-management-llc-1366704",
-          "group": "owners"
-        },
-        {
-          "name": "Northern Trust Corp",
-          "shares": 504643,
-          "as_of": "2026-06-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/northern-trust-corp-10923",
           "group": "owners"
         },
         {
@@ -571,67 +603,35 @@
           "group": "owners"
         },
         {
+          "name": "Trexquant Investment Lp",
+          "shares": 276712,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/trexquant-investment-lp-957871",
+          "group": "owners"
+        },
+        {
+          "name": "Clear Street Group Inc.",
+          "shares": 272160,
+          "as_of": "2026-09-30",
+          "source": "Form 13F",
+          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/clear-street-group-inc-1176140",
+          "group": "owners"
+        },
+        {
           "name": "Lpl Financial Llc",
           "shares": 253991,
           "as_of": "2026-09-30",
           "source": "Form 13F",
           "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/lpl-financial-llc-748362",
           "group": "owners"
-        },
-        {
-          "name": "Raymond James Financial Inc",
-          "shares": 246783,
-          "as_of": "2026-09-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/raymond-james-financial-inc-4542",
-          "group": "owners"
-        },
-        {
-          "name": "Summit Financial, Llc",
-          "shares": 241902,
-          "as_of": "2026-09-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/summit-financial-llc-1076889",
-          "group": "owners"
-        },
-        {
-          "name": "Bank Of New York Mellon Corp",
-          "shares": 237100,
-          "as_of": "2026-09-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/bank-of-new-york-mellon-corp-736081",
-          "group": "owners"
-        },
-        {
-          "name": "First Trust Advisors Lp",
-          "shares": 209969,
-          "as_of": "2026-09-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/first-trust-advisors-lp-86408",
-          "group": "owners"
-        },
-        {
-          "name": "Moneta Group Investment Advisors Llc",
-          "shares": 202372,
-          "as_of": "2026-09-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/moneta-group-investment-advisors-llc-78608",
-          "group": "owners"
-        },
-        {
-          "name": "Invesco Ltd.",
-          "shares": 196384,
-          "as_of": "2026-09-30",
-          "source": "Form 13F",
-          "url": "https://www.nasdaq.com/market-activity/institutional-portfolio/invesco-ltd-12291",
-          "group": "owners"
         }
       ],
       "beneficial": [],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-16T04:00:33.614Z",
-      "attempted_at": "2026-11-16T04:00:33.614Z",
+      "fetched_at": "2026-11-17T00:12:01.534Z",
+      "attempted_at": "2026-11-17T00:12:01.534Z",
       "last_error": null
     }
   }
