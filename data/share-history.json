@@ -36,6 +36,12 @@
         "basic_shares": 427671547,
         "source": "8-K filed 2026-11-16, acc 0001193125-26-462151, covering 2026-11-09 to 2026-11-15, balances as of 2026-11-15; priced at the 2026-11-15 close. Re-based on the Q3 2026 10-Q (acc 0001050446-26-000060, filed 2026-11-02, balances at 2026-09-30) plus what was filed since. Carried from that report, EST: debt at principal 6,753,553,000 (Note 6), no debt event in this 8-K; the STRK, STRF, STRD and STRE faces at the 2026-09-30 share counts and stated amounts (Note 10), STRF at its 100 stated amount, no higher preference being filed at the row date; the preferred total from the 2026-09-30 aggregate (14,109,839 thousand) less STRF's filed preference above its stated amount (45,838,100) and the STRC repurchases since, with STRE at the row's EUR cross. STRE in USD: EUR 775,000,000 at 1.1025, the EUR cross of the 2026-11-15 close the row is priced at (65,305.28 USD over 59,235.94 EUR a bitcoin), EST; the Note 10 STRE aggregate implies 1.1343 at 2026-09-30 (879,083 thousand over EUR 775,000,000). STRC: 90,964,532 shares at 2026-09-30 less the repurchases filed since, 370,317 of them executed by 2026-09-30 and settled after (the 10-Q's October repurchases, 7,050,335, less 6,680,018 in the October 8-Ks), and this 8-K's 2,282,510. Basic shares: the 10-Q cover count at 2026-10-25, 402,714,357 class A plus 19,640,250 class B = 422,354,607, plus the class A ATM shares in each later 8-K. The STRC rate 12.00% is carried, EST; this 8-K states it maintained at 12.00% for record dates in December 2026. Fully diluted count, estimated: basic + Q3 2026 10-Q ADSO spread 29,599,000 (451,577 thousand less 421,978 thousand).",
         "recorded_at": "2026-11-16T16:14:43.491Z"
+      },
+      {
+        "as_of": "2026-11-23",
+        "basic_shares": 429597223,
+        "source": "8-K filed 2026-11-23, acc 0001193125-26-470961, covering 2026-11-16 to 2026-11-22, balances as of 2026-11-22; priced at the 2026-11-22 close. Re-based on the Q3 2026 10-Q (acc 0001050446-26-000060, filed 2026-11-02, balances at 2026-09-30) plus what was filed since. Carried from that report, EST: debt at principal 6,753,553,000 (Note 6), no debt event in this 8-K; the STRK, STRF, STRD and STRE faces at the 2026-09-30 share counts and stated amounts (Note 10), STRF at its 100 stated amount, no higher preference being filed at the row date; the preferred total from the 2026-09-30 aggregate (14,109,839 thousand) less STRF's filed preference above its stated amount (45,838,100) and the STRC repurchases since, with STRE at the row's EUR cross. STRE in USD: EUR 775,000,000 at 1.0972, the EUR cross of the 2026-11-22 close the row is priced at (61,172.02 USD over 55,753.83 EUR a bitcoin), EST; the Note 10 STRE aggregate implies 1.1343 at 2026-09-30 (879,083 thousand over EUR 775,000,000). STRC: 90,964,532 shares at 2026-09-30 less the repurchases filed since, 370,317 of them executed by 2026-09-30 and settled after (the 10-Q's October repurchases, 7,050,335, less 6,680,018 in the October 8-Ks), and 2,092,035, 1,887,464, 2,282,510 and this 8-K's 2,183,747. Basic shares: the 10-Q cover count at 2026-10-25, 402,714,357 class A plus 19,640,250 class B = 422,354,607, plus the class A ATM shares in each later 8-K; this 8-K's 1,925,676 include shares sold but not yet settled as of 2026-11-20. Cash: USD Reserve 3.73 billion plus USD Cash 1.09 billion, as filed after the reallocation of 1.0 billion from the USD Reserve to USD Cash; the sum is unchanged by it. BTC: 851,305 as filed, one below the 850,849 at 2026-11-15 plus the 457 bought; no sale is stated. The STRC rate 12.00% is carried, EST; this 8-K states no rate, and the 8-K of 2026-11-16 (acc 0001193125-26-462151) states it maintained at 12.00% for record dates in December 2026. Fully diluted count, estimated: basic + Q3 2026 10-Q ADSO spread 29,599,000 (451,577 thousand less 421,978 thousand).",
+        "recorded_at": "2026-11-23T23:43:20.887Z"
       }
     ],
     "metaplanet": [
@@ -104,6 +110,12 @@
         "basic_shares": 127331109,
         "source": "8-K Nov 16, 2026 (acc 0001628280-26-074004), as of Nov 13, 2026; no consolidated indebtedness as of Oct 23, 2026 from 424B5 Oct 26, 2026 (acc 0000950103-26-016137), carried; priced at the 2026-11-15 close. EDGAR VERIFIED: https://www.sec.gov/Archives/edgar/data/1920406/000162828026074004/asst-20261116.htm",
         "recorded_at": "2026-11-16T16:14:45.111Z"
+      },
+      {
+        "as_of": "2026-11-23",
+        "basic_shares": 127331109,
+        "source": "8-K Nov 23, 2026 (acc 0001628280-26-075372), as of Nov 20, 2026; no consolidated indebtedness as of Oct 23, 2026 from 424B5 Oct 26, 2026 (acc 0000950103-26-016137), carried; priced at the 2026-11-22 close. EDGAR VERIFIED: https://www.sec.gov/Archives/edgar/data/1920406/000162828026075372/asst-20261123.htm",
+        "recorded_at": "2026-11-23T23:43:22.281Z"
       }
     ]
   }
