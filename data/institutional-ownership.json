@@ -4,8 +4,8 @@
     "strategy": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 248599679,
-      "holders_count": 1140,
+      "institutional_shares": 248605622,
+      "holders_count": 1141,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/MSTR/institutional-holdings",
@@ -256,8 +256,8 @@
       ],
       "register": [],
       "notes": [],
-      "fetched_at": "2026-11-24T18:54:17.379Z",
-      "attempted_at": "2026-11-24T18:54:17.379Z",
+      "fetched_at": "2026-11-25T21:59:41.783Z",
+      "attempted_at": "2026-11-25T21:59:41.783Z",
       "last_error": null
     },
     "metaplanet": {
@@ -413,15 +413,15 @@
         "text": "Insiders: MMXX Ventures plus Simon Gerovich own about 9.5–10.9%. At Dec 31, 2025 the annual report shows MMXX at 42,474,750 shares (3.64% of shares outstanding excluding treasury; 3.72% of voting rights) and Simon Gerovich at 15,555,500 shares. A large-shareholding report as of Sep 9, 2025 reported MMXX at 5.62% of 株券等, which can include rights. The Oct 2, 2026 correction says Gerovich does not hold a majority of MMXX, so the two are added rather than treated as one controlled block. Sources: https://metaplanet.jp/disclosure-pdf/S100XTWY.pdf and https://metaplanet.jp/disclosure-pdf/S100Z5LW.pdf."
       },
       "ok": true,
-      "fetched_at": "2026-11-24T18:54:17.379Z",
-      "attempted_at": "2026-11-24T18:54:17.379Z",
+      "fetched_at": "2026-11-25T21:59:41.783Z",
+      "attempted_at": "2026-11-25T21:59:41.783Z",
       "last_error": null
     },
     "strive": {
       "ok": true,
       "reported": true,
-      "institutional_shares": 44411226,
-      "holders_count": 239,
+      "institutional_shares": 44411244,
+      "holders_count": 240,
       "as_of": "2026-09-30",
       "source": "Nasdaq institutional holdings (Form 13F)",
       "source_url": "https://www.nasdaq.com/market-activity/stocks/ASST/institutional-holdings",
@@ -629,11 +629,9 @@
       ],
       "beneficial": [],
       "register": [],
-      "notes": [
-        "Schedule 13D/13G could not be refreshed (HTTP 500). Earlier 13D/13G rows are unchanged."
-      ],
-      "fetched_at": "2026-11-24T18:54:17.379Z",
-      "attempted_at": "2026-11-24T18:54:17.379Z",
+      "notes": [],
+      "fetched_at": "2026-11-25T21:59:41.783Z",
+      "attempted_at": "2026-11-25T21:59:41.783Z",
       "last_error": null
     }
   }
